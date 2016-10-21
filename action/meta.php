@@ -321,9 +321,20 @@ function check_userfiles() {
 	
     global $INFO;
     global $conf;
-	$userfiles = DOKU_PLUGIN . 'ckgedit/fckeditor/userfiles/';
-    $save_dir = trim($conf['savedir']);  
     
+    $save_dir = trim($conf['savedir']);  
+    $animal = isset($conf['animal']) ? $conf['animal'] : 'userfiles';
+    
+   $userfiles = DOKU_PLUGIN . "ckgedit/fckeditor/$animal/";
+    if(isset($conf['animal']) && $conf['animal'] !== 'userfiles') {
+        setcookie('FCK_animal',$animal, $expire, '/');     
+		setcookie('FCK_animal_inc',$conf['animal_inc'], $expire, '/');     
+        preg_match('#^(.*?' . $conf['animal'] . ')#', $save_dir,$matches);
+        $save_dir=$matches[1] . '/data/pages';
+        setcookie('FCK_farmlocal',$save_dir, $expire, '/');     
+    
+        return;
+    }
 // msg('BASE='. DOKU_BASE);
 // msg(DOKU_URL);
 // msg('REL='. DOKU_REL);
@@ -339,7 +350,7 @@ function check_userfiles() {
            $mdir = ltrim($mdir, '/');
         $media_dir = DOKU_BASE . $mdir . 'image/';
         }
-        else $media_dir = '/lib/plugins/ckgedit/fckeditor/userfiles/image/';        
+        else $media_dir = '/lib/plugins/ckgedit/fckeditor/'. $animal . '/image/';        
         setcookie('FCK_media',$media_dir, $expire, '/');           
 
      }
@@ -558,10 +569,14 @@ function check_userfiles() {
        global $ID; 
        global $JSINFO;
        global  $INPUT;
+       global $conf;
        
        $JSINFO['confirm_delete']= $this->getLang('confirm_delete');
        $JSINFO['doku_base'] = DOKU_BASE ;
        $JSINFO['cg_rev'] = $INPUT->str('rev');
+       if(isset($conf['animal'])) {           
+           $JSINFO['animal_media'] =   '/lib/plugins/ckgedit/fckeditor/' . $conf['animal'] .'/image/';
+       }
 	   $this->check_userfiles(); 
 	   $this->profile_dwpriority=($this->dokuwiki_priority && $this->in_dwpriority_group()) ? 1 :  0; 
        if(isset($_COOKIE['FCK_NmSp'])) $this->set_session(); 

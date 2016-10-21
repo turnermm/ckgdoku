@@ -5,7 +5,7 @@
  * 
  * @author TJ619 <rockandrollfever0@gmail.com>
  * @author Laurent Marquet <laurent.marquet@laposte.net>
- * @author Blacklord049
+ * @author Vincent Lecomte <vincent.p.lecomte@gmail.com>
  */
 $lang['btn_dw_edit']           = 'Éditeur DW';
 $lang['dw_btn_fck_preview']    = 'Prévisualisation CKG';

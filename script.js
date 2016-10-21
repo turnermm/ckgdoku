@@ -325,7 +325,11 @@ function ckg_edit_mediaman_insert(edid, id, opts, dw_align) {
     }
 
     var funcNum = CKEDITOR.instances.wiki__text._.filebrowserFn;
-    var fileUrl = DOKU_BASE + '/lib/exe/fetch.php?media=' + id;
+    if(typeof JSINFO['animal_media'] !== 'undefined') { 
+       id = id.replace(/^:/,"");
+        var fileUrl = JSINFO['animal_media'] + id.replace(/:/g,'\/');
+    }    
+    else var fileUrl = DOKU_BASE + '/lib/exe/fetch.php?media=' + id;
     CKEDITOR.tools.callFunction(funcNum, fileUrl, function() {
         var dialog = this.getDialog();
         if ( dialog.getName() == "image" ) {

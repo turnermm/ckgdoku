@@ -1,4 +1,6 @@
-rev_16-Oct_19-12_33
+rev_16-Oct_20-20_18
 
 19 Oct
 manually merged with ckgedit farms branch
+20 Oct
+Fixed script.js to correctly insert farm's image url into image.js
