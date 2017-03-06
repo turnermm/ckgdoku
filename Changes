@@ -1,4 +1,4 @@
-rev_17-Mar_06-09_38
+rev_17-Mar_06-13_38
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -7,3 +7,6 @@ Fix for HTML in user profile panel
 
 2 Feb 2017
 Synched with ckgedit
+
+3 March 
+remove backslashes from ends of blockquote
