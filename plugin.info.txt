@@ -1,4 +1,4 @@
-base  ckgedit
+base  ckgdoku
 author  Myron Turner
 email  turnermm02@shaw.ca
 date 2017-03-18

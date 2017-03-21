@@ -1,6 +1,6 @@
 <?php
 /**
- lib/plugins/ckgedit/fckeditor/dwsmileys.php
+ lib/plugins/ckgdoku/fckeditor/dwsmileys.php
 */
 
 

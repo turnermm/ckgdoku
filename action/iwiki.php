@@ -8,7 +8,7 @@
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
 include_once (DOKU_INC . 'inc/confutils.php');
-class action_plugin_ckgedit_iwiki extends DokuWiki_Action_Plugin {
+class action_plugin_ckgdoku_iwiki extends DokuWiki_Action_Plugin {
   private $interlinks = null;
     /**
      * Registers a callback function for a given event

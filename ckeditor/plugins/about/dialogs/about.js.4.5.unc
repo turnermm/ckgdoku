@@ -53,7 +53,7 @@ CKEDITOR.dialog.add( 'about', function( editor ) {
 						'CKEditor ' + CKEDITOR.version + ' (revision ' + CKEDITOR.revision + ')<br>' +
 						'<a href="http://ckeditor.com/">http://ckeditor.com</a>' +
 					'</p>' +
-					   'Modified for use with Dokuwiki, ckgeditor plugin version: ' + ckgEditorVer + '<br />' +
+					   'Modified for use with Dokuwiki, ckgdokuor plugin version: ' + ckgEditorVer + '<br />' +
 					'<p>' +
 					'<p>' +
 						lang.help.replace( '$1', '<a href="http://docs.ckeditor.com/user">' + lang.userGuide + '</a>' ) +

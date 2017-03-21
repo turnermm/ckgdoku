@@ -95,7 +95,7 @@ oListManager.GetFolderRowHtml = function( folderName, folderPath, folder_class, 
 }
 
 
-var imageDirectoryRegex = new RegExp ('^(.*?ckgedit\\/fckeditor\\/userfiles\\/image\\/)(.*)');
+var imageDirectoryRegex = new RegExp ('^(.*?ckgdoku\\/fckeditor\\/userfiles\\/image\\/)(.*)');
 function reviseImgSrc(url) {
  //var imgUrl = decodeURI(decodeURI(url));
  var imgUrl =decodeURI(dwikiUTF8_decodeFN(url,DwikiFNencode));
@@ -330,7 +330,7 @@ function OpenFile( fileUrl )
     }
     window.top.opener.CKEDITOR.tools.callFunction( funcNum, fileUrl);
     if(isInternalLink) {  
-        window.top.opener.update_ckgeditInternalLink(fileUrl.replace(/^.*?\/data\/pages\//,""));
+        window.top.opener.update_ckgdokuInternalLink(fileUrl.replace(/^.*?\/data\/pages\//,""));
     }   
     else if(isDwikiMediaFile) {        
        var url;       
@@ -341,7 +341,7 @@ function OpenFile( fileUrl )
            url = fileUrl.match(/data\/media\/(.*?)$/);  // needs tobe updated for non-standard and Windows save dirs
            fileUrl = url[1];
        }      
-       window.top.opener.update_ckgeditMediaLink(fileUrl);    
+       window.top.opener.update_ckgdokuMediaLink(fileUrl);    
     parent.opener.oDokuWiki_FCKEditorInstance.isLocalDwikiBrowser=false;
     }
   

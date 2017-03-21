@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
    *
-   * class       plugin_ckgedit_specials
+   * class       plugin_ckgdoku_specials
    * @author     Myron Turner <turnermm02@shaw.ca>
 */
         
@@ -12,8 +12,8 @@ if(!defined('DOKU_INC')) die();
 
 if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 require_once(DOKU_PLUGIN.'syntax.php');
-//define ('CKGEDIT_IMAGES', DOKU_URL . 'lib/plugins/ckgedit/images/');
-//define ('CK_IMG_PATH',DOKU_INC . 'lib/plugins/ckgedit/images/');
+//define ('CKGEDIT_IMAGES', DOKU_URL . 'lib/plugins/ckgdoku/images/');
+//define ('CK_IMG_PATH',DOKU_INC . 'lib/plugins/ckgdoku/images/');
 if(!defined('DOKU_LF')) define ('DOKU_LF',"\n");
 if(!defined('DOKU_TAB')) define ('DOKU_TAB',"\t");
 
@@ -21,7 +21,7 @@ if(!defined('DOKU_TAB')) define ('DOKU_TAB',"\t");
  * All DokuWiki plugins to extend the parser/rendering mechanism
  * need to inherit from this class
  */
-class syntax_plugin_ckgedit_specials extends DokuWiki_Syntax_Plugin {
+class syntax_plugin_ckgdoku_specials extends DokuWiki_Syntax_Plugin {
 
 
     /**
@@ -53,15 +53,15 @@ class syntax_plugin_ckgedit_specials extends DokuWiki_Syntax_Plugin {
      */
     function connectTo($mode) {        
              
-          $this->Lexer->addSpecialPattern('~~MULTI_PLUGIN_OPEN~~',$mode,'plugin_ckgedit_specials');
-          $this->Lexer->addSpecialPattern('~~MULTI_PLUGIN_CLOSE~~',$mode,'plugin_ckgedit_specials');
-          $this->Lexer->addSpecialPattern('~~COMPLEX_TABLES~~',$mode,'plugin_ckgedit_specials');
-          $this->Lexer->addSpecialPattern('~~NO_STYLING~~',$mode,'plugin_ckgedit_specials');          
-          $this->Lexer->addEntryPattern('~~START_HTML_BLOCK~~(?=.*?~~CLOSE_HTML_BLOCK~~)',$mode,'plugin_ckgedit_specials');   
+          $this->Lexer->addSpecialPattern('~~MULTI_PLUGIN_OPEN~~',$mode,'plugin_ckgdoku_specials');
+          $this->Lexer->addSpecialPattern('~~MULTI_PLUGIN_CLOSE~~',$mode,'plugin_ckgdoku_specials');
+          $this->Lexer->addSpecialPattern('~~COMPLEX_TABLES~~',$mode,'plugin_ckgdoku_specials');
+          $this->Lexer->addSpecialPattern('~~NO_STYLING~~',$mode,'plugin_ckgdoku_specials');          
+          $this->Lexer->addEntryPattern('~~START_HTML_BLOCK~~(?=.*?~~CLOSE_HTML_BLOCK~~)',$mode,'plugin_ckgdoku_specials');   
  
            
     }
-     function postConnect() { $this->Lexer->addExitPattern('~~CLOSE_HTML_BLOCK~~','plugin_ckgedit_specials'); }
+     function postConnect() { $this->Lexer->addExitPattern('~~CLOSE_HTML_BLOCK~~','plugin_ckgdoku_specials'); }
 
     /**
      * Handle the match

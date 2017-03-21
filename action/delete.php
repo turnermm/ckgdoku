@@ -8,14 +8,14 @@ require_once(DOKU_PLUGIN.'action.php');
  * @author     Pierre Spring <pierre.spring@liip.ch>
  */
 
-class action_plugin_ckgedit_delete extends DokuWiki_Action_Plugin {
+class action_plugin_ckgdoku_delete extends DokuWiki_Action_Plugin {
 
 
     function register(Doku_Event_Handler $controller) {
-        $controller->register_hook('DOKUWIKI_STARTED', 'BEFORE', $this, 'ckgedit_delete_preprocess');
+        $controller->register_hook('DOKUWIKI_STARTED', 'BEFORE', $this, 'ckgdoku_delete_preprocess');
     }
 
-    function ckgedit_delete_preprocess(Doku_Event $event){
+    function ckgdoku_delete_preprocess(Doku_Event $event){
         global $ACT;
         if (! is_array($ACT) || !(isset($ACT['delete']))) return;
         global $TEXT;

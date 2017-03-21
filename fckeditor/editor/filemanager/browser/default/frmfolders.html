@@ -81,7 +81,7 @@ function GetCurentFolder_from_Request()
 		{ 
 			response = (httpObject.responseText);
 			res = response.replace(/:/g,"/");
-            if(res.match(/lib\/plugins\/ckgedit\/fckeditor\/userfiles\/image/)) {
+            if(res.match(/lib\/plugins\/ckgdoku\/fckeditor\/userfiles\/image/)) {
                   res = '';  // temp fix for puzzling encoding=url bug in frmresourceslist.html,
                              // where image loading is processed in GetFileRowHtml()
             }

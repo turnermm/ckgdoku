@@ -7,7 +7,7 @@
 // must be run within Dokuwiki
 if (!defined('DOKU_INC')) die();
 
-class helper_plugin_ckgedit extends DokuWiki_Plugin {
+class helper_plugin_ckgdoku extends DokuWiki_Plugin {
  
 
  
@@ -31,7 +31,7 @@ class helper_plugin_ckgedit extends DokuWiki_Plugin {
      return explode(',', $str);
   }
   
-  function get_ckgedit_ImageAllowedExtensions() {
+  function get_ckgdoku_ImageAllowedExtensions() {
     $uploadImageTypes = ARRAY();
     foreach (getMimeTypes() as $ext=>$mtype) {
         if(preg_match("/image/", $mtype)) {
@@ -62,20 +62,20 @@ class helper_plugin_ckgedit extends DokuWiki_Plugin {
   $action_list = plugin_list('action');
   $tags = in_array('tag',$action_list) ? 'Tags': "";
 
-  $ckgedit_conf_direction = $this->getConf('direction');
-   if($ckgedit_conf_direction == "dokuwiki") {
-       $ckgedit_lang_direction = $lang['direction'];
+  $ckgdoku_conf_direction = $this->getConf('direction');
+   if($ckgdoku_conf_direction == "dokuwiki") {
+       $ckgdoku_lang_direction = $lang['direction'];
    }    
   else {
-      $ckgedit_lang_direction = $ckgedit_conf_direction;
+      $ckgdoku_lang_direction = $ckgdoku_conf_direction;
   }   
-  $ImageUploadAllowedExtensions = $this->get_ckgedit_ImageAllowedExtensions() ;
+  $ImageUploadAllowedExtensions = $this->get_ckgdoku_ImageAllowedExtensions() ;
   $media_tmp_ns = preg_match('/:/',$ID) ? preg_replace('/:\w+$/',"",$ID,1) : "";    
   $locktimer_msg = "Your lock for editing this page is about to expire in a minute.\\n"                  
                 . "You can reset the timer by clicking the Back-up button.";
 
-    $meta_fn = metaFN($ID,'.ckgedit');
-    $meta_id = 'meta/' . str_replace(':','/',$ID) . '.ckgedit';
+    $meta_fn = metaFN($ID,'.ckgdoku');
+    $meta_id = 'meta/' . str_replace(':','/',$ID) . '.ckgdoku';
 
   global $INFO; 
   global $conf;
@@ -171,11 +171,11 @@ var oldonload = window.onload;
 var ourLockTimerINI = false;
 var oldBeforeunload;
 
-  var ckgedit_onload = function() { $js };
+  var ckgdoku_onload = function() { $js };
   
-  jQuery(window).on('load',ckgedit_onload);
+  jQuery(window).on('load',ckgdoku_onload);
   
- function ckgeditEditorTextChanged() {
+ function ckgdokuEditorTextChanged() {
    window.textChanged = false;   
    oldBeforeunload(); 
    if(window.dwfckTextChanged) {        
@@ -269,7 +269,7 @@ var oldBeforeunload;
                 DOKU_BASE + 'lib/exe/ajax.php',
                 params,
                 function (data) {
-                    data = data.replace(/auto/,"")  + ' by ckgedit';
+                    data = data.replace(/auto/,"")  + ' by ckgdoku';
                     locktimer.response = data; 
                     locktimer.refreshed(data);
                 },
@@ -289,8 +289,8 @@ var oldBeforeunload;
 
  function resetDokuWikiLockTimer(delete_checkbox) {
 
-        var dom_checkbox = document.getElementById('ckgedit_timer');
-        var dom_label = document.getElementById('ckgedit_timer_label');
+        var dom_checkbox = document.getElementById('ckgdoku_timer');
+        var dom_label = document.getElementById('ckgdoku_timer_label');
         locktimer.clear();     
         if(ourLockTimerIsSet) {
 
@@ -337,7 +337,7 @@ function renewLock(bak) {
         params += '&wikitext='+encodeURIComponent(dwform.elements.fck_wikitext.value);      
         params += '&call=refresh_save';
         jQuery.post(
-           //     DOKU_BASE + 'lib/plugins/ckgedit/scripts/refresh_save.php',
+           //     DOKU_BASE + 'lib/plugins/ckgdoku/scripts/refresh_save.php',
                DOKU_BASE + 'lib/exe/ajax.php',
                 params,
                 function (data) {          
@@ -371,7 +371,7 @@ function draft_delete() {
         var debug = false;
         var params = "draft_id=$cname";
         jQuery.ajax({
-           url: DOKU_BASE + 'lib/plugins/ckgedit/scripts/draft_delete.php',
+           url: DOKU_BASE + 'lib/plugins/ckgdoku/scripts/draft_delete.php',
            async: false,
            data: params,    
            type: 'POST',
@@ -410,8 +410,8 @@ function FCKEditorWindowObj(w) {
   DWFCK_EditorWinObj = w;
 }
 
-function ckgedit_isRTL() { 
-var direction = "$ckgedit_lang_direction";
+function ckgdoku_isRTL() { 
+var direction = "$ckgdoku_lang_direction";
 
 return direction == 'rtl';
   
@@ -449,7 +449,7 @@ function  extra_plugins() {
     return "$extra_plugins";
 }
 
-function ckgedit_language_chk(config) { 
+function ckgdoku_language_chk(config) { 
     if("$scayt_auto" == 'on') {
         config.scayt_autoStartup = true;      
     }
@@ -496,7 +496,7 @@ function FCKeditor_OnComplete( editorInstance )
   var index = navigator.userAgent.indexOf('Safari'); 
   if(index == -1  || (navigator.userAgent.indexOf('Chrome'))) {
     oldBeforeunload = window.onbeforeunload;
-    window.onbeforeunload = ckgeditEditorTextChanged;
+    window.onbeforeunload = ckgdokuEditorTextChanged;
   }
  
   

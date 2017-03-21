@@ -18,15 +18,15 @@ require_once(DOKU_PLUGIN.'syntax.php');
  * All DokuWiki plugins to extend the parser/rendering mechanism
  * need to inherit from this class
  */
-class syntax_plugin_ckgedit_font extends DokuWiki_Syntax_Plugin {
+class syntax_plugin_ckgdoku_font extends DokuWiki_Syntax_Plugin {
  
 
  
     function getType(){ return 'formatting'; }
     function getAllowedTypes() { return array('formatting', 'substition', 'disabled'); }   
     function getSort(){ return 158; }
-    function connectTo($mode) { $this->Lexer->addEntryPattern('<font.*?>(?=.*?</font>)',$mode,'plugin_ckgedit_font'); }
-    function postConnect() { $this->Lexer->addExitPattern('</font>','plugin_ckgedit_font'); }
+    function connectTo($mode) { $this->Lexer->addEntryPattern('<font.*?>(?=.*?</font>)',$mode,'plugin_ckgdoku_font'); }
+    function postConnect() { $this->Lexer->addExitPattern('</font>','plugin_ckgdoku_font'); }
  
  
     /**

@@ -1,5 +1,5 @@
 function parse_wikitext(id) {
-    if(ckgedit_dwedit_reject) {
+    if(ckgdoku_dwedit_reject) {
           var dom =  GetE('ebut_cancel');  
           dom.click();
           return true;
@@ -462,7 +462,7 @@ function parse_wikitext(id) {
             }
 
 
-            if(tag == 'span' && !ckgedit_xcl_styles) {
+            if(tag == 'span' && !ckgdoku_xcl_styles) {
                if(attrs[i].name == 'style') {
                    if(!this.in_font) results += "__STYLE__";
              	   this.in_font=true;    
@@ -1176,7 +1176,7 @@ function parse_wikitext(id) {
         this.is_smiley = false;    
         if(tag !='li') return;
      }
-	 if(tag == 'span' && this.in_font && !ckgedit_xcl_styles) {
+	 if(tag == 'span' && this.in_font && !ckgdoku_xcl_styles) {
 	       tag = 'font';
           //<font 18pt/garamond;;color;;background_color>  
           var font_str = '<font ' + this.font_size + '/' + this.font_family + ';;' + this.font_color + ';;' + this.font_bgcolor +">";        
@@ -1760,13 +1760,13 @@ results = results.replace(/(\s*={2,})(.*?)(\[\[|\{\{)(.*?)(\]\]|\}\})(.*?)\1/gm,
                 c = '[[' + a + '|'+c + ']]'; 
                      else   c = '{{' + b + '|'+c + '}}';                     
                
-                var val = prompt(LANG.plugins.ckgedit.font_err_1 + "\n" + c  + "\n" + LANG.plugins.ckgedit.font_err_2  );  
+                var val = prompt(LANG.plugins.ckgdoku.font_err_1 + "\n" + c  + "\n" + LANG.plugins.ckgdoku.font_err_2  );  
            if(val == null) {
-                 if(ckgedit_to_dwedit)   {
-                    ckgedit_to_dwedit = false;                   
+                 if(ckgdoku_to_dwedit)   {
+                    ckgdoku_to_dwedit = false;                   
                         return c;   
                 }    
-                 else throw new Error(LANG.plugins.ckgedit.font_err_throw);
+                 else throw new Error(LANG.plugins.ckgdoku.font_err_throw);
              } 
            if(val) return val;
                return c; 
@@ -1779,7 +1779,7 @@ results = results.replace(/(\s*={2,})(.*?)(\[\[|\{\{)(.*?)(\]\]|\}\})(.*?)\1/gm,
        }     
         
            if(fontConflict())  {           
-               if(confirm(LANG.plugins.ckgedit.font_conflict)) return;
+               if(confirm(LANG.plugins.ckgdoku.font_conflict)) return;
                  var v = jQuery("#fontdel").val();          
                  if(!v) {                     
                      jQuery('#dw__editform').append('<input type="hidden" id="fontdel" name="fontdel" value="del" />');
@@ -1910,7 +1910,7 @@ jQuery( "#ebtn__delete" ).mouseup(function() {
 });
 
 jQuery( "#ebtn__dwedit" ).click(function() { 
-   ckgedit_to_dwedit = true;
+   ckgdoku_to_dwedit = true;
    setDWEditCookie(2, this);
    parse_wikitext('edbtn__save');
    this.form.submit();
@@ -1918,7 +1918,7 @@ jQuery( "#ebtn__dwedit" ).click(function() {
 
 jQuery("#ebtn__fbswitch").click(function(){
     if(getCookie('ckgFbOpt') == 'dokuwiki') {
-        document.cookie = 'ckgFbOpt=ckgedit;';
+        document.cookie = 'ckgFbOpt=ckgdoku;';
     } else {
         document.cookie = 'ckgFbOpt=dokuwiki;';
     }
@@ -1926,8 +1926,8 @@ jQuery("#ebtn__fbswitch").click(function(){
    this.form.submit();
 });
 
-jQuery( "#ckgedit_draft_btn" ).click(function() { 
-   ckgedit_get_draft();
+jQuery( "#ckgdoku_draft_btn" ).click(function() { 
+   ckgdoku_get_draft();
 });
 jQuery( "#backup_button" ).click(function() { 
    renewLock(true);
@@ -1948,7 +1948,7 @@ jQuery( "#ebut_cancel" ).mouseup(function() {
 });
 jQuery( "#save_button" ).mousedown(function() { 
  if(!window.dwfckTextChanged && !JSINFO['cg_rev']) {
-  ckgedit_dwedit_reject = true;
+  ckgdoku_dwedit_reject = true;
   parse_wikitext('ebut_cancel'); 
  }
    else {
