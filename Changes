@@ -1,4 +1,4 @@
-rev_17-Mar_18-11_54
+rev_17-Mar_21-19_08
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -10,3 +10,6 @@ Synched with ckgedit
 
 3 March 
 remove backslashes from ends of blockquote
+
+Mar 21
+Converted all uses of ckgedit to ckgdoku in code; now it loads as plugin ckgdoku
