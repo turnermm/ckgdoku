@@ -561,6 +561,10 @@ function check_userfiles() {
        global  $INPUT;
        global $updateVersion;
        
+        $plist = plugin_list('helper');        
+        if(in_array('ckgedit', $plist)) {    
+            msg($this->getLang('ckgcke_conflict'),2); 
+        }
        $JSINFO['confirm_delete']= $this->getLang('confirm_delete');
        $JSINFO['doku_base'] = DOKU_BASE ;
        $JSINFO['cg_rev'] = $INPUT->str('rev');
