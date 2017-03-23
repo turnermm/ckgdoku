@@ -1,7 +1,7 @@
 base  ckgdoku
 author  Myron Turner
 email  turnermm02@shaw.ca
-date 2017-03-22
+date 2017-03-23
 name  ckgdoku
 desc  WYSIWYG plugin for Dokuwiki
 url  https://www.dokuwiki.org/plugin:ckgdoku

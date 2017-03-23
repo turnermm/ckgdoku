@@ -1,4 +1,4 @@
-rev_17-Mar_22-14_05
+rev_17-Mar_23-09_30
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -15,4 +15,7 @@ Mar 21
 Converted all uses of ckgedit to ckgdoku in code; now it loads as plugin ckgdoku
 
 Mar 22
-ckgedit/ckgdoku warning: one must be disabled (metq.php)
+ckgedit/ckgdoku warning: one must be disabled (meta.php)
+
+Mar 23
+updated localization of symlink creation in meta.php
