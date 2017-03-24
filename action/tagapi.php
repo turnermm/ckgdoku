@@ -7,7 +7,7 @@
 
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
-class action_plugin_ckgedit_tagapi extends DokuWiki_Action_Plugin {
+class action_plugin_ckgdoku_tagapi extends DokuWiki_Action_Plugin {
   private $tagplugin = null;
     /**
      * Registers a callback function for a given event

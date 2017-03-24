@@ -1,2 +1,2 @@
 # ckgdoku
-working branch of ckgedit using dokuwiki mediamanager
+working branch of ckgdoku using dokuwiki mediamanager

@@ -2,23 +2,23 @@
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../../').'/');
 if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 if(!defined('DOKU_MEDIA')) define('DOKU_MEDIA',DOKU_INC.'data/media/');
-define ('BROKEN_IMAGE', DOKU_URL . 'lib/plugins/ckgedit/fckeditor/userfiles/blink.jpg?nolink&33x34');
+define ('BROKEN_IMAGE', DOKU_URL . 'lib/plugins/ckgdoku/fckeditor/userfiles/blink.jpg?nolink&33x34');
 require_once(DOKU_PLUGIN.'action.php');
 define('FCK_ACTION_SUBDIR', realpath(dirname(__FILE__)) . '/');
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  */
 
-class action_plugin_ckgedit_save extends DokuWiki_Action_Plugin {
+class action_plugin_ckgdoku_save extends DokuWiki_Action_Plugin {
 
     function register(Doku_Event_Handler $controller) {
   
-        $controller->register_hook('DOKUWIKI_STARTED', 'BEFORE', $this, 'ckgedit_save_preprocess');
+        $controller->register_hook('DOKUWIKI_STARTED', 'BEFORE', $this, 'ckgdoku_save_preprocess');
     }
 
-    function ckgedit_save_preprocess(Doku_Event $event){
+    function ckgdoku_save_preprocess(Doku_Event $event){
         global $ACT;
-        if (!isset($_REQUEST['ckgedit']) || ! is_array($ACT) || !(isset($ACT['save']) || isset($ACT['preview']))) return;
+        if (!isset($_REQUEST['ckgdoku']) || ! is_array($ACT) || !(isset($ACT['save']) || isset($ACT['preview']))) return;
          if (isset($_REQUEST["fontdel"]) ) {
              msg($this->getLang("fontdel"),1);           
          }

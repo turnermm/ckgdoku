@@ -264,7 +264,7 @@ var dokuBase = location.host + DOKU_BASE;
     };
  }
  
- function ckgedit_seteditor_priority(m,client,dw_val_obj) {
+ function ckgdoku_seteditor_priority(m,client,dw_val_obj) {
        var which = {'Y': 'Dokuwiki', 'N': 'CKEditor'};
 
        if (typeof m === "undefined") {  // Safari
@@ -280,12 +280,12 @@ var dokuBase = location.host + DOKU_BASE;
                 function (data) {  
                     if(data == 'done') { 
                         if(!m)
-                             alert(LANG.plugins.ckgedit.dwp_not_sel); 
+                             alert(LANG.plugins.ckgdoku.dwp_not_sel); 
                           else 
-                             alert(LANG.plugins.ckgedit.dwp_updated + which[m]); 
+                             alert(LANG.plugins.ckgdoku.dwp_updated + which[m]); 
                     }
                       else  {
-                          alert(LANG.plugins.ckgedit.dwp_save_err + data); 
+                          alert(LANG.plugins.ckgdoku.dwp_save_err + data); 
                       }   
                     },
                 'html'

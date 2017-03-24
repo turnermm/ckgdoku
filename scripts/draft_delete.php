@@ -7,13 +7,13 @@ global $INPUT;
 $cname = $INPUT->str('draft_id');
 $cname = urldecode($cname);
 if(!preg_match("#/data/cache/\w/[a-f0-9]{32}\.draft$#i", $cname)) return;
-$ckgedit_cname = $cname . '.fckl';
+$ckgdoku_cname = $cname . '.fckl';
 
 
 if(file_exists($cname)) {
    io_lock($cname);
-   if(file_exists($ckgedit_cname)) {
-      unlink($ckgedit_cname); 
+   if(file_exists($ckgdoku_cname)) {
+      unlink($ckgdoku_cname); 
    }
    unlink($cname); 
 

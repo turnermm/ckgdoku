@@ -14,7 +14,7 @@ require_once DOKU_INC.'inc/parser/xhtml.php';
 /**
  * The Renderer
  */
-class renderer_plugin_ckgedit extends Doku_Renderer_xhtml 
+class renderer_plugin_ckgdoku extends Doku_Renderer_xhtml 
 {
 
     var $ver_anteater;
@@ -53,7 +53,7 @@ class renderer_plugin_ckgedit extends Doku_Renderer_xhtml
      */
     function getFormat()
     {
-        // this should be 'ckgedit' usally, but we inherit from the xhtml renderer
+        // this should be 'ckgdoku' usally, but we inherit from the xhtml renderer
         // and produce XHTML as well, so we can gain magically compatibility
         // by saying we're the 'xhtml' renderer here.
         return 'xhtml';

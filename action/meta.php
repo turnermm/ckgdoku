@@ -5,10 +5,10 @@
  
 if(!defined('DOKU_INC')) die();
 if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
-define('FCK_ACTION_SUBDIR',  DOKU_PLUGIN . 'ckgedit/action/');
+define('FCK_ACTION_SUBDIR',  DOKU_PLUGIN . 'ckgdoku/action/');
 require_once(DOKU_PLUGIN.'action.php');
  
-class action_plugin_ckgedit_meta extends DokuWiki_Action_Plugin {
+class action_plugin_ckgdoku_meta extends DokuWiki_Action_Plugin {
   var $session_id = false;    
   var $draft_file;
   var $user_rewrite = false;
@@ -19,10 +19,10 @@ class action_plugin_ckgedit_meta extends DokuWiki_Action_Plugin {
   var $dw_priority_group;
   var $dw_priority_metafn;
   function __construct() {
-      $this->helper = plugin_load('helper', 'ckgedit');
+      $this->helper = plugin_load('helper', 'ckgdoku');
       $this->dokuwiki_priority = $this->getConf('dw_priority');
       $this->dw_priority_group = $this->getConf('dw_users');
-      $this->dw_priority_metafn=metaFN(':ckgedit:dw_priority', '.ser');
+      $this->dw_priority_metafn=metaFN(':ckgdoku:dw_priority', '.ser');
       if(!file_exists($this->dw_priority_metafn)) {
           io_saveFile($this->dw_priority_metafn, serialize(array()));
       }
@@ -59,7 +59,7 @@ class action_plugin_ckgedit_meta extends DokuWiki_Action_Plugin {
             }
 
             $pos = $event->data->findElementByAttribute('type', 'reset');
-            $_form = '</div></form><br /><form name="ckgeditform" action="#"><div class="no">';
+            $_form = '</div></form><br /><form name="ckgdokuform" action="#"><div class="no">';
             $_form.= '<fieldset ><legend>' . $this->getLang('uprofile_title') .'</legend>';
             
             $_form.= '<label><span><b>DW Editor</b></span> ';
@@ -69,7 +69,7 @@ class action_plugin_ckgedit_meta extends DokuWiki_Action_Plugin {
             
             $_form.= '<br /><label><span><b>User Name: </b></span> ';
             $_form.= '<input type="textbox" name="cked_client" disabled value="' .  $client .'"/></label>';
-            $_form.= '<br /><br /><input type="button" value="Save" class="button" ' . "onclick='ckgedit_seteditor_priority(this.form.cked_selector.value,this.form.cked_client.value,this.form.cked_selector);' />&nbsp;";
+            $_form.= '<br /><br /><input type="button" value="Save" class="button" ' . "onclick='ckgdoku_seteditor_priority(this.form.cked_selector.value,this.form.cked_client.value,this.form.cked_selector);' />&nbsp;";
             $_form.= '<input type="reset" value="Reset" class="button" />';
            $_form.= '</fieldset>';           
             $event->data->insertElement($pos+2, $_form);
@@ -105,7 +105,7 @@ function _ajax_call(Doku_Event $event, $param) {
        
        $rsave_id = urldecode($INPUT->str('rsave_id'));
        $path = pathinfo($rsave_id);
-       if($path['extension'] != 'ckgedit') {
+       if($path['extension'] != 'ckgdoku') {
              echo "failed";
              return;
         }  
@@ -216,7 +216,7 @@ if($_REQUEST['fck_preview_mode'] != 'nil' && !isset($_COOKIE['FCKG_USE']) && !$F
     echo '<style type="text/css">#edbtn__preview, .btn_show { position:absolute; visibility:hidden; }</style>';
  }
   
- global $ckgedit_lang;
+ global $ckgdoku_lang;
 
   if($_REQUEST['fck_preview_mode']== 'preview'){
     return;
@@ -258,7 +258,7 @@ if($_REQUEST['fck_preview_mode'] != 'nil' && !isset($_COOKIE['FCKG_USE']) && !$F
    if(is_string($act) && $act != 'edit') {  
         return;
    }
-  global $INFO, $ckgedit_lang;
+  global $INFO, $ckgdoku_lang;
     
   $discard = $this->getLang('discard_edits');   
   echo "<script type='text/javascript'>\n//<![CDATA[ \n";
@@ -267,11 +267,11 @@ if($_REQUEST['fck_preview_mode'] != 'nil' && !isset($_COOKIE['FCKG_USE']) && !$F
   echo <<<SCRIPT
     <script type="text/javascript">
     //<![CDATA[ 
-    var ckgedit_dwedit_reject = false;
-    var ckgedit_to_dwedit = false;
+    var ckgdoku_dwedit_reject = false;
+    var ckgdoku_to_dwedit = false;
     function setDWEditCookie(which, e) { 
       
-        var dom = document.getElementById('ckgedit_mode_type');                
+        var dom = document.getElementById('ckgdoku_mode_type');                
           
          if(useDW_Editor) {
                 document.cookie = 'FCKG_USE=other;expires=';             
@@ -299,7 +299,7 @@ if($_REQUEST['fck_preview_mode'] != 'nil' && !isset($_COOKIE['FCKG_USE']) && !$F
            }
             else if(window.dwfckTextChanged  && !window.confirm("$discard")) {            
                var dom = GetE('dwsave_select');                
-               ckgedit_dwedit_reject=true;
+               ckgdoku_dwedit_reject=true;
                window.dwfckTextChanged = false;
         }
        }
@@ -326,7 +326,7 @@ function check_userfiles() {
     $save_dir = trim($conf['savedir']);  
     $animal = isset($conf['animal']) ? $conf['animal'] : 'userfiles';
     
-   $userfiles = DOKU_PLUGIN . "ckgedit/fckeditor/$animal/";
+   $userfiles = DOKU_PLUGIN . "ckgdoku/fckeditor/$animal/";
     if(isset($conf['animal']) && $conf['animal'] !== 'userfiles') {
         setcookie('FCK_animal',$animal, $expire, '/');     
 		setcookie('FCK_animal_inc',$conf['animal_inc'], $expire, '/');     
@@ -351,7 +351,7 @@ function check_userfiles() {
            $mdir = ltrim($mdir, '/');
         $media_dir = DOKU_BASE . $mdir . 'image/';
         }
-        else $media_dir = '/lib/plugins/ckgedit/fckeditor/'. $animal . '/image/';        
+        else $media_dir = '/lib/plugins/ckgdoku/fckeditor/'. $animal . '/image/';        
         setcookie('FCK_media',$media_dir, $expire, '/');           
 
      }
@@ -365,18 +365,18 @@ function check_userfiles() {
                $security = $userfiles . '.htaccess.security';
                if(file_exists($security)) {                   
                    if(!copy($security, $htaccess)) {
-                       msg('For winstyle setup: cannot copy to ' . $htaccess);
+                       msg($this->getLang("ws_cantcopy") . $htaccess);  
                    }
-                   else msg('For winstyle setup, copied security-enabled .htaccess to data/media' ."\n" .'See ckgedit/fckeditor/userfiles/.htacess.security');
+                   else msg($this->getLang("ws_copiedhtaccess"));    
                }
           } 
          return;    
      }
      if(!is_readable($userfiles) && !is_writable($userfiles)){
-              msg("ckgedit cannot access $userfiles. Please check the permissions.");
+              msg($this->getLang("userfiles_perm" ) . ' ' . $userfiles) ;
 		      return;
      }		   
-	$version = io_readFile(DOKU_PLUGIN . 'ckgedit/version');
+	$version = io_readFile(DOKU_PLUGIN . 'ckgdoku/version');
 	if(!$version) return;
     $meta = metaFN('fckl:symchk','.meta'); 
 	$symcheck = io_readFile($meta);	    
@@ -435,7 +435,7 @@ function check_userfiles() {
                        }					 
 					 if(!@symlink($data_media,$path) ) {
 					     $bad_create = true;
-						  if($show_msg)  msg("unable to create $name link:  $path",-1);			  
+						  if($show_msg)   msg($this->getLang("sym_not created_1") . " $name link:  $path",-1);		
 				   }
 				   else {
 				     $successes[] = $name; 
@@ -445,7 +445,7 @@ function check_userfiles() {
       }
 	  else {
 	     if($show_msg)  {
-			msg("Cannot create symlinks for filebrowser.  Cannot access:  $userfiles   ",-1);
+	        msg($this->getLang("sym_not created_2") ." $userfiles",-1);
 		 }
 	  }
 	   
@@ -453,14 +453,13 @@ function check_userfiles() {
 	   
 	  if($bad_create) {
 	       if($show_msg)  {
-			   msg("There was an error when trying to create symbolic links in $userfiles. "
-					. "See ckgedit/auto_install.pdf  or  the <a href='http://www.mturner.org/fckgLite/doku.php?do=search&id=htaccess+|+media'>fckgLite web site</a>" , 2);					
+		       msg($this->getLang("sym_not created_3") . " $userfiles"); 
 				}
       }
 	  else {	        
 	       if(count($successes)) {
 				$links_created = implode(', ',$successes);
-				msg('The following links were created in the userfiles directory: ' . $links_created,2);
+				 msg($this->getLang("syms_created") . " $links_created",2);   
 			 }
 	  }
 	  			io_saveFile($meta,$version);
@@ -531,7 +530,7 @@ function check_userfiles() {
             // temp fix for puzzling encoding=url bug in frmresourceslist.html,
            // where image loading is processed in GetFileRowHtml()
 
-           if(preg_match('/ckgedit:fckeditor:userfiles:image/',$ID)) {
+           if(preg_match('/ckgdoku:fckeditor:userfiles:image/',$ID)) {
                       $_SESSION['dwfck_ns'] = "";        
                       $_SESSION['dwfck_top'] = "";      
 
@@ -573,6 +572,13 @@ function check_userfiles() {
        global $conf;
        global $updateVersion;
        
+        $plist = plugin_list('helper');        
+        if(in_array('ckgedit', $plist)) {    
+            msg($this->getLang('ckgcke_conflict'),2); 
+        }
+
+   
+   
        $JSINFO['confirm_delete']= $this->getLang('confirm_delete');
        $JSINFO['doku_base'] = DOKU_BASE ;
        $JSINFO['cg_rev'] = $INPUT->str('rev');
@@ -583,7 +589,7 @@ function check_userfiles() {
        else $JSINFO['chrome_version'] = 0;
        
        if(isset($conf['animal'])) {           
-           $JSINFO['animal_media'] =   '/lib/plugins/ckgedit/fckeditor/' . $conf['animal'] .'/image/';
+           $JSINFO['animal_media'] =   '/lib/plugins/ckgdoku/fckeditor/' . $conf['animal'] .'/image/';
        }
        
 	   $this->check_userfiles(); 
@@ -636,14 +642,14 @@ SCRIPT;
  *    1. load script, if not loaded
  *    2. Re-label Cancel Button "Exit" when doing a preview  
  *    3. set up $REQUEST value to identify a preview when in DW Edit , used in 
- *       set_session to remove ckgedit and DW drafts if present after a DW preview  
+ *       set_session to remove ckgdoku and DW drafts if present after a DW preview  
 */
   function setupDWEdit(Doku_Event $event) {
   global $ACT;
 
-  $url = DOKU_URL . 'lib/plugins/ckgedit/scripts/script-cmpr.js';
+  $url = DOKU_URL . 'lib/plugins/ckgdoku/scripts/script-cmpr.js';
   if(($ACT == 'login' || $this->session_id == false) && $this->getConf('preload_ckeditorjs')) {
-     $url2 = DOKU_BASE.'lib/plugins/ckgedit/ckeditor/ckeditor.js';
+     $url2 = DOKU_BASE.'lib/plugins/ckgdoku/ckeditor/ckeditor.js';
   }
   else $url2 = "";
   echo <<<SCRIPT

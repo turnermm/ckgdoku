@@ -82,21 +82,21 @@ config.colors = new Array(
 );
 
      
-      var ckedit_path =  window.location.protocol +'//' + top.dokuBase + 'lib/plugins/ckgedit/ckeditor/';
+      var ckedit_path =  window.location.protocol +'//' + top.dokuBase + 'lib/plugins/ckgdoku/ckeditor/';
       config.doku_url = window.location.protocol+ '//' + top.dokuBase;
-      config.ckedit_path = window.location.protocol +'//' + top.dokuBase + 'lib/plugins/ckgedit/ckeditor/';
+      config.ckedit_path = window.location.protocol +'//' + top.dokuBase + 'lib/plugins/ckgdoku/ckeditor/';
       config.jquery = top.jQuery;
     //  config.format_code = { element : 'code', attributes : { 'class' : 'dwcode' } };
 	// Define changes to default configuration here.
 	// For the complete reference:
 	// http://docs.ckeditor.com/#!/api/CKEDITOR.config
-      top.ckgedit_language_chk(config);  //resets language if $conf['other_lang'] != 'default' and resets auto scayt to true of false
+      top.ckgdoku_language_chk(config);  //resets language if $conf['other_lang'] != 'default' and resets auto scayt to true of false
      // config.scayt_autoStartup = true;      
       config.format_tags = 'p;h1;h2;h3;h4;h5'; 
       config.extraSpecialChars  = ['↔'];
       config.extraPlugins = 'signature,footnote,shortcuts,fontAssist,tags,timestamp,headerbuttons'; //,devtools';
       config.contentsLangDirection = '';
-      if( top.ckgedit_isRTL()) config.contentsLangDirection = 'rtl';
+      if( top.ckgdoku_isRTL()) config.contentsLangDirection = 'rtl';
       config.pasteFromWordRemoveFontStyles = false;   // preserve font style when "paste from word"
       config.pasteFromWordRemoveStyles = false;       // preserve style (color) when "paste from word"
       config.allowedContent=true;                     // preserve highlight when "paste from word"     
@@ -196,7 +196,12 @@ function do_smileys() {
                            config.dokuFixmeSmiley.push( a);
                            continue;
                         }
-                         config.dokuSmileyConfImages[i] = a;
+                        else if(a[0].match(/^([A-Z])+$/) && (!a[0].match(/^LOL$/))) {
+                             config.dokuLargeSmiley.push(a);       
+                             config.dokuSmileyConfImages[i]  =" ";                          
+                             continue;                            
+                        }
+                        else config.dokuSmileyConfImages[i] = a;
                   }      
                 }
              },
@@ -205,6 +210,7 @@ function do_smileys() {
 }
 config.removePlugins = 'liststyle';
 config.dokuFixmeSmiley = new Array();
+config.dokuLargeSmiley = new Array();
 config.dokuSmileyConfImages;
 try {
    do_smileys();
@@ -213,14 +219,14 @@ try {
 }
 
 config.ckgEditorVer;
-var get_ckgeditor_version = function() {
+var get_ckgdokuor_version = function() {
     config.jquery.post(
             ckedit_path + "get_version.php",
             function (data,status) { 
                 if(status == "success") {            
                     config.ckgEditorVer=data;
                 }
-                else config.ckgEditorVer = "Dokuwiki plugin: ckgedit";               
+                else config.ckgEditorVer = "Dokuwiki plugin: ckgdoku";               
             },
             'html'
         );
@@ -229,7 +235,7 @@ config.filebrowserWindowWidth='60%';
 config.filebrowserWindowHeight = '60%';
 //config.filebrowserWindowFeatures = 'location=no,menubar=no,toolbar=no,dependent=yes,minimizable=no,modal=yes,alwaysRaised=yes,resizable=yes,scrollbars=yes,left=20';
 
-get_ckgeditor_version();   
+get_ckgdokuor_version();   
 
 //	config.removeButtons = 'Underline,Subscript,Superscript,Anchor';
 // This is actually the default value.
