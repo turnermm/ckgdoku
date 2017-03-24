@@ -1,4 +1,4 @@
-rev_17-Mar_23-09_30
+rev_17-Mar_24-14_58
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -19,3 +19,6 @@ ckgedit/ckgdoku warning: one must be disabled (meta.php)
 
 Mar 23
 updated localization of symlink creation in meta.php
+
+Mar 24
+Merged trans into master
