@@ -299,11 +299,12 @@ function ckg_edit_mediaman_insert(edid, id, opts, dw_align) {
     var options = opts.substring(1).split('&');
 
     //get width and link options
+    link = 'detail';
     for (var i in options) {
         var opt = options[i];
-        if (parseInt(opt) !== NaN) {
+         if (opt.match(/^\d+$/)) {   
             width = opt;
-        } else {
+        } else if (opt.match(/^\w+$/)) {   
             link = opt;
         }
     }
