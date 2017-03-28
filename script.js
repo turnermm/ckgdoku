@@ -292,6 +292,12 @@ var dokuBase = location.host + DOKU_BASE;
             );     
  }
 
+ jQuery(document).ready(function() {
+     if(JSINFO['hide_captcha_error'] =='hide') {
+         jQuery("div.error").hide();
+     }   
+ });  
+ 
 function ckg_edit_mediaman_insert(edid, id, opts, dw_align) {
     var link, width, s, align;
 
