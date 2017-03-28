@@ -1,4 +1,4 @@
-rev_17-Mar_24-15_55
+rev_17-Mar_28-11_17
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -22,3 +22,6 @@ updated localization of symlink creation in meta.php
 
 Mar 24
 Merged trans into master
+
+Mar 28
+Fix in script.js for assigning image parameters (size, link, align)
