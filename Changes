@@ -1,4 +1,4 @@
-rev_17-Mar_28-11_17
+rev_17-Mar_29-08_56
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -25,3 +25,6 @@ Merged trans into master
 
 Mar 28
 Fix in script.js for assigning image parameters (size, link, align)
+
+Mar 29
+Synced to captcha
