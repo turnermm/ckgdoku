@@ -18,6 +18,7 @@ class action_plugin_ckgdoku_meta extends DokuWiki_Action_Plugin {
   var $wiki_text;  
   var $dw_priority_group;
   var $dw_priority_metafn;
+  var $captcha = false;
   function __construct() {
       $this->helper = plugin_load('helper', 'ckgdoku');
       $this->dokuwiki_priority = $this->getConf('dw_priority');
@@ -26,6 +27,10 @@ class action_plugin_ckgdoku_meta extends DokuWiki_Action_Plugin {
       if(!file_exists($this->dw_priority_metafn)) {
           io_saveFile($this->dw_priority_metafn, serialize(array()));
       }
+       
+       if(!plugin_isdisabled('captcha')) {    
+           $this->captcha = true; 
+        }
   }
   /*
    * Register its handlers with the dokuwiki's event controller
@@ -449,8 +454,6 @@ function check_userfiles() {
 		 }
 	  }
 	   
-	 
-	   
 	  if($bad_create) {
 	       if($show_msg)  {
 		       msg($this->getLang("sym_not created_3") . " $userfiles"); 
@@ -569,16 +572,22 @@ function check_userfiles() {
        global $ID; 
        global $JSINFO;
        global  $INPUT;
-       global $conf;
        global $updateVersion;
+       global $conf;
        
         $plist = plugin_list('helper');        
         if(in_array('ckgedit', $plist)) {    
             msg($this->getLang('ckgcke_conflict'),2); 
         }
 
+       $acl_defines = array('EDIT'=> 2,'CREATE'=> 4,'UPLOAD'=> 8,'DELETE'=> 16,'ADMIN'=> 255);
+       $_auth =  $this->getConf('captcha_auth');
+       $auth_captcha = (int)$acl_defines[$_auth];     
+       $auth = auth_quickaclcheck($ID);  
    
-   
+       if($auth >= $auth_captcha && $this->captcha) {         
+           $conf['plugin']['captcha']['forusers']=0;
+        }
        $JSINFO['confirm_delete']= $this->getLang('confirm_delete');
        $JSINFO['doku_base'] = DOKU_BASE ;
        $JSINFO['cg_rev'] = $INPUT->str('rev');
@@ -587,6 +596,7 @@ function check_userfiles() {
            $JSINFO['chrome_version']  = (float) $cmatch[1];
        }
        else $JSINFO['chrome_version'] = 0;
+       $JSINFO['hide_captcha_error'] = $INPUT->str('ckged_captcha_err','none');
        
        if(isset($conf['animal'])) {           
            $JSINFO['animal_media'] =   '/lib/plugins/ckgdoku/fckeditor/' . $conf['animal'] .'/image/';
