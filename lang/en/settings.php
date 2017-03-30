@@ -41,3 +41,5 @@ $lang['extra_plugins']  = "Comma separated list of additional Ckeditor plugins t
 $lang['dw_users'] = "Group name of users whose editor defaults to Dokuwiki editor when <b>dw_priority</b> is slected.  If  not defined, then all users get the native Dokuwiki editor when <b>dw_priority</b> is selected.";
 $lang['allow_ckg_filebrowser'] = 'Select which file/media browser(s) users can use';
 $lang['default_ckg_filebrowser'] = 'Select which file/media browser is the default. This will be overridden if the selected browser is not allowed';
+$lang['captcha_auth'] ='ACL level at which the captcha is turned off when the captcha plugin\'s <code>forusers</code> option is set to true.  The default is <code>ACL_CREATE</code>, which means' 
+                                        .' that any user with <code>ACL_EDIT</code> or less will get the captcha, <code>ACL_CREATE</code> or higher will not.';

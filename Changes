@@ -1,4 +1,6 @@
-rev_17-Mar_24-09_56
+rev_17-Mar_29-08_56
+
+Switched dafault filebrowser settings to all and ckgedit
 
 19 Oct
 manually merged with ckgdoku farms branch
@@ -7,3 +9,29 @@ Fixed script.js to correctly insert farm's image url into image.js
 21 Feb  2017
 Synched with ckgdoku farms_4.7a
 
+18 Nov
+Fix for HTML in user profile panel
+
+2 Feb 2017
+Synched with ckgedit
+
+3 March 
+remove backslashes from ends of blockquote
+
+Mar 21
+Converted all uses of ckgedit to ckgdoku in code; now it loads as plugin ckgdoku
+
+Mar 22
+ckgedit/ckgdoku warning: one must be disabled (meta.php)
+
+Mar 23
+updated localization of symlink creation in meta.php
+
+Mar 24
+Merged trans into master
+
+Mar 28
+Fix in script.js for assigning image parameters (size, link, align)
+
+Mar 29
+Synced to captcha
