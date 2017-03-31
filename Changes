@@ -1,4 +1,4 @@
-rev_17-Mar_30-22_37
+rev_17-Mar_31-05_32
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -28,5 +28,7 @@ Fix in script.js for assigning image parameters (size, link, align)
 
 Mar 29
 Synced to captcha
-Fixed bug in edit.php permissions
+
+Mar 30
+Fixed hiding specialized buttons for non-users wehn captcha is on
 
