@@ -1,4 +1,4 @@
-rev_17-Mar_31-06_05
+rev_17-Apr_01-07_46
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -37,4 +37,8 @@ Mar 29
 Synced to captcha
 
 Mar 31
-fixx for guest use of specialized buttons when captcha is on
+fix for guest use of specialized buttons when captcha is on
+
+Apr 1
+syncs with master pull #9: remove extraneous / from fileurl in script.js
+

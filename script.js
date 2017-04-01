@@ -336,7 +336,7 @@ function ckg_edit_mediaman_insert(edid, id, opts, dw_align) {
        id = id.replace(/^:/,"");
         var fileUrl = JSINFO['animal_media'] + id.replace(/:/g,'\/');
     }    
-    else var fileUrl = DOKU_BASE + '/lib/exe/fetch.php?media=' + id;
+    else var fileUrl = DOKU_BASE + 'lib/exe/fetch.php?media=' + id;
     CKEDITOR.tools.callFunction(funcNum, fileUrl, function() {
         var dialog = this.getDialog();
         if ( dialog.getName() == "image" ) {
