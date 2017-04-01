@@ -332,7 +332,7 @@ function ckg_edit_mediaman_insert(edid, id, opts, dw_align) {
     }
 
     var funcNum = CKEDITOR.instances.wiki__text._.filebrowserFn;
-    var fileUrl = DOKU_BASE + '/lib/exe/fetch.php?media=' + id;
+    var fileUrl = DOKU_BASE + 'lib/exe/fetch.php?media=' + id;
     CKEDITOR.tools.callFunction(funcNum, fileUrl, function() {
         var dialog = this.getDialog();
         if ( dialog.getName() == "image" ) {
