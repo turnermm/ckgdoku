@@ -1,4 +1,4 @@
-rev_17-Mar_31-05_32
+rev_17-Apr_01-06_33
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -32,3 +32,5 @@ Synced to captcha
 Mar 30
 Fixed hiding specialized buttons for non-users wehn captcha is on
 
+Apr 1
+removed extra / from fileurl sent from media manager to ckeditor link dialog in script.js (pull  #9) 
