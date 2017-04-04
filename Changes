@@ -1,4 +1,4 @@
-rev_17-Apr_01-06_33
+rev_17-Apr_04-09_05
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -34,3 +34,6 @@ Fixed hiding specialized buttons for non-users wehn captcha is on
 
 Apr 1
 removed extra / from fileurl sent from media manager to ckeditor link dialog in script.js (pull  #9) 
+
+Apr 4
+Moved javascript from mediamanager.php to scripts/mediamgr.js, loaded by TPL_METAHEADER_OUTPUT.
