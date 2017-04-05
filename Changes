@@ -1,4 +1,4 @@
-rev_17-Apr_04-11_15
+rev_17-Apr_05-18_39
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -44,3 +44,6 @@ syncs with master pull #9: remove extraneous / from fileurl in script.js
 
 Apr 1
 Moved js from in action/mediamanager.php to script: scripts/mediamgr.js
+
+Apr 5
+Support for Hover Tips over images
