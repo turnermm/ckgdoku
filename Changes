@@ -1,4 +1,4 @@
-rev_17-Apr_04-09_05
+rev_17-Apr_05-17_35
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -37,3 +37,6 @@ removed extra / from fileurl sent from media manager to ckeditor link dialog in 
 
 Apr 4
 Moved javascript from mediamanager.php to scripts/mediamgr.js, loaded by TPL_METAHEADER_OUTPUT.
+
+Apr 5
+support for Hover texts on images
