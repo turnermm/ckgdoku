@@ -1,4 +1,4 @@
-      alert('here');
+      
       if (opener != null && opener.CKEDITOR !== undefined) {
             window.onload = function () {
                 jQuery( document ).ready(function() {
