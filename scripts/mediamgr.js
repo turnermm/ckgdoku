@@ -36,4 +36,5 @@
             if ((location.search.split("ckg_media=")[1]||"").split("&")[0] !== "img") {
                 return;
             }
-
+        }    
+    

@@ -47,3 +47,6 @@ Moved js from in action/mediamanager.php to script: scripts/mediamgr.js
 
 Apr 5
 Support for Hover Tips over images
+
+Apr 6
+Fixes missing curly at end of mediamgr.js
