@@ -1,4 +1,4 @@
-rev_17-Apr_05-17_35
+rev_17-Apr_06-13_30
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -40,3 +40,6 @@ Moved javascript from mediamanager.php to scripts/mediamgr.js, loaded by TPL_MET
 
 Apr 5
 support for Hover texts on images
+
+Apr 6
+Fixes missing curly at end of mediamgr.js
