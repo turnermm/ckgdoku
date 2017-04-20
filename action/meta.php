@@ -705,7 +705,8 @@ function reset_user_rewrite_check() {
           $this->user_rewrite = $conf['userewrite'];
 	     $conf['userewrite']  = 0; 
        }
-       if($conf['htmlok']) { 
+       msg( $this->getConf('htmlblock_ok'),1);
+       if($conf['htmlok'] || $this->getConf('htmlblock_ok')) { 
          $JSINFO['htmlok'] = 1;
     }	  
     else $JSINFO['htmlok'] = 0;

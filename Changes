@@ -1,4 +1,4 @@
-rev_17-Apr_06-13_30
+rev_17-Apr_20-15_57
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -43,3 +43,6 @@ support for Hover texts on images
 
 Apr 6
 Fixes missing curly at end of mediamgr.js
+
+Apr 20
+New setting htmbloc_okk gives option of allowing HTML_BLOCKs without setti…ng DW's htmlok to true

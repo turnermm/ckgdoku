@@ -38,3 +38,4 @@ $meta['alt_toolbar']  = array('multicheckbox','_choices' => array( 'HorizontalRu
 $meta['mfiles'] = array('onoff');
 $meta['extra_plugins'] = array('string');
 $meta['captcha_auth'] = array('multichoice','_choices' => array('READ','EDIT','CREATE','UPLOAD','DELETE','ADMIN'));
+$meta['htmlblock_ok'] = array('onoff');
