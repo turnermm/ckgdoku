@@ -1,4 +1,4 @@
-rev_17-Apr_20-15_57
+rev_17-Apr_22-18_41
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -46,3 +46,6 @@ Fixes missing curly at end of mediamgr.js
 
 Apr 20
 New setting htmbloc_okk gives option of allowing HTML_BLOCKs without setti…ng DW's htmlok to true
+
+Apr 22
+Double click edit section opens dw editor
