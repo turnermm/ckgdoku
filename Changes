@@ -1,4 +1,4 @@
-rev_17-Apr_22-18_41
+rev_17-Apr_23-20_18
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -49,3 +49,6 @@ New setting htmbloc_okk gives option of allowing HTML_BLOCKs without setti…ng 
 
 Apr 22
 Double click edit section opens dw editor
+
+Apr 23
+Implemented reminders of new double-click feature for Admins
