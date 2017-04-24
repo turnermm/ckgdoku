@@ -330,9 +330,6 @@ function check_userfiles() {
 	$userfiles = DOKU_PLUGIN . 'ckgdoku/fckeditor/userfiles/';
     $save_dir = trim($conf['savedir']);  
     
-// msg('BASE='. DOKU_BASE);
-// msg(DOKU_URL);
-// msg('REL='. DOKU_REL);
     if(!preg_match('#^\.\/data$#',$save_dir)) {
         $data_media = $conf['savedir']  . '/media/';
         
@@ -586,7 +583,13 @@ function check_userfiles() {
        }
        else $JSINFO['chrome_version'] = 0;
        $JSINFO['hide_captcha_error'] = $INPUT->str('ckged_captcha_err','none');
-       
+       $dbl_click_auth  =  $this->getConf('dw_edit_display');
+       if($dbl_click_auth == 'none' || empty($_SERVER['REMOTE_USER'])) {
+           $JSINFO['dbl_click_auth']  = "";
+       }
+       else if($dbl_click_auth == 'all' ||$auth == 255 ) {
+           $JSINFO['dbl_click_auth']  = "1";
+       }       
 
 	   $this->check_userfiles(); 
 	   $this->profile_dwpriority=($this->dokuwiki_priority && $this->in_dwpriority_group()) ? 1 :  0; 
@@ -701,18 +704,40 @@ function reset_user_rewrite_check() {
 	   global $JSINFO;
 	  
        if(isset($_COOKIE['FCKG_USE']) && $_COOKIE['FCKG_USE'] =='_false_' ) return;
+       if($ACT == 'login') $this->chk_dbl_clk_time();
        if($ACT == 'edit') {
           $this->user_rewrite = $conf['userewrite'];
 	     $conf['userewrite']  = 0; 
        }
-       msg( $this->getConf('htmlblock_ok'),1);
-       if($conf['htmlok'] || $this->getConf('htmlblock_ok')) { 
+       if($conf['htmlok'] || $this->getConf('htmblock_ok')) { 
          $JSINFO['htmlok'] = 1;
     }	  
     else $JSINFO['htmlok'] = 0;
     }	  
 
-   
+function chk_dbl_clk_time() {  
+   global $INFO;
+   if($INFO['isadmin'] || $INFO['ismanager'] )    {  // only admins and mgrs get messages
+	       $show_msg = true;		   
+	}
+   if(!$show_msg)  return;
+  $filename =  metaFN('fckl:dblck','.meta'); 
+  $msg = $this->getLang('dblclk');
+   if (file_exists($filename)) {      
+           $reps = io_readFile($filename);
+           if($reps <2) {
+              $reminder =  $this->getLang('dblclk_reminder');
+              msg("($reminder) " . $msg,2 );    
+              io_saveFile($filename,$reps+1); 
+              return;
+           }
+   }
+   else
+       {      
+       io_saveFile($filename,'1'); 
+       msg($msg,2);    
+   }
+}
 /**
   checked for additional dw priority possibilities only if the dw priority option is set to true
 */
