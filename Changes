@@ -1,4 +1,4 @@
-rev_17-Apr_23-20_18
+rev_17-May_02-09_17
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -52,3 +52,6 @@ Double click edit section opens dw editor
 
 Apr 23
 Implemented reminders of new double-click feature for Admins
+
+May 2
+Fixed bug in meta.php htmblock_ok -> htmlblock_ok for getting config option
