@@ -1,4 +1,4 @@
-rev_17-May_02-09_17
+rev_17-May_04-07_38
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -55,3 +55,6 @@ Implemented reminders of new double-click feature for Admins
 
 May 2
 Fixed bug in meta.php htmblock_ok -> htmlblock_ok for getting config option
+
+May 4
+Added Geshi plugin
