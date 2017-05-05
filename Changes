@@ -1,4 +1,4 @@
-rev_17-May_04-07_38
+rev_17-May_05-16_28
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -58,3 +58,7 @@ Fixed bug in meta.php htmblock_ok -> htmlblock_ok for getting config option
 
 May 4
 Added Geshi plugin
+
+May 5
+refactored geshi.js->getHref()
+           
