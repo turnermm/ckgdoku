@@ -64,4 +64,5 @@ refactored geshi.js->getHref()
 
 May 6
 tweaked geshi icon
+Fixed JS type error for mis-labled fr and de lang files
            
