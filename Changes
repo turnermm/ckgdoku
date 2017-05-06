@@ -1,4 +1,4 @@
-rev_17-May_06-00_03
+rev_17-May_06-09_06
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -65,4 +65,5 @@ refactored geshi.js->getHref()
 May 6
 tweaked geshi icon
 Fixed JS type error for mis-labled fr and de lang files
+Geshi German language file contributed by github user
            
