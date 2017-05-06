@@ -1,4 +1,4 @@
-rev_17-May_05-16_28
+rev_17-May_06-00_03
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -61,4 +61,7 @@ Added Geshi plugin
 
 May 5
 refactored geshi.js->getHref()
+
+May 6
+tweaked geshi icon
            
