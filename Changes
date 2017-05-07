@@ -66,4 +66,6 @@ May 6
 tweaked geshi icon
 Fixed JS type error for mis-labled fr and de lang files
 Geshi German language file contributed by github user
-           
+
+May 7
+Placed geshi progamming lang selection into variable (had been hard-coded to java for code blocks)
