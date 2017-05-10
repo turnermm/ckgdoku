@@ -311,7 +311,7 @@ var oldBeforeunload;
           
  }
 
-
+/* Renews lock and  creates a ckgdoku backup if editor_bak config option is true */
 function renewLock(bak) {
   if(ourLockTimerIsSet) {
          lockTimerRefresh(true);
@@ -372,7 +372,7 @@ function draft_delete() {
         var params = "draft_id=$cname";
         jQuery.ajax({
            url: DOKU_BASE + 'lib/plugins/ckgdoku/scripts/draft_delete.php',
-           async: false,
+           //async: false,
            data: params,    
            type: 'POST',
            dataType: 'html',         
