@@ -99,7 +99,31 @@ function _ajax_call(Doku_Event $event, $param) {
          return;
     }
 
-    if ($event->data !== 'refresh_save') {
+
+   if ($event->data == 'geshi_sel') {     //get geshi file names , return as ;; separated string w/o php extensions
+      $event->stopPropagation();
+       $event->preventDefault();
+      $gdir = '/var/www/html/devel/vendor/easybook/geshi/geshi/';
+       if( class_exists('GeSHi')) {         
+            if(defined('GESHI_LANG_ROOT') )  $geshi_dir =GESHI_LANG_ROOT;
+      }
+     else {
+         echo "ENotfound\n";
+         return ;
+     }  
+    $gfiles = scandir ($geshi_dir);
+    $selects = array();
+    foreach($gfiles as $gfile){
+        if(is_dir($gfile)) continue;
+       $gfile =  preg_replace("/\.php\n?$/","",$gfile);
+        $selects[] = $gfile;
+    }
+    $selects = implode ( ';;', $selects );
+    echo $selects;
+    return;
+    }    
+    
+    if ($event->data !== 'refresh_save') {  // save ckgedit backups in native dw format
         return;
     }
        
