@@ -69,3 +69,7 @@ Geshi German language file contributed by github user
 
 May 7
 Placed geshi progamming lang selection into variable (had been hard-coded to java for code blocks)
+
+May 11
+Fixed wrong URL to ajax.php when loading GeSHi options (on Nginx)
+ 
