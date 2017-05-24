@@ -1,4 +1,4 @@
-rev_17-May_06-09_06
+rev_17-May_24-09_07
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -72,4 +72,7 @@ Placed geshi progamming lang selection into variable (had been hard-coded to jav
 
 May 11
 Fixed wrong URL to ajax.php when loading GeSHi options (on Nginx)
+
+May 24
+Fixed broken list when li contains links
  
