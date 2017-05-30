@@ -94,7 +94,7 @@ config.colors = new Array(
      // config.scayt_autoStartup = true;      
       config.format_tags = 'p;h1;h2;h3;h4;h5'; 
       config.extraSpecialChars  = ['↔'];
-      config.extraPlugins = 'signature,footnote,shortcuts,fontAssist,tags,timestamp,headerbuttons,geshi'; //,devtools';
+      config.extraPlugins = 'signature,footnote,shortcuts,fontAssist,tags,timestamp,headerbuttons'; //,devtools';
       config.contentsLangDirection = '';
       if( top.ckgdoku_isRTL()) config.contentsLangDirection = 'rtl';
       config.pasteFromWordRemoveFontStyles = false;   // preserve font style when "paste from word"
@@ -231,32 +231,6 @@ var get_ckgdokuor_version = function() {
             'html'
         );
 }
-
-  var SelectOptions = function() {
-         var retv;                  
-         config.jquery.ajax(
-          config.doku_url + 'lib/exe/ajax.php',
-          {
-            data:
-              {
-                call: 'geshi_sel'
-              },
-            type: "GET",        
-            dataType: "html",
-            success: function(data, textStatus, jqXHR)
-              {
-                  config.geshi_opts = data;                  
-              },
-            error: function(jqXHR, textStatus, errorThrown )
-              {
-                alert(textStatus);
-                alert(errorThrown);
-              }
-          }
-        );
-      //  return retv;
-    };
-    SelectOptions();
 config.filebrowserWindowWidth='60%';
 config.filebrowserWindowHeight = '60%';
 //config.filebrowserWindowFeatures = 'location=no,menubar=no,toolbar=no,dependent=yes,minimizable=no,modal=yes,alwaysRaised=yes,resizable=yes,scrollbars=yes,left=20';
