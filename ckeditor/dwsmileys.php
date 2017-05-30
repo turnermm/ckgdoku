@@ -1,6 +1,6 @@
 <?php
 /**
- lib/plugins/ckgdoku/fckeditor/dwsmileys.php
+ lib/plugins/ckgedit/fckeditor/dwsmileys.php
 */
 
 $SMILEYS = realpath(dirname(__FILE__).'/../../../../').'/conf/smileys.conf';
