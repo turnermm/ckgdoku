@@ -220,7 +220,7 @@ try {
 }
 
 config.ckgEditorVer;
-var get_ckgdokuor_version = function() {
+var get_ckgdoku_version = function() {
     config.jquery.post(
             ckedit_path + "get_version.php",
             function (data,status) { 
@@ -262,7 +262,7 @@ config.filebrowserWindowWidth='60%';
 config.filebrowserWindowHeight = '60%';
 //config.filebrowserWindowFeatures = 'location=no,menubar=no,toolbar=no,dependent=yes,minimizable=no,modal=yes,alwaysRaised=yes,resizable=yes,scrollbars=yes,left=20';
 
-get_ckgeditor_version(); 
+get_ckgdoku_version(); 
 
 CKEDITOR.lang['default'] = {};
 CKEDITOR.lang['default']['fbrowser'] = {

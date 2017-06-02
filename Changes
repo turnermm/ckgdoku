@@ -1,4 +1,4 @@
-rev_17-Jun_01-20_12
+rev_17-Jun_02-08_49
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -79,3 +79,9 @@ Fixed broken list when li contains links
 June 1
 Enabled code and file blolcks and snippets in tables
 Fixed cell where snippet together with text breaks cell
+
+June 2
+Replaced faulty skayt with skayt 4.5.7
+Replaced moono with 4.7 moono
+Removed Samples
+Fixed references in ckedit.js that still pointed to ckgedit
