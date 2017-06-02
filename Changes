@@ -76,5 +76,6 @@ Fixed wrong URL to ajax.php when loading GeSHi options (on Nginx)
 May 24
 Fixed broken list when li contains links
 
-May 30
+June 1
 Enabled code and file blolcks and snippets in tables
+Fixed cell where snippet together with text breaks cell
