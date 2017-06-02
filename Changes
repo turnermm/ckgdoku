@@ -1,4 +1,4 @@
-rev_17-May_24-09_07
+rev_17-Jun_01-20_12
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -75,4 +75,6 @@ Fixed wrong URL to ajax.php when loading GeSHi options (on Nginx)
 
 May 24
 Fixed broken list when li contains links
- 
+
+May 30
+Enabled code and file blolcks and snippets in tables
