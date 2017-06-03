@@ -1,4 +1,4 @@
-rev_17-Jun_01-20_12
+rev_17-Jun_03-17_55
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -77,5 +77,8 @@ May 24
 Fixed broken list when li contains links
 
 June 1
-Enabled code and file blolcks and snippets in tables
+Enabled code and file blocks and snippets in tables
 Fixed cell where snippet together with text breaks cell
+
+June 3
+Fixed deprecated synchrononous post in link.js
