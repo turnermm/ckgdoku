@@ -31,6 +31,9 @@ class action_plugin_ckgdoku_meta extends DokuWiki_Action_Plugin {
        if(!plugin_isdisabled('captcha')) {    
            $this->captcha = true; 
         }
+        if( class_exists('GeSHi')) {         
+            if(defined('GESHI_LANG_ROOT') )  $geshi_dir =GESHI_LANG_ROOT;
+        }
   }
   /*
    * Register its handlers with the dokuwiki's event controller
@@ -609,11 +612,13 @@ function check_userfiles() {
        $JSINFO['hide_captcha_error'] = $INPUT->str('ckged_captcha_err','none');
        $dbl_click_auth  =  $this->getConf('dw_edit_display');
        if($dbl_click_auth == 'none' || empty($_SERVER['REMOTE_USER'])) {
-           $JSINFO['dbl_click_auth']  = "";
+           $JSINFO['ckg_dbl_click']  = "";
        }
        else if($dbl_click_auth == 'all' ||$auth == 255 ) {
-           $JSINFO['dbl_click_auth']  = "1";
+           $JSINFO['ckg_dbl_click']  = "1";
        }       
+       $onoff = $this->getConf('dblclk');
+       if($onoff == 'off') $JSINFO['ckg_dbl_click'] = "";
 
 	   $this->check_userfiles(); 
 	   $this->profile_dwpriority=($this->dokuwiki_priority && $this->in_dwpriority_group()) ? 1 :  0; 
@@ -733,6 +738,7 @@ function reset_user_rewrite_check() {
           $this->user_rewrite = $conf['userewrite'];
 	     $conf['userewrite']  = 0; 
        }
+      
        if($conf['htmlok'] || $this->getConf('htmlblock_ok')) { 
          $JSINFO['htmlok'] = 1;
     }	  
