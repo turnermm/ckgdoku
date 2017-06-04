@@ -36,4 +36,5 @@ $conf['mfiles'] = 0;
 $conf['extra_plugins'] ="Geshi";
 $conf['captcha_auth'] = 'CREATE';
 $conf['htmblock_ok'] = 0;
+$conf['dblclk'] ='on';
 

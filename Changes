@@ -1,4 +1,4 @@
-rev_17-Jun_03-17_55
+rev_17-Jun_04-16_13
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -82,3 +82,6 @@ Fixed cell where snippet together with text breaks cell
 
 June 3
 Fixed deprecated synchrononous post in link.js
+
+June 4
+Added dblclk option
