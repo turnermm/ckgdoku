@@ -1,4 +1,4 @@
-rev_17-Jun_03-21_35
+rev_17-Jun_04-09_15
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -88,3 +88,7 @@ Fixed references in ckedit.js that still pointed to ckgedit
 
 Jan 3
 Restored orignal link.js for ckgdoku, containing linkwiz, which had been inadvertently exchanged for ckgedit's
+
+Jan4
+CKEDitor 4.7 ready to go
+Switching to tag 'current' as Dokuwiki download version
