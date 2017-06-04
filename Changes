@@ -1,4 +1,4 @@
-rev_17-Jun_02-08_49
+rev_17-Jun_03-21_35
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -85,3 +85,6 @@ Replaced faulty skayt with skayt 4.5.7
 Replaced moono with 4.7 moono
 Removed Samples
 Fixed references in ckedit.js that still pointed to ckgedit
+
+Jan 3
+Restored orignal link.js for ckgdoku, containing linkwiz, which had been inadvertently exchanged for ckgedit's
