@@ -1,4 +1,4 @@
-rev_17-Jun_04-15_02
+rev_17-Jun_12-15_17
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -85,7 +85,7 @@ Replaced faulty skayt with skayt 4.5.7
 Replaced moono with 4.7 moono
 Removed Samples
 Fixed references in ckedit.js that still pointed to ckgedit
-
+5
 Jan 3
 Restored orignal link.js for ckgdoku, containing linkwiz, which had been inadvertently exchanged for ckgedit's
 
@@ -95,3 +95,6 @@ Switching to tag 'current' as Dokuwiki download version
 
 Jan 5
 Updated Javascript for new dblick option
+
+Jan 12
+Support for canonical urls
