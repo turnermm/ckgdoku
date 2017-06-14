@@ -89,9 +89,9 @@ config.colors = new Array(
           config.ckedit_path = top.DOKU_BASE + 'lib/plugins/ckgedit/ckeditor/';
      }
      else {
-      ckedit_path =  window.location.protocol +'//' + top.dokuBase + 'lib/plugins/ckgedit/ckeditor/';
+      ckedit_path =  window.location.protocol +'//' + top.dokuBase + 'lib/plugins/ckgdoku/ckeditor/';
       config.doku_url = window.location.protocol+ '//' + top.dokuBase;
-      config.ckedit_path = window.location.protocol +'//' + top.dokuBase + 'lib/plugins/ckgedit/ckeditor/';
+      config.ckedit_path = window.location.protocol +'//' + top.dokuBase + 'lib/plugins/ckgdoku/ckeditor/';
      }
       config.jquery = top.jQuery;
     //  config.format_code = { element : 'code', attributes : { 'class' : 'dwcode' } };
