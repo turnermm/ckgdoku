@@ -82,9 +82,17 @@ config.colors = new Array(
 );
 
      
-      var ckedit_path =  window.location.protocol +'//' + top.dokuBase + 'lib/plugins/ckgdoku/ckeditor/';
+     var ckedit_path;    
+     if(top.JSINFO['ckg_canonical']) {     
+          ckedit_path =  top.DOKU_BASE + 'lib/plugins/ckgedit/ckeditor/';
+          config.doku_url = top.DOKU_BASE;
+          config.ckedit_path = top.DOKU_BASE + 'lib/plugins/ckgedit/ckeditor/';
+     }
+     else {
+      ckedit_path =  window.location.protocol +'//' + top.dokuBase + 'lib/plugins/ckgdoku/ckeditor/';
       config.doku_url = window.location.protocol+ '//' + top.dokuBase;
       config.ckedit_path = window.location.protocol +'//' + top.dokuBase + 'lib/plugins/ckgdoku/ckeditor/';
+     }
       config.jquery = top.jQuery;
     //  config.format_code = { element : 'code', attributes : { 'class' : 'dwcode' } };
 	// Define changes to default configuration here.
@@ -116,6 +124,9 @@ config.colors = new Array(
      config.ToolBarItemsExtra = "";
      if(xtra) {
          config.ToolBarItemsExtra = xtra.split(','); 
+         if(xtra) {
+           config.extraPlugins +=  ',' + xtra.toLowerCase();         
+         }                
      }
      
     config.toolbar_Dokuwiki =
@@ -219,7 +230,7 @@ try {
 }
 
 config.ckgEditorVer;
-var get_ckgdokuor_version = function() {
+var get_ckgdoku_version = function() {
     config.jquery.post(
             ckedit_path + "get_version.php",
             function (data,status) { 
@@ -261,28 +272,7 @@ config.filebrowserWindowWidth='60%';
 config.filebrowserWindowHeight = '60%';
 //config.filebrowserWindowFeatures = 'location=no,menubar=no,toolbar=no,dependent=yes,minimizable=no,modal=yes,alwaysRaised=yes,resizable=yes,scrollbars=yes,left=20';
 
-get_ckgdokuor_version();   
-
-//	config.removeButtons = 'Underline,Subscript,Superscript,Anchor';
-// This is actually the default value.
-/*
-config.toolbar_Full =
-[
-    { name: 'document',    items : [ 'Source','-','Save','NewPage','DocProps','Preview','Print','-','Templates' ] },
-    { name: 'clipboard',   items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
-    { name: 'editing',     items : [ 'Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt' ] },
-    { name: 'forms',       items : [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
-    '/',
-    { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
-    { name: 'paragraph',   items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
-    { name: 'links',       items : [ 'Link','Unlink','Anchor' ] },
-    { name: 'insert',      items : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak' ] },
-    '/',
-    { name: 'styles',      items : [ 'Styles','Format','Font','FontSize' ] },
-    { name: 'colors',      items : [ 'TextColor','BGColor' ] },
-    { name: 'tools',       items : [ 'Maximize', 'ShowBlocks','-','About' ] }
-];
-*/
+get_ckgdoku_version(); 
 
 CKEDITOR.lang['default'] = {};
 CKEDITOR.lang['default']['fbrowser'] = {
@@ -384,4 +374,4 @@ ToolTip: 'Insert signature'
 
 config.allowedContent = true;
 
-};
+};  //end config.js

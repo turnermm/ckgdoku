@@ -1,4 +1,4 @@
-rev_17-Jun_04-16_13
+rev_17-Jun_15-16_15
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -85,3 +85,6 @@ Fixed deprecated synchrononous post in link.js
 
 June 4
 Added dblclk option
+
+June 12
+Support for canonical urls; automate config for CKEditor extra plugins
