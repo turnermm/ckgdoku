@@ -1,4 +1,4 @@
-rev_17-Jun_14-13_18
+rev_17-Jun_16-15_08
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -102,7 +102,7 @@ Support for canonical urls
 Jun 13
 Automate addition of xtra plugins to xtra plugins list
 
-Jan 14
-Fixed by in ckedit path in config.js
+Jan 14/Jan16
+Fixed canonical url/path in config.js
 
 
