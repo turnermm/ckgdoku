@@ -88,3 +88,6 @@ Added dblclk option
 
 June 12
 Support for canonical urls; automate config for CKEditor extra plugins
+
+June 16
+Fixed canonical urls in config.js
