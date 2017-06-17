@@ -106,7 +106,7 @@ function _ajax_call(Doku_Event $event, $param) {
    if ($event->data == 'geshi_sel') {     //get geshi file names , return as ;; separated string w/o php extensions
       $event->stopPropagation();
        $event->preventDefault();
-      $gdir = '/var/www/html/devel/vendor/easybook/geshi/geshi/';
+     // $gdir = '/var/www/html/devel/vendor/easybook/geshi/geshi/';
        if( class_exists('GeSHi')) {         
             if(defined('GESHI_LANG_ROOT') )  $geshi_dir =GESHI_LANG_ROOT;
       }
