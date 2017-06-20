@@ -113,8 +113,10 @@ config.colors = new Array(
      //config.removeButtons = 'TextColor,BGColor, FontAssist,Font,FontSize';
      if(config.removeButtons.match(/FontAssist/)) font_assist = "";
     config.skin = 'moono';
+     config.wrapSyntaxDiv = top.JSINFO['wrapDiv'] ;
+     config.wrapSyntaxSpan = top.JSINFO['wrapSpan'] ;
      config.ToolBarItemsAlt = {  
-     'Signature':'Signature' ,'Footnotes':'Footnotes', 'Tags':""
+     'Signature':'Signature' ,'Footnotes':'Footnotes', 'Tags':"",'Wrap':""
      };
 
     if (top.JSINFO['has_tags']) {
@@ -123,6 +125,16 @@ config.colors = new Array(
     if(top.JSINFO['has_wrap']) {
         config.ToolBarItemsAlt['Wrap']='Wrap';
     }
+    if(top.JSINFO['wrapDiv']) {
+       config.wrapSyntaxDiv = top.JSINFO['wrapDiv'];
+    }
+    else config.wrapSyntaxDiv = "";
+    if(top.JSINFO['wrapSpan']) {
+       config.wrapSyntaxSpan = top.JSINFO['wrapSpan'];
+    }
+    else config.wrapSyntaxSpan = "";
+
+    
      var xtra = top.extra_plugins();
      config.ToolBarItemsExtra = "";
      if(xtra) {
@@ -137,8 +149,8 @@ config.colors = new Array(
 	{name: 'header_buttons', items: ['same_header', 'lower_header', 'higher_header', 'none_header']},
     	{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
 		{ name: 'editing', items : [ 'Find','Replace','-','SelectAll','-'] },    
-		{ name: 'insert', items : [ 'Image','Table','HorizontalRule','Smiley','SpecialChar',  config.ToolBarItemsAlt['Signature'] ,
-           config.ToolBarItemsAlt['Footnotes'],config.ToolBarItemsAlt['Tags'],config.ToolBarItemsAlt['Wrap']]},                  
+		{ name: 'insert', items : [ 'Image','Table','HorizontalRule','Smiley','SpecialChar',  config.ToolBarItemsAlt['Signature'] ,config.ToolBarItemsAlt['Footnotes'],
+           config.ToolBarItemsAlt['Tags'],config.ToolBarItemsAlt['Wrap']]},        
    		{ name: 'links', items : [ 'Link','Unlink' ] },
 		{ name: 'styles', items : [ 'Format', 'Styles' ,'Font','FontSize'] },
     	{ name: 'colors', items : [ 'TextColor','BGColor', font_assist ] },		
