@@ -1,4 +1,4 @@
-rev_17-Jun_15-16_15
+rev_17-Jun_21-10_45
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -91,3 +91,6 @@ Support for canonical urls; automate config for CKEditor extra plugins
 
 June 16
 Fixed canonical urls in config.js
+
+June 21
+Fixed wrap->getConf error in meta.php where wrap not installed or is disabled
