@@ -1,4 +1,4 @@
-rev_17-Jun_20-10_02
+rev_17-Jun_21-10_24
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -105,4 +105,6 @@ Automate addition of xtra plugins to xtra plugins list
 Jan 14/Jan16
 Fixed canonical url/path in config.js
 
+June 21
+Fixed error in meta.php when accessesing none-existent wrap->getConf
 
