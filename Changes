@@ -1,4 +1,4 @@
-rev_17-Jun_21-10_45
+rev_17-Jun_23-08_30
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -94,3 +94,6 @@ Fixed canonical urls in config.js
 
 June 21
 Fixed wrap->getConf error in meta.php where wrap not installed or is disabled
+
+June 23
+Added copy and paste CKEditor pastebase64 plugin
