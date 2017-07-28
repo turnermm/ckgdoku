@@ -1321,7 +1321,10 @@ var useHeading = function(wiki_id) {
                     var el = editor.document.createElement( 'a' );
                     el.setAttribute( 'href',  attributes['href']);
                     if(!hasSelectedText &&  (data.type == 'media' || data.type == 'internal')) {
-                        el.setHtml(data.adv.advTitle);
+                        if(internal_text) {
+                            el.setHtml(internal_text);                  
+                         }
+                         else el.setHtml(data.adv.advTitle);  
                     }
                     else el.setHtml(selection.getSelectedText());
                     for(attr in attributes) {
