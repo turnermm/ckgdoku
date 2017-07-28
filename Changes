@@ -1,4 +1,4 @@
-rev_17-Jun_23-08_11
+rev_17-Jul_27-20_20
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -111,3 +111,5 @@ Fixed error in meta.php when accessesing none-existent wrap->getConf
 Jun 23
 Added CKEditor pastbase64 plugin for copy and paste
 
+Jul 27
+Added Internal Link Texxt Option to Link Dialog
