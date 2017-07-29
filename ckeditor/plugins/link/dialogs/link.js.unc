@@ -30,6 +30,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 	 var fckgSMBInputId;
      var defaultFBLang = {
         InternalLink: "internal link",
+        LinkText: "Link Text (Optional)",
         InternalMedia: "internal media",
         MediaFileLink: "link to media file",
         SMBLabel: "Samba Share",
@@ -741,8 +742,8 @@ var useHeading = function(wiki_id) {
                             {
 								type : 'text',
 								id : 'internal_text',
-								label : "internal link text (optional)",
-								required: true,
+								label : translateItem('LinkText'),
+								required: false,
                                 
                             },
                             {
