@@ -1,4 +1,4 @@
-rev_17-Jun_24-16_38
+rev_17-Jul_30-11_33
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -75,25 +75,43 @@ Fixed wrong URL to ajax.php when loading GeSHi options (on Nginx)
 
 May 24
 Fixed broken list when li contains links
-
+ 
 June 1
-Enabled code and file blocks and snippets in tables
+Enabled code and file blolcks and snippets in tables
 Fixed cell where snippet together with text breaks cell
 
-June 3
+June 2
+Replaced faulty skayt with skayt 4.5.7
+Replaced moono with 4.7 moono
+Removed Samples
+Fixed references in ckedit.js that still pointed to ckgedit
+5
+Jan 3
+Restored orignal link.js for ckgdoku, containing linkwiz, which had been inadvertently exchanged for ckgedit's
 Fixed deprecated synchrononous post in link.js
 
-June 4
+Jun4
+CKEDitor 4.7 ready to go
+Switching to tag 'current' as Dokuwiki download version
 Added dblclk option
 
-June 12
-Support for canonical urls; automate config for CKEditor extra plugins
+Jun 5
+Updated Javascript for new dblick option
 
-June 16
-Fixed canonical urls in config.js
+Jun 12/13
+Support for canonical urls
+automate config for CKEditor extra plugins
+Automate addition of xtra plugins to xtra plugins list
+
+Jan 14/Jan16
+Fixed canonical url/path in config.js
 
 June 21
-Fixed wrap->getConf error in meta.php where wrap not installed or is disabled
+Fixed error in meta.php when accessesing none-existent wrap->getConf
 
-June 23
-Added copy and paste CKEditor pastebase64 plugin
+Jun 23
+Added CKEditor pastbase64 plugin for copy and paste
+
+Jul 27
+Added Internal Link Texxt Option to Link Dialog
+

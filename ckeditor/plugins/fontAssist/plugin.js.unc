@@ -85,14 +85,14 @@ CKEDITOR.plugins.add( 'fontAssist',
           font_size: "",
          };        
         
-         var ckgdoku_getEID = function (dialog,page,el) {   
+         var ckgedit_getEID = function (dialog,page,el) {   
                 var InputId = dialog.getContentElement(page,el).getInputElement().$.id;           
                 return  document.getElementById(InputId);
          };
 
        // displays open tag of font plugin below display window         
          var display_fontOpen = function(dialog){
-             var a = ckgdoku_getEID(dialog,'general','alert');         
+             var a = ckgedit_getEID(dialog,'general','alert');         
             a.value = style_spec.open_tag();
             a.value = a.value.replace(/&lt;/, '<');
             a.value = a.value.replace(/&gt;/, '>');
@@ -107,12 +107,12 @@ CKEDITOR.plugins.add( 'fontAssist',
          */
         var setColor = function(dialog,ui_el) {
                  var which = (ui_el == 'colors') ? 'fg': 'bg';     // ui_el = colors or backgroundcolors        
-                 var el = ckgdoku_getEID(dialog,ui_el,which);
+                 var el = ckgedit_getEID(dialog,ui_el,which);
                  style_spec.save_color(which,el.value);                                  
-                 var el = ckgdoku_getEID(dialog,'general','contents');
+                 var el = ckgedit_getEID(dialog,'general','contents');
                  if(which == 'fg') {
                     el.style.color = style_spec.get(which);
-                    var d = ckgdoku_getEID(dialog,'general','contents');
+                    var d = ckgedit_getEID(dialog,'general','contents');
                     d.innerHTML = replace_formats(selectedText);                    
                  }
                  else {
@@ -127,7 +127,7 @@ CKEDITOR.plugins.add( 'fontAssist',
                 style_spec.save_color('fg', original_styles['fg']); 
                 style_spec.save_color('bg', original_styles['bg']);                 
                 
-                var el = ckgdoku_getEID(dialog,'general','contents');
+                var el = ckgedit_getEID(dialog,'general','contents');
                 
                 el.style.color = style_spec.get('fg'); 
                 el.style.backgroundColor = style_spec.get('bg'); 
@@ -138,7 +138,7 @@ CKEDITOR.plugins.add( 'fontAssist',
         
         var setFont = function(dialog) {
                    var font_style = style_spec.get_font_style(false);                   
-                   var d = ckgdoku_getEID(dialog,'general','contents');
+                   var d = ckgedit_getEID(dialog,'general','contents');
                    d.style.font =  font_style;                    
                    d.innerHTML = replace_formats(selectedText); 
                   display_fontOpen(dialog);                   
@@ -148,9 +148,9 @@ CKEDITOR.plugins.add( 'fontAssist',
                 style_spec.save_font(original_styles['font']); 
                 style_spec.save_size(original_styles['font_size']);                 
                 setFont(dialog);             
-                var n = ckgdoku_getEID(dialog,'general','fontopts');
+                var n = ckgedit_getEID(dialog,'general','fontopts');
                 n.options[0].selected = true;
-                n = ckgdoku_getEID(dialog,'general','sizeopts'); 
+                n = ckgedit_getEID(dialog,'general','sizeopts'); 
                 n.options[0].selected = true;                
                 
         };
@@ -158,9 +158,9 @@ CKEDITOR.plugins.add( 'fontAssist',
         var onClickfg = function (evt,data) { 
              var dialog = this.getDialog();   
              dialog.disableButton('ok'); 
-             var n = ckgdoku_getEID(dialog,'colors','fg');
+             var n = ckgedit_getEID(dialog,'colors','fg');
              var value = onClickInsert(evt, n);               
-             var n = ckgdoku_getEID(dialog,'colors','fgsample');
+             var n = ckgedit_getEID(dialog,'colors','fgsample');
              n.style.backgroundColor = value;
              toggle_ok(dialog,true);
          };
@@ -168,9 +168,9 @@ CKEDITOR.plugins.add( 'fontAssist',
          var onClickbg = function (evt,data) { 
              var dialog = this.getDialog();  
              dialog.disableButton('ok'); 
-             var n = ckgdoku_getEID(dialog,'backgroundcolors','bg');                  
+             var n = ckgedit_getEID(dialog,'backgroundcolors','bg');                  
              var value = onClickInsert(evt, n); 
-             var n = ckgdoku_getEID(dialog,'backgroundcolors','bgsample');
+             var n = ckgedit_getEID(dialog,'backgroundcolors','bgsample');
              n.style.backgroundColor = value;             
              toggle_ok(dialog,true);
          };
@@ -191,7 +191,7 @@ CKEDITOR.plugins.add( 'fontAssist',
              };
              
              var toggle_ok = function(dialog,onff) {
-                var t = ckgdoku_getEID(dialog,'general','oktoggle');            
+                var t = ckgedit_getEID(dialog,'general','oktoggle');            
                 t.checked = onff;             
              };
              
@@ -344,7 +344,7 @@ CKEDITOR.plugins.add( 'fontAssist',
 								// http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.ui.dialog.labeledElement.html#constructor		
                                 onClick: function() {
                                     var dialog = this.getDialog();
-                                    var el =  ckgdoku_getEID(dialog,'general','alert')                                  
+                                    var el =  ckgedit_getEID(dialog,'general','alert')                                  
                                     el.focus();
                                     el.select();
                               },                             
@@ -484,7 +484,7 @@ CKEDITOR.plugins.add( 'fontAssist',
 								label : lang.Reset, //'Reset',		
                                 onClick: function() {                                     
                                     var dialog = this.getDialog();
-                                    var el = ckgdoku_getEID(dialog,'colors','fg');
+                                    var el = ckgedit_getEID(dialog,'colors','fg');
                                     el.value = "";                                    
                                     dialog.enableButton( 'ok' );
                                     toggle_ok(dialog,false);
@@ -550,7 +550,7 @@ CKEDITOR.plugins.add( 'fontAssist',
 								label : lang.Reset, //'Reset',		
                                onClick: function() {                                    
                                     var dialog = this.getDialog();
-                                    var el = ckgdoku_getEID(dialog,'backgroundcolors','bg');
+                                    var el = ckgedit_getEID(dialog,'backgroundcolors','bg');
                                     el.value = "";
                                     dialog.enableButton( 'ok' );                                     
                                     toggle_ok(dialog,false);                                    
@@ -588,7 +588,7 @@ CKEDITOR.plugins.add( 'fontAssist',
                     var editor = this.getParentEditor(),
                         selection = editor.getSelection();
                         nonReplaceable = false;  
-                        var a = ckgdoku_getEID(this,'general','alert');
+                        var a = ckgedit_getEID(this,'general','alert');
                         a.innerHTML = "";
                         
                         this.enableButton( 'ok' );  
@@ -600,7 +600,7 @@ CKEDITOR.plugins.add( 'fontAssist',
                         if(!p) return;
                         if(!text1.match(/&lt;font(.*)\/font&gt;/) && !text1.match(/<font(.*)\/font>/)) { 
                            nonReplaceable = true;                         
-                           var a = ckgdoku_getEID(this,'general','alert');
+                           var a = ckgedit_getEID(this,'general','alert');
                            a.value = "Changes will not be inserted into editor.  See Info for details";  
                          }  
                       
@@ -616,7 +616,7 @@ CKEDITOR.plugins.add( 'fontAssist',
                         text = text.replace(/&gt;/g, '>');
                         text = text.replace(/<span.*?scayt.*?>(.*?)<\/span>/g,"$1");
                       
-                        var d = ckgdoku_getEID(this,'general','contents');
+                        var d = ckgedit_getEID(this,'general','contents');
 
                         var matches = text.match(/<font(.*?)>(.*)/m);                  
                         if(matches && matches[2]) {
@@ -643,9 +643,9 @@ CKEDITOR.plugins.add( 'fontAssist',
                            selectedText = matches[2];                              
                            d.innerHTML = replace_formats(matches[2]);
                            
-                           var sel = ckgdoku_getEID(this,'general','fontopts');
+                           var sel = ckgedit_getEID(this,'general','fontopts');
                            updateSelectList(sel,original_styles['font']);
-                           sel = ckgdoku_getEID(this,'general','sizeopts');
+                           sel = ckgedit_getEID(this,'general','sizeopts');
                            updateSelectList(sel,original_styles['font_size']);
                         }  
                    
@@ -655,11 +655,11 @@ CKEDITOR.plugins.add( 'fontAssist',
                 {
                        editor = this.getParentEditor();
                    
-                        var n = ckgdoku_getEID(this,'general','fontopts');
+                        var n = ckgedit_getEID(this,'general','fontopts');
                         var font_names = CKEDITOR.config.font_names.split(/;/);                      
                         createSelectList(n,font_names);   
                         
-                        var n = ckgdoku_getEID(this,'general','sizeopts');                   
+                        var n = ckgedit_getEID(this,'general','sizeopts');                   
                         var size_list = CKEDITOR.config.fontSize_sizes.split(/;/);                      
                         createSelectList(n,size_list);   
                       
@@ -667,7 +667,7 @@ CKEDITOR.plugins.add( 'fontAssist',
                        var dialog = this;                       
                        tab.on('focus', function(evt) {              
                            dialog.enableButton( 'ok' ); 
-                           var t = ckgdoku_getEID(dialog,'general','oktoggle');                              
+                           var t = ckgedit_getEID(dialog,'general','oktoggle');                              
                            t.checked = false;                           
                        });
 

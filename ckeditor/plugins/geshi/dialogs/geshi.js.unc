@@ -15,7 +15,7 @@ CKEDITOR.dialog.add( 'geshiDialog', function( editor ) {
     
     var  getHref = function() {
        var data = window.location.pathname;
-       var qs = window.location.search;
+       var qs = window.location.search;      
        var matches = data.match(/\/(.*?)\/(doku.php)?\/?(.*)/);
      
        if(qs_match = qs.match(/id=([\w:_\.]+)\b/)) { //none
@@ -44,7 +44,7 @@ CKEDITOR.dialog.add( 'geshiDialog', function( editor ) {
     +'<dt><a href="' + href_vals.href + '?do=export_code&id=' + href_vals.id+ '&codeblock=0" title="Download Snippet" class="mediafile mf_' + type +'">' +file +'</a></dt> <dd><pre class="file ' + type+ '">';
  };
  
- var downloadable_footer = function() {   
+    var downloadable_footer = function() {   
     return "</pre> </dd></dl>";
   } 
 
@@ -65,8 +65,7 @@ CKEDITOR.dialog.add( 'geshiDialog', function( editor ) {
         s_display = 'display:none';
         ckg_geshi_langopts = [];
     }
-	return {
-
+	return { 
 		// Basic properties of the dialog window: title, minimum size.
 		title: 'Abbreviation Properties',
 		minWidth: 600,
@@ -115,7 +114,7 @@ CKEDITOR.dialog.add( 'geshiDialog', function( editor ) {
                                             width: '175px',
                                             validate: CKEDITOR.dialog.validate.notEmpty(editor.lang.geshi.lang_empty)
                                         },
-                                        {                                           
+                                        {
                                             type: 'text',
                                             id: 'file',
                                             label: editor.lang.geshi.file || 'File name',
@@ -128,7 +127,7 @@ CKEDITOR.dialog.add( 'geshiDialog', function( editor ) {
                                             items: [ [ editor.lang.geshi.codeblock, 'block' ], [ editor.lang.geshi.snippet, 'snippet' ] ],
                                             'default': 'block',
                                             style: 'color: green',
-                                              onClick: function() {                                              
+                                              onClick: function() {    
                                                  radio = this.getValue();
                                             }
                                         },                    
@@ -146,30 +145,29 @@ CKEDITOR.dialog.add( 'geshiDialog', function( editor ) {
             geshi_dialog = dialog;
              selection = editor.getSelection();             
              var text = selection.getSelectedText();                    
-            dialog.getContentElement(  'tab-basic', 'geshi' ).setValue( text );   
+            dialog.getContentElement(  'tab-basic', 'geshi' ).setValue( text );  
          //   dialog.getContentElement(  'tab-basic', 'language' ).style='display:block'; 
           //  alert( 'Current value: ' + dialog.getValueOf( 'tab-basic', 'ckg_geshi_lang' ) );
        },
        
 		// This method is invoked once a user clicks the OK button, confirming the dialog.
 		onOk: function() {
-
 			// The context of this function is the dialog object itself.
 			// http://docs.ckeditor.com/#!/api/CKEDITOR.dialog
            
 			var dialog = this, retval;      
 	         var text = dialog.getValueOf( 'tab-basic', 'geshi' );
-             var which = dialog.getValueOf( 'tab-basic', 'which' );
+             var which = dialog.getValueOf( 'tab-basic', 'which' );             
              //dialog.getValueOf( 'tab-basic', 'language');
              var p_lang = dialog.getValueOf( 'tab-basic', 'ckg_geshi_lang' );
              if(!p_lang) p_lang = dialog.getValueOf( 'tab-basic', 'language' );
              if(!p_lang) return;
            
              if(which == 'block') {
-                 retval = '<pre class="code ' + p_lang + ' ">' + text + '</pre>';
+                 retval = '<pre class="code ' + p_lang+ '">' + text + '</pre>';
              }
              else retval = downloadable_header(p_lang,dialog.getValueOf( 'tab-basic', 'file' ) ) + text + downloadable_footer();
-              editor.insertHtml(retval);
+             editor.insertHtml(retval);
 
 		}
 	};

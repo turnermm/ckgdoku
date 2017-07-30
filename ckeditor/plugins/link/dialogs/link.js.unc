@@ -4,7 +4,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 var update_ckgdokuInternalLink, update_ckgdokuMediaLink;
-var fckgInternalInputId, fckgMediaInputId,ckgdokuIwikiData, ckgdokuIwikiIndex;
+var fckgInternalInputId, fckgMediaInputId,ckgdokuIwikiData, ckgdokuIwikiIndex, ckgdokuInternalText;
  var ck_m_files_protocol, ckg_dialog, linkOpt;
  window.onbeforeunload = function() { };
 
@@ -30,6 +30,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 	 var fckgSMBInputId;
      var defaultFBLang = {
         InternalLink: "internal link",
+        LinkText: "Link Text (Optional)",
         InternalMedia: "internal media",
         MediaFileLink: "link to media file",
         SMBLabel: "Samba Share",
@@ -739,6 +740,13 @@ var useHeading = function(wiki_id) {
                                 },
                             },
                             {
+								type : 'text',
+								id : 'internal_text',
+								label : translateItem('LinkText'),
+								required: false,
+                                
+                            },
+                            {
                                 id: 'anchorsmsg',
                                 type: 'html',
                                 html: translateItem('AdvancedTabPrompt'), //'Use the advanced tab to create page anchors and query strings',
@@ -1084,7 +1092,7 @@ var useHeading = function(wiki_id) {
 
 		onOk : function()
 		{
-
+           var internal_text = false;
             var ImagesAllowed = new RegExp( oDokuWiki_FCKEditorInstance.imageUploadAllowedExtensions);
 			var attributes = {},
 				removeAttributes = [],
@@ -1124,6 +1132,8 @@ var useHeading = function(wiki_id) {
 					attributes[ 'data-cke-saved-href' ] = ( url.indexOf( '/' ) === 0 ) ? url : protocol + url;
                 break;
                 case 'internal':
+                
+                     internal_text  = document.getElementById(ckgdokuInternalText).value ? document.getElementById(ckgdokuInternalText).value : false;
                      if(!data.url.url) {
                         data.url.url=document.getElementById(fckgInternalInputId).value;
                               if(!data.url.url.match(/^:?\w+:/)) {
@@ -1312,7 +1322,10 @@ var useHeading = function(wiki_id) {
                     var el = editor.document.createElement( 'a' );
                     el.setAttribute( 'href',  attributes['href']);
                     if(!hasSelectedText &&  (data.type == 'media' || data.type == 'internal')) {
-                        el.setHtml(data.adv.advTitle);
+                        if(internal_text) {
+                            el.setHtml(internal_text);                  
+                         }
+                         else el.setHtml(data.adv.advTitle);  
                     }
                     else el.setHtml(selection.getSelectedText());
                     for(attr in attributes) {
@@ -1331,9 +1344,9 @@ var useHeading = function(wiki_id) {
 			{
 
 				// We're only editing an existing link, so just overwrite the attributes.
-				var element = this._.selectedElement,
+				var element = this._.selectedElement,                
 					href = element.data( 'cke-saved-href' ),
-					textView = element.getHtml();
+					textView = element.getHtml();                    
                  if(other_media) {
                      attributes['type'] = 'other_mime';
                      attributes['title'] = ':' + other_mime_file;
@@ -1355,15 +1368,18 @@ var useHeading = function(wiki_id) {
 				selection.selectElement( element );
 				delete this._.selectedElement;
 			}
-
-            if(text && data.adv.advTitle) {
+           if(internal_text) {
+               text.setText(internal_text);
+           }
+            else if(text && data.adv.advTitle) {
                   text.setText(data.adv.advTitle);
             }
+              
 		},
 		onLoad : function()
 		{
 	       ckgdokuIwikiData = getIwikiOptions();
-           var select_id = this.getContentElement('info',  'iwiki_shortcut').getInputElement().$.id;
+           var select_id = this.getContentElement('info',  'iwiki_shortcut').getInputElement().$.id;           
            var select =document.getElementById(select_id);
            this.stack = select.options;
           this.stack.length = 0;
@@ -1378,6 +1394,7 @@ var useHeading = function(wiki_id) {
 
             oDokuWiki_FCKEditorInstance.isDwikiImage = false;
 			fckgInternalInputId = this.getContentElement('info', 'internal').getInputElement().$.id;
+            ckgdokuInternalText = this.getContentElement('info', 'internal_text').getInputElement().$.id;
             fckgMediaInputId = this.getContentElement('info', 'media').getInputElement().$.id;
             fckgSMBInputId = this.getContentElement('info', 'samba').getInputElement().$.id;
             var el = this.getContentElement('info', 'iwiki_shortcut').getInputElement().$.id;
