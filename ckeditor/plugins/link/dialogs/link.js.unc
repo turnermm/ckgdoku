@@ -75,6 +75,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
             success: function(data, textStatus, jqXHR)
               {
                   retv = data;
+                  ckgdokuIwikiData = retv;
               },
             error: function(jqXHR, textStatus, errorThrown )
               {
@@ -1172,7 +1173,7 @@ var useHeading = function(wiki_id) {
 
                     var iwiki_pattern = ckgdokuIwikiData[data.url.iwiki_shortcut];
                     data.adv.advTitle = data.url.selection;
-                    data.url.selection = 'oIWIKIo'+data.url.selection+'cIWIKIc';
+                    if(data.url.selection) data.url.selection = 'oIWIKIo'+data.url.selection+'cIWIKIc';
 
                     if(iwiki_pattern.match(/\{.*?\}/) ){
                        data.url.url = ckgdokuIwikiData[data.url.iwiki_shortcut].replace(/{.*?}/,data.url.selection);
@@ -1378,20 +1379,22 @@ var useHeading = function(wiki_id) {
 		},
 		onLoad : function()
 		{
-	       ckgdokuIwikiData = getIwikiOptions();
-           var select_id = this.getContentElement('info',  'iwiki_shortcut').getInputElement().$.id;           
-           var select =document.getElementById(select_id);
-           this.stack = select.options;
-          this.stack.length = 0;
-         this.stack[0] = (new Option("Not Set","not-set",false,false));
-         ckgdokuIwikiIndex = new Array();
-         var count = 1;
-         for(var i in ckgdokuIwikiData) {
-            this.stack[count] =  new Option(i + ' >> ' + ckgdokuIwikiData[i],i,false,false);
+	        getIwikiOptions();            
+            ckg_iwi_Select_Id_x = this.getContentElement('info',  'iwiki_shortcut').getInputElement().$.id;     
+            setTimeout(function(select_id) {             
+               var select =document.getElementById(ckg_iwi_Select_Id_x);           
+               this.stack = select.options;
+               this.stack.length = 0;
+               this.stack[0] = (new Option("Not Set","not-set",false,false));
+               ckgdokuIwikiIndex = new Array();
+               var count = 1;
+               for(var i in ckgdokuIwikiData) {
+                  this.stack[count] =  new Option(i + ' >> ' + ckgdokuIwikiData[i],i,false,false); 
             ckgdokuIwikiIndex[i] = count;
-            count++;
-         }
-
+                  count++;            
+              }
+         }, 2000);            
+         
             oDokuWiki_FCKEditorInstance.isDwikiImage = false;
 			fckgInternalInputId = this.getContentElement('info', 'internal').getInputElement().$.id;
             ckgdokuInternalText = this.getContentElement('info', 'internal_text').getInputElement().$.id;
