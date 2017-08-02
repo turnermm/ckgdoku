@@ -298,6 +298,33 @@ var dokuBase = location.host + DOKU_BASE;
      }   
  });  
  
+
+jQuery(document).ready(function(){
+
+    $dokuWiki = jQuery('.dokuwiki');
+  
+    if(typeof(JSINFO['dbl_click_auth'] !== 'undefined') && JSINFO['dbl_click_auth'] == "") return;  
+    if(!JSINFO['ckg_dbl_click']) return;
+   
+    /**
+     * If one or more edit section buttons exist?
+     * This makes sure this feature is enabled only on the edit page and for users with page edit rights.
+     */
+    if (jQuery('.editbutton_section', $dokuWiki).length > 0) {
+
+        // register double click event for all headings and section divs
+        jQuery('[class^="sectionedit"], div[class^="level"]', $dokuWiki).dblclick(function(){
+            // find the closest edit button form to the element double clicked (downwards) and submit the form
+            var f =  jQuery(this).nextAll('.editbutton_section:eq(0)').children('form:eq(0)');
+            //alert(jQuery(f).hasClass('button'));            
+            jQuery('<input />').attr('type','hidden').attr('name','mode').attr('value','dwiki').appendTo(jQuery(f));
+            jQuery('<input />').attr('type','hidden').attr('name','fck_preview_mode').attr('value','nil').appendTo(jQuery(f));
+            f.submit();
+        })
+    }
+
+});
+ 
 function ckg_edit_mediaman_insert(edid, id, opts, dw_align) {
     var link, width, s, align;
 

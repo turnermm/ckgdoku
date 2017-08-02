@@ -16,7 +16,7 @@ $lang['dwedit_ns'] = "Comma separated list of namespaces and/or pages where ckgd
 $lang['acl_del'] =  "Default (box not checked) allows users with upload permission to delete media files; if box is checked, then user needs delete permission to delete from the folder.";
 $lang['auth_ci'] = "The user login id is case insensitive, that is you can login as both USER and user";
 $lang['nix_style'] = "For Windows Servers (Vista and Later).  This setting makes it possible to access data\\media through ckgdoku\\CKeditor\\userfiles, if links to media and file have been successfully created in userfiles";
-$lang['no_symlinks']  = "Disable automatic creation of symbolic links in ckgdoku/userfiles.";            
+$lang['no_symlinks']  = "Disable automatic creation of symbolic links in ckgdoku/userfiles.  This option should be disabled when updating.";            
 $lang['direction'] = 'Set Language direction in CKeditor:  <b>nocheck</b>: ckgdoku will make no changes to the default direction setting; ' 
                        . ' <b>dokuwiki</b>:  the current Dokuwiki language direction;  <b>ltr</b>: Left-to-right ; <b>rtl</b>: Right-to-left.';
 $lang['scayt_auto'] = 'Automatically enable the SCAYT spellchecker. Defaults to "on". To turn off SCAYT select "off"';
@@ -43,3 +43,5 @@ $lang['allow_ckg_filebrowser'] = 'Select which file/media browser(s) users can u
 $lang['default_ckg_filebrowser'] = 'Select which file/media browser is the default. This will be overridden if the selected browser is not allowed';
 $lang['captcha_auth'] ='ACL level at which the captcha is turned off when the captcha plugin\'s <code>forusers</code> option is set to true.  The default is <code>ACL_CREATE</code>, which means' 
                                         .' that any user with <code>ACL_EDIT</code> or less will get the captcha, <code>ACL_CREATE</code> or higher will not.';
+$lang['htmlblock_ok'] ='When using <code>HTML_BLOCK</code>s  either this setting or Dokuwiki\'s <code>htmlok</code> option must be enabled. ' .
+        ' It doesn\'t pose the same level of security  risk as <code>htmlok</code>.  Nevertheless, it is should be used only in a trusted user environment, and not in an open wiki.';                                    

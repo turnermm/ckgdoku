@@ -1,9 +1,9 @@
 /**
- * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.html or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
- CKEDITOR.editorConfig = function( config ) {
+CKEDITOR.editorConfig = function( config ) {
 
 config.keystrokes = [
 
@@ -82,9 +82,17 @@ config.colors = new Array(
 );
 
      
-      var ckedit_path =  window.location.protocol +'//' + top.dokuBase + 'lib/plugins/ckgdoku/ckeditor/';
+     var ckedit_path;    
+     if(top.JSINFO['ckg_canonical']) {     
+          ckedit_path =  top.DOKU_BASE + 'lib/plugins/ckgdoku/ckeditor/';
+          config.doku_url = top.DOKU_BASE;
+          config.ckedit_path = top.DOKU_BASE + 'lib/plugins/ckgdoku/ckeditor/';
+     }
+     else {
+      ckedit_path =  window.location.protocol +'//' + top.dokuBase + 'lib/plugins/ckgdoku/ckeditor/';
       config.doku_url = window.location.protocol+ '//' + top.dokuBase;
       config.ckedit_path = window.location.protocol +'//' + top.dokuBase + 'lib/plugins/ckgdoku/ckeditor/';
+     }
       config.jquery = top.jQuery;
     //  config.format_code = { element : 'code', attributes : { 'class' : 'dwcode' } };
 	// Define changes to default configuration here.
@@ -94,7 +102,7 @@ config.colors = new Array(
      // config.scayt_autoStartup = true;      
       config.format_tags = 'p;h1;h2;h3;h4;h5'; 
       config.extraSpecialChars  = ['↔'];
-      config.extraPlugins = 'signature,footnote,shortcuts,fontAssist,tags,timestamp,headerbuttons'; //,devtools';
+      config.extraPlugins = 'signature,footnote,shortcuts,fontAssist,tags,timestamp,headerbuttons,geshi,wrap,pastebase64'; //,devtools';
       config.contentsLangDirection = '';
       if( top.ckgdoku_isRTL()) config.contentsLangDirection = 'rtl';
       config.pasteFromWordRemoveFontStyles = false;   // preserve font style when "paste from word"
@@ -104,26 +112,46 @@ config.colors = new Array(
      var font_assist = 'FontAssist';
      //config.removeButtons = 'TextColor,BGColor, FontAssist,Font,FontSize';
      if(config.removeButtons.match(/FontAssist/)) font_assist = "";
-
+    config.skin = 'moono';
+     config.wrapSyntaxDiv = top.JSINFO['wrapDiv'] ;
+     config.wrapSyntaxSpan = top.JSINFO['wrapSpan'] ;
      config.ToolBarItemsAlt = {  
-     'Signature':'Signature' ,'Footnotes':'Footnotes', 'Tags':""
+     'Signature':'Signature' ,'Footnotes':'Footnotes', 'Tags':"",'Wrap':""
      };
-   	if(top.hasTags()){
+
+    if (top.JSINFO['has_tags']) {
 		config.ToolBarItemsAlt['Tags']='Tags';
 	}
+    if(top.JSINFO['has_wrap']) {
+        config.ToolBarItemsAlt['Wrap']='Wrap';
+    }
+    if(top.JSINFO['wrapDiv']) {
+       config.wrapSyntaxDiv = top.JSINFO['wrapDiv'];
+    }
+    else config.wrapSyntaxDiv = "";
+    if(top.JSINFO['wrapSpan']) {
+       config.wrapSyntaxSpan = top.JSINFO['wrapSpan'];
+    }
+    else config.wrapSyntaxSpan = "";
+
  
      var xtra = top.extra_plugins();
      config.ToolBarItemsExtra = "";
      if(xtra) {
          config.ToolBarItemsExtra = xtra.split(','); 
+         if(xtra) {
+           config.extraPlugins +=  ',' + xtra.toLowerCase();         
+         }                
      }
-     
-    config.toolbar_Dokuwiki =
+    
+  config.toolbar_Dokuwiki =
 	[
 	{name: 'header_buttons', items: ['same_header', 'lower_header', 'higher_header', 'none_header']},
     	{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
-		{ name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','Scayt' ] },        
-		{ name: 'insert', items : [ 'Image','Table','HorizontalRule','Smiley','SpecialChar',  config.ToolBarItemsAlt['Signature'] ,config.ToolBarItemsAlt['Footnotes'],config.ToolBarItemsAlt['Tags'] ]},           
+
+		{ name: 'editing', items : [ 'Find','Replace','-','SelectAll','-'] },    
+		{ name: 'insert', items : [ 'Image','Table','HorizontalRule','Smiley','SpecialChar',  config.ToolBarItemsAlt['Signature'] ,config.ToolBarItemsAlt['Footnotes'],
+           config.ToolBarItemsAlt['Tags'],config.ToolBarItemsAlt['Wrap']]},        
    		{ name: 'links', items : [ 'Link','Unlink' ] },
 		{ name: 'styles', items : [ 'Format', 'Styles' ,'Font','FontSize'] },
     	{ name: 'colors', items : [ 'TextColor','BGColor', font_assist ] },		
@@ -133,9 +161,9 @@ config.colors = new Array(
 		{ name: 'tools', items : ['Source', 'Maximize','-','About'] },
          {name: 'extras', items: config.ToolBarItemsExtra }
        
-	];
-    
-        config.toolbar_DokuwikiNoGuest =
+	];    
+	
+     config.toolbar_DokuwikiNoGuest =
 	[
 		{ name: 'styles', items : [ 'Source'] },
 		{ name: 'tools', items : [ 'About' ] }
@@ -145,16 +173,34 @@ config.colors = new Array(
     config.toolbar_DokuwikiGuest =
 	[
     	{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
-		{ name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','Scayt' ] },        
+		{ name: 'editing', items : [ 'Find','Replace','-','SelectAll'] },        
 		{ name: 'insert', items : [ 'Table','HorizontalRule','Smiley','SpecialChar', 'Footnotes'] },              		
 		{ name: 'styles', items : [ 'Format', 'Styles' ] },
 		{ name: 'paragraph', items : [ 'NumberedList','BulletedList','Indent','Outdent'] },
    		{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','-','Undo','Redo' ] },
     	{ name: 'basicstyles', items: [ 'basicstyles', 'cleanup' ] },
 		{ name: 'tools', items : [ 'Maximize','-','About' ] },
-	];
-	
-config.dokuSmileyPath = 'http://' + top.dokuBase + 'lib/images/smileys/';    
+
+	];    
+  
+
+config.wrap_lang;   
+var params =  'call=wrap_lang&lang=' + CKEDITOR.lang.detect( 'en' ) ;
+var get_wrap_lang = function() {
+    config.jquery.post(           
+           config.doku_url + 'lib/exe/ajax.php',
+            params ,
+            function (data,status) { 
+                if(status == "success") {
+                 config.wrap_lang = JSON.parse(data);                 
+                }
+                else alert('lang failed');               
+            },
+            'html'
+        );
+}
+get_wrap_lang();
+config.dokuSmileyPath = config.doku_url + 'lib/images/smileys/';    
 config.dokuSmileyImages	=
                           [['8-)','icon_cool.gif'],
                       	  ['8-O','icon_eek.gif'],                      	
@@ -208,6 +254,7 @@ function do_smileys() {
             'html'
         );
 }
+
 config.removePlugins = 'liststyle';
 config.dokuFixmeSmiley = new Array();
 config.dokuLargeSmiley = new Array();
@@ -219,7 +266,7 @@ try {
 }
 
 config.ckgEditorVer;
-var get_ckgdokuor_version = function() {
+var get_ckgdoku_version = function() {
     config.jquery.post(
             ckedit_path + "get_version.php",
             function (data,status) { 
@@ -231,32 +278,37 @@ var get_ckgdokuor_version = function() {
             'html'
         );
 }
+
+  var SelectOptions = function() {
+         var retv;                  
+         config.jquery.ajax(
+          config.doku_url + 'lib/exe/ajax.php',
+          {
+            data:
+              {
+                call: 'geshi_sel'
+              },
+            type: "GET",        
+            dataType: "html",
+            success: function(data, textStatus, jqXHR)
+              {
+                  config.geshi_opts = data;                  
+              },
+            error: function(jqXHR, textStatus, errorThrown )
+              {
+                alert(textStatus);
+                alert(errorThrown);
+              }
+          }
+        );
+      //  return retv;
+    };
+    SelectOptions();
 config.filebrowserWindowWidth='60%';
 config.filebrowserWindowHeight = '60%';
 //config.filebrowserWindowFeatures = 'location=no,menubar=no,toolbar=no,dependent=yes,minimizable=no,modal=yes,alwaysRaised=yes,resizable=yes,scrollbars=yes,left=20';
 
-get_ckgdokuor_version();   
-
-//	config.removeButtons = 'Underline,Subscript,Superscript,Anchor';
-// This is actually the default value.
-/*
-config.toolbar_Full =
-[
-    { name: 'document',    items : [ 'Source','-','Save','NewPage','DocProps','Preview','Print','-','Templates' ] },
-    { name: 'clipboard',   items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
-    { name: 'editing',     items : [ 'Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt' ] },
-    { name: 'forms',       items : [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
-    '/',
-    { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
-    { name: 'paragraph',   items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
-    { name: 'links',       items : [ 'Link','Unlink','Anchor' ] },
-    { name: 'insert',      items : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak' ] },
-    '/',
-    { name: 'styles',      items : [ 'Styles','Format','Font','FontSize' ] },
-    { name: 'colors',      items : [ 'TextColor','BGColor' ] },
-    { name: 'tools',       items : [ 'Maximize', 'ShowBlocks','-','About' ] }
-];
-*/
+get_ckgdoku_version(); 
 
 CKEDITOR.lang['default'] = {};
 CKEDITOR.lang['default']['fbrowser'] = {
@@ -358,4 +410,4 @@ ToolTip: 'Insert signature'
 
 config.allowedContent = true;
 
-};
+};  //end config.js

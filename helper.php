@@ -49,7 +49,7 @@ class helper_plugin_ckgdoku extends DokuWiki_Plugin {
   function has_plugin($plugin) {    
    static $plugins_list;
       if(!$plugins_list) {         
-           $plugins_list = plugin_list('syntax');               
+           $plugins_list = plugin_list();               
       }
       return in_array($plugin, $plugins_list);
   }
@@ -59,9 +59,6 @@ class helper_plugin_ckgdoku extends DokuWiki_Plugin {
   global $lang;
   global $skip_styling;
   $preview_button = $lang['btn_preview'];
-  $action_list = plugin_list('action');
-  $tags = in_array('tag',$action_list) ? 'Tags': "";
-
   $ckgdoku_conf_direction = $this->getConf('direction');
    if($ckgdoku_conf_direction == "dokuwiki") {
        $ckgdoku_lang_direction = $lang['direction'];
@@ -311,7 +308,7 @@ var oldBeforeunload;
           
  }
 
-
+/* Renews lock and  creates a ckgdoku backup if editor_bak config option is true */
 function renewLock(bak) {
   if(ourLockTimerIsSet) {
          lockTimerRefresh(true);
@@ -372,7 +369,7 @@ function draft_delete() {
         var params = "draft_id=$cname";
         jQuery.ajax({
            url: DOKU_BASE + 'lib/plugins/ckgdoku/scripts/draft_delete.php',
-           async: false,
+           //async: false,
            data: params,    
            type: 'POST',
            dataType: 'html',         
@@ -440,9 +437,6 @@ if("$toolbar_opts") {
 
 return opts;
 
-}
-function hasTags() {
-   return "$tags";
 }
 
 function  extra_plugins() {  

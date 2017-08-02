@@ -33,5 +33,8 @@ $conf['font_options']  = 0;
 $conf['nofont_styling'] = 0;
 $conf['alt_toolbar'] = '';
 $conf['mfiles'] = 0;
-$conf['extra_plugins'] ="";
+$conf['extra_plugins'] ="Geshi";
 $conf['captcha_auth'] = 'CREATE';
+$conf['htmblock_ok'] = 0;
+$conf['dblclk'] ='on';
+

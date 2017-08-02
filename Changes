@@ -1,4 +1,4 @@
-rev_17-Apr_05-18_39
+rev_17-Aug_01-19_11
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -50,3 +50,75 @@ Support for Hover Tips over images
 
 Apr 6
 Fixes missing curly at end of mediamgr.js
+
+Apr 20
+New setting htmbloc_okk gives option of allowing HTML_BLOCKs without setti…ng DW's htmlok to true
+
+Apr 22
+Double click edit section opens dw editor
+
+Apr 23
+Implemented reminders of new double-click feature for Admins
+
+May 2
+Fixed bug in meta.php htmblock_ok -> htmlblock_ok for getting config option
+
+May 4
+Added Geshi plugin
+
+May 5
+refactored geshi.js->getHref()
+
+May 6
+tweaked geshi icon
+Fixed JS type error for mis-labled fr and de lang files
+Geshi German language file contributed by github user
+
+May 7
+Placed geshi progamming lang selection into variable (had been hard-coded to java for code blocks)
+
+May 11
+Fixed wrong URL to ajax.php when loading GeSHi options (on Nginx)
+
+May 24
+Fixed broken list when li contains links
+ 
+June 1
+Enabled code and file blolcks and snippets in tables
+Fixed cell where snippet together with text breaks cell
+
+June 2
+Replaced faulty skayt with skayt 4.5.7
+Replaced moono with 4.7 moono
+Removed Samples
+Fixed references in ckedit.js that still pointed to ckgedit
+5
+Jan 3
+Restored orignal link.js for ckgdoku, containing linkwiz, which had been inadvertently exchanged for ckgedit's
+Fixed deprecated synchrononous post in link.js
+
+Jun4
+CKEDitor 4.7 ready to go
+Switching to tag 'current' as Dokuwiki download version
+Added dblclk option
+
+Jun 5
+Updated Javascript for new dblick option
+
+Jun 12/13
+Support for canonical urls
+automate config for CKEditor extra plugins
+Automate addition of xtra plugins to xtra plugins list
+
+Jan 14/Jan16
+Fixed canonical url/path in config.js
+
+June 21
+Fixed error in meta.php when accessesing none-existent wrap->getConf
+
+Jun 23
+Added CKEditor pastbase64 plugin for copy and paste
+
+Jul 27
+Added Internal Link Texxt Option to Link Dialog
+

@@ -17,7 +17,7 @@ $meta['acl_del'] = array('onoff');
 $meta['auth_ci'] = array('onoff');
 $meta['nix_style'] = array('onoff');
 $meta['no_symlinks'] = array('onoff');
-$meta['direction'] = array('multichoice','_choices' => array('nocheck','dokuwiki','ltr','rtl'));#
+$meta['direction'] = array('multichoice','_choices' => array('nocheck','dokuwiki','ltr','rtl'));
 $meta['scayt_auto'] = array('multichoice','_choices' => array('on','off'));
 $meta['scayt_lang'] = array('multichoice','_choices' => array('American English/en_US','Brazilian Portuguese/pt_BR','British English/en_GB','Canadian English/en_CA','Canadian French/fr_CA','Danish/da_DK','Dutch/nl_NL','Finnish/fi_FI','French/fr_FR','German/de_DE','Greek/el_GR','Italian/it_IT', 'Norwegian/nb_NO','Portuguese/pt_PT', 'Spanish/es_ES','Swedish/sv_SE'));
 $meta['complex_tables'] = array('onoff');
@@ -38,3 +38,5 @@ $meta['alt_toolbar']  = array('multicheckbox','_choices' => array( 'HorizontalRu
 $meta['mfiles'] = array('onoff');
 $meta['extra_plugins'] = array('string');
 $meta['captcha_auth'] = array('multichoice','_choices' => array('READ','EDIT','CREATE','UPLOAD','DELETE','ADMIN'));
+$meta['htmlblock_ok'] = array('onoff');
+$meta['dblclk'] = array('multichoice','_choices' => array('on','off'));

@@ -81,7 +81,30 @@ class action_plugin_ckgdoku_meta extends DokuWiki_Action_Plugin {
   }
  
 function _ajax_call(Doku_Event $event, $param) {
-     if ($event->data == 'cked_selector') {
+     if ($event->data == 'wrap_lang') {  //choose profile editor priority
+         $event->stopPropagation();
+          $event->preventDefault();
+         global $INPUT;
+         $which = $INPUT->str('lang');
+         $path = DOKU_PLUGIN . 'wrap/lang/' . $which . '/lang.php';
+         if(file_exists($path)) {   
+                $data = file($path, FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES );
+                array_shift($data);
+         }
+        $result = array();
+        for($i=0; $i<count($data); $i++) {      
+              list($name, $val) = explode('=',$data[$i]);
+              $name = str_replace('$lang',"",$name);   
+              $name = trim($name,' ][\'');
+              if($name == 'picker') $name ='title';   
+             $val = trim($val,' ;\'');              
+              $result[$name] = $val;    
+        }
+         echo json_encode($result);
+         return;
+       }
+
+     if ($event->data == 'cked_selector') {  //choose profile editor priority
          $event->stopPropagation();
          $event->preventDefault();
         global $INPUT, $USERINFO,$INFO;
@@ -99,7 +122,31 @@ function _ajax_call(Doku_Event $event, $param) {
          return;
     }
 
-    if ($event->data !== 'refresh_save') {
+
+   if ($event->data == 'geshi_sel') {     //get geshi file names , return as ;; separated string w/o php extensions
+      $event->stopPropagation();
+       $event->preventDefault();
+  
+       if( class_exists('GeSHi')) {         
+            if(defined('GESHI_LANG_ROOT') )  $geshi_dir =GESHI_LANG_ROOT;
+      }
+     else {
+         echo "ENotfound\n";
+         return ;
+     }  
+    $gfiles = scandir ($geshi_dir);
+    $selects = array();
+    foreach($gfiles as $gfile){
+        if(is_dir($gfile)) continue;
+       $gfile =  preg_replace("/\.php\n?$/","",$gfile);
+        $selects[] = $gfile;
+    }
+    $selects = implode ( ';;', $selects );
+    echo $selects;
+    return;
+    }    
+    
+    if ($event->data !== 'refresh_save') {  // save ckgedit backups in native dw format
         return;
     }
        
@@ -597,9 +644,33 @@ function check_userfiles() {
        }
        else $JSINFO['chrome_version'] = 0;
        $JSINFO['hide_captcha_error'] = $INPUT->str('ckged_captcha_err','none');
-       
-       if(isset($conf['animal'])) {           
-           $JSINFO['animal_media'] =   '/lib/plugins/ckgdoku/fckeditor/' . $conf['animal'] .'/image/';
+       $dbl_click_auth  =  $this->getConf('dw_edit_display');
+       if($dbl_click_auth == 'none' || empty($_SERVER['REMOTE_USER'])) {
+           $JSINFO['ckg_dbl_click']  = "";
+       }
+       else if($dbl_click_auth == 'all' ||$auth == 255 ) {
+           $JSINFO['ckg_dbl_click']  = "1";
+       }       
+       $onoff = $this->getConf('dblclk');
+       if($onoff == 'off') $JSINFO['ckg_dbl_click'] = "";
+       $JSINFO['ckg_canonical'] =$conf['canonical'];
+       $JSINFO['doku_base'] = DOKU_BASE;
+       if($this->helper->has_plugin('tag'))  $JSINFO['has_tags'] = "Tag";
+       if($this->helper->has_plugin('wrap') && ! plugin_isdisabled('wrap'))  {       
+           $JSINFO['has_wrap'] = "Wrap";
+        $wrap_helper =  plugin_load('helper',wrap);
+           if($wrap_helper ) {            
+        $syntaxDiv = $wrap_helper->getConf('syntaxDiv');
+        if(!empty($syntaxDiv)) {
+            $JSINFO['wrapDiv'] = $syntaxDiv;
+          } 
+          else $JSINFO['wrapDiv'] = "";
+        $syntaxSpan = $wrap_helper->getConf('syntaxSpan');
+        if(!empty($syntaxSpan)) {
+            $JSINFO['wrapSpan'] = $syntaxSpan; 
+        }
+        else $JSINFO['wrapSpan'] = "";
+           }
        }
        
 	   $this->check_userfiles(); 
@@ -715,17 +786,41 @@ function reset_user_rewrite_check() {
 	   global $JSINFO;
 	  
        if(isset($_COOKIE['FCKG_USE']) && $_COOKIE['FCKG_USE'] =='_false_' ) return;
+       if($ACT == 'login') $this->chk_dbl_clk_time();
        if($ACT == 'edit') {
           $this->user_rewrite = $conf['userewrite'];
 	     $conf['userewrite']  = 0; 
        }
-       if($conf['htmlok']) { 
+      
+       if($conf['htmlok'] || $this->getConf('htmlblock_ok')) { 
          $JSINFO['htmlok'] = 1;
     }	  
     else $JSINFO['htmlok'] = 0;
     }	  
 
-   
+function chk_dbl_clk_time() {  
+   global $INFO;
+   if($INFO['isadmin'] || $INFO['ismanager'] )    {  // only admins and mgrs get messages
+	       $show_msg = true;		   
+	}
+   if(!$show_msg)  return;
+  $filename =  metaFN('fckl:dblck','.meta'); 
+  $msg = $this->getLang('dblclk');
+   if (file_exists($filename)) {      
+           $reps = io_readFile($filename);
+           if($reps <2) {
+              $reminder =  $this->getLang('dblclk_reminder');
+              msg("($reminder) " . $msg,2 );    
+              io_saveFile($filename,$reps+1); 
+              return;
+           }
+   }
+   else
+       {      
+       io_saveFile($filename,'1'); 
+       msg($msg,2);    
+   }
+}
 /**
   checked for additional dw priority possibilities only if the dw priority option is set to true
 */
