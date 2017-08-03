@@ -1137,7 +1137,7 @@ var useHeading = function(wiki_id) {
                      internal_text  = document.getElementById(ckgdokuInternalText).value ? document.getElementById(ckgdokuInternalText).value : false;
                      if(!data.url.url) {
                         data.url.url=document.getElementById(fckgInternalInputId).value;
-                              if(!data.url.url.match(/^:?\w+:/)) {
+                              if(!data.url.url.match(/^:\w+/)) {                                 
                                 var ns = top.getCurrentWikiNS() + ':';
                                 ns = ns.replace(/:$/,"");
                                 var regex = new RegExp(':?'+ ns+':');
