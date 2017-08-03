@@ -1,4 +1,4 @@
-rev_17-Aug_02-19_00
+rev_17-Aug_03-14_17
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -115,3 +115,5 @@ Added CKEditor pastbase64 plugin for copy and paste
 Jul 27
 Added Internal Link Texxt Option to Link Dialog
 
+Aug 3
+Fixed multiple urlencoding of interwiki links
