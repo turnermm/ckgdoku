@@ -1,4 +1,4 @@
-rev_17-Aug_03-14_17
+rev_17-Aug_04-06_57
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -117,3 +117,6 @@ Added Internal Link Texxt Option to Link Dialog
 
 Aug 3
 Fixed multiple urlencoding of interwiki links
+
+Aug 4
+Merged ilinkt branch: creates correct root ns internal links when using manual entries in link tool
