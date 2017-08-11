@@ -19,7 +19,7 @@ $lang['nix_style'] = "For Windows Servers (Vista and Later).  This setting makes
 $lang['no_symlinks']  = "Disable automatic creation of symbolic links in ckgdoku/userfiles.  This option should be disabled when updating.";            
 $lang['direction'] = 'Set Language direction in CKeditor:  <b>nocheck</b>: ckgdoku will make no changes to the default direction setting; ' 
                        . ' <b>dokuwiki</b>:  the current Dokuwiki language direction;  <b>ltr</b>: Left-to-right ; <b>rtl</b>: Right-to-left.';
-$lang['scayt_auto'] = 'Automatically enable the SCAYT spellchecker. Defaults to "on". To turn off SCAYT select "off"';
+$lang['scayt_auto'] = 'Automatically enable the SCAYT spellchecker. Defaults to <code>on</code>. To turn SCAYT off, select <code>off</code> (it can still  be turned on in the editor). To remove the Scayt toolbar icon as well as turning off the service, select <code>disable</code>.';
 $lang['scayt_lang']="Set SCAYT default language.";
 $lang['smiley_hack'] = "Reset URL for CKeditor's smilies when moving to new server. This is done on a page by page basis when page is loaded for editing and saved.  This option should normally be turned off.";
 $lang['complex_tables'] ="Use the complex tables algorithm.  As opposed to the standard parsing of tables, this should give better results when mixing complex arrangements of rowspans and colspans. But slightly more processing time.";
@@ -45,3 +45,5 @@ $lang['captcha_auth'] ='ACL level at which the captcha is turned off when the ca
                                         .' that any user with <code>ACL_EDIT</code> or less will get the captcha, <code>ACL_CREATE</code> or higher will not.';
 $lang['htmlblock_ok'] ='When using <code>HTML_BLOCK</code>s  either this setting or Dokuwiki\'s <code>htmlok</code> option must be enabled. ' .
         ' It doesn\'t pose the same level of security  risk as <code>htmlok</code>.  Nevertheless, it is should be used only in a trusted user environment, and not in an open wiki.';                                    
+$lang['dblclk']="Set to <code>off</code> to turn off the double click feature which enables section editing using the Dokuwiki editor (see:  <a href='https://www.dokuwiki.org/plugin:ckgedit#direct_access_to_dokuwiki_editor'>direct_access_to_dokuwiki_editor</a>)";
+$lang['preserve_enc'] ="Preserve urlencoding in urls when the dokuwiki deaccent option is active.";
