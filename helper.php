@@ -448,6 +448,9 @@ function ckgdoku_language_chk(config) {
         config.scayt_autoStartup = true;      
     }
     else config.scayt_autoStartup = false;
+    if("$scayt_auto" == 'disable') {
+        config.scayt__disable = true;
+    }   
     config.scayt_sLang="$scayt_lang";  
    var lang = "$interface_lang"; 
    if(lang ==  'default') return; ;
