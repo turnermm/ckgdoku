@@ -4,7 +4,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 var update_ckgdokuInternalLink, update_ckgdokuMediaLink;
-var fckgInternalInputId, fckgMediaInputId,ckgdokuIwikiData, ckgdokuIwikiIndex, ckgdokuInternalText;
+var fckgInternalInputId, fckgMediaInputId,ckgdokuIwikiData, ckgdokuIwikiIndex;
  var ck_m_files_protocol, ckg_dialog, linkOpt;
  window.onbeforeunload = function() { };
 
@@ -1133,8 +1133,7 @@ var useHeading = function(wiki_id) {
 					attributes[ 'data-cke-saved-href' ] = ( url.indexOf( '/' ) === 0 ) ? url : protocol + url;
                 break;
                 case 'internal':
-                
-                     internal_text  = document.getElementById(ckgdokuInternalText).value ? document.getElementById(ckgdokuInternalText).value : false;
+                     internal_text =  this.getValueOf( 'info', 'internal_text' );
                      if(!data.url.url) {
                         data.url.url=document.getElementById(fckgInternalInputId).value;
                               if(!data.url.url.match(/^:\w+/)) {                                 
@@ -1397,7 +1396,6 @@ var useHeading = function(wiki_id) {
          
             oDokuWiki_FCKEditorInstance.isDwikiImage = false;
 			fckgInternalInputId = this.getContentElement('info', 'internal').getInputElement().$.id;
-            ckgdokuInternalText = this.getContentElement('info', 'internal_text').getInputElement().$.id;
             fckgMediaInputId = this.getContentElement('info', 'media').getInputElement().$.id;
             fckgSMBInputId = this.getContentElement('info', 'samba').getInputElement().$.id;
             var el = this.getContentElement('info', 'iwiki_shortcut').getInputElement().$.id;
