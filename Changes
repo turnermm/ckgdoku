@@ -1,4 +1,4 @@
-rev_17-Aug_12-05_35
+rev_17-Aug_23-19_38
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -120,3 +120,7 @@ Fixed multiple urlencoding of interwiki links
 
 Aug 4
 Merged ilinkt branch: creates correct root ns internal links when using manual entries in link tool
+
+Aug 23
+Aug 23
+Support for switching between CKEdiktor GUIs
