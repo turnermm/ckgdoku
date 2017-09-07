@@ -251,9 +251,16 @@ function dwedit_draft_delete() {
         document.cookie = 'ckgEdht=' + h +';expires="";path=' +JSINFO['doku_base'];
    }
 
-  function ckgd_setImgPaste(which) {         
-        document.cookie = 'ckgEdPaste=' + which +';expires="";path=' +JSINFO['doku_base'];
-        alert(LANG.plugins.ckgdoku.ckg_paste_restart);
+ 
+  function ckgd_setImgPaste(which) {        
+      var state = JSINFO['ckgEdPaste'] ? JSINFO['ckgEdPaste']  : "";
+      if(state == 'on')  {
+            which = 'off'  
+      }
+      else which = 'on';      
+      JSINFO['ckgEdPaste'] = which;   
+       document.cookie = 'ckgEdPaste=' + which +';expires="";path=' +JSINFO['doku_base'];
+      alert(LANG.plugins.ckgdoku.ckg_paste_restart + ' ' + LANG.plugins.ckgdoku[which]);    
    }
 
   function GetE(e) {

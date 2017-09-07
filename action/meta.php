@@ -658,6 +658,14 @@ function check_userfiles() {
         else $JSINFO['wrapSpan'] = "";
            }
        }
+       
+        if(!isset($_COOKIE['ckgEdPaste'])) {
+            $JSINFO['ckgEdPaste'] = 'off';
+        }
+        else {
+            $JSINFO['ckgEdPaste'] = $_COOKIE['ckgEdPaste'];
+        }       
+       
 	   $this->check_userfiles(); 
 	   $this->profile_dwpriority=($this->dokuwiki_priority && $this->in_dwpriority_group()) ? 1 :  0; 
        if(isset($_COOKIE['FCK_NmSp'])) $this->set_session(); 
