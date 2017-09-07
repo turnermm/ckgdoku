@@ -1,4 +1,4 @@
-rev_17-Aug_23-19_38
+rev_17-Sep_07-09_06
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -122,5 +122,7 @@ Aug 4
 Merged ilinkt branch: creates correct root ns internal links when using manual entries in link tool
 
 Aug 23
-Aug 23
 Support for switching between CKEdiktor GUIs
+
+Sep 7
+switches filling interwiki select array from setTimeout to set Interval

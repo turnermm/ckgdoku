@@ -60,8 +60,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
       return defaultFBLang[js_code];
     };
 
-    var getIwikiOptions = function() {
-        var retv;
          jQuery.ajax(
           DOKU_BASE + 'lib/exe/ajax.php',
           {
@@ -84,10 +82,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
               }
           }
         );
-        return retv;
 
-
-    };
     var getInternalHeaders = function() {
 
 	  var dialog = this.getDialog();
@@ -1377,23 +1372,28 @@ var useHeading = function(wiki_id) {
               
 		},
 		onLoad : function()
-		{
-	        getIwikiOptions();            
+		{	                   
             ckg_iwi_Select_Id_x = this.getContentElement('info',  'iwiki_shortcut').getInputElement().$.id;     
-            setTimeout(function(select_id) {             
-               var select =document.getElementById(ckg_iwi_Select_Id_x);           
+            var setUpIwikiSel = function() { 
+                if(!ckgdokuIwikiData) return;
+                myStopFunction();
+                var select =document.getElementById(ckg_iwi_Select_Id_x);           
                this.stack = select.options;
                this.stack.length = 0;
                this.stack[0] = (new Option("Not Set","not-set",false,false));
-               ckgdokuIwikiIndex = new Array();
+               ckgeditIwikiIndex = new Array();
                var count = 1;
                for(var i in ckgdokuIwikiData) {
                   this.stack[count] =  new Option(i + ' >> ' + ckgdokuIwikiData[i],i,false,false); 
-            ckgdokuIwikiIndex[i] = count;
+                  ckgeditIwikiIndex[i] = count;
                   count++;            
-              }
-         }, 2000);            
-         
+              }              
+         }; 
+          var myVar = setInterval(function(){ setUpIwikiSel()}, 1000);
+           var  myStopFunction = function () {
+                 clearInterval(myVar);                 
+          } 
+          
             oDokuWiki_FCKEditorInstance.isDwikiImage = false;
 			fckgInternalInputId = this.getContentElement('info', 'internal').getInputElement().$.id;
             fckgMediaInputId = this.getContentElement('info', 'media').getInputElement().$.id;
