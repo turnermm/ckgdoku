@@ -29,8 +29,12 @@ class action_plugin_ckgdoku_mediamanager extends DokuWiki_Action_Plugin {
     }
     function upload_finish(Doku_Event $event) {
         if(!preg_match("#^image/#",$event->data[3]) && $_COOKIE['ckgFbType'] == 'image') {
-            msg($this->getLang('mediamgr_imgonly')  .$event->data[3] );
-           $event->preventDefault() ;
+            if(!empty($event->data[3]) && strlen($event->data[3]) >30) {
+                $fname = substr($event->data[3],0,29) . '. . .';                 
+            }
+            else $fname = $event->data[3];
+            msg($this->getLang('mediamgr_imgonly') .  $fname);    
+            $event->preventDefault();
         }    
     }
     
