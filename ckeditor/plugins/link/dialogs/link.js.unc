@@ -1649,7 +1649,7 @@ var doku_linkwiz = {
         if(!link) {
             return;
         }
-
+        link = ':' + link.replace(/^:/,"");
         //insert link into field
         var dialog = CKEDITOR.dialog.getCurrent();
         dialog.getContentElement("info", "internal").setValue(link);

@@ -1,4 +1,4 @@
-rev_17-Sep_15-08_57
+rev_17-Sep_18-20_03
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -127,3 +127,7 @@ Support for switching between CKEdiktor GUIs
 Sep 7
 switches filling interwiki select array from setTimeout to set Interval
 smoother switching betweein image paste modes
+
+Sep 18
+Added initial colon to links returned from linkwiz, to establish them as root, otherwise they are configured as
+belonging to current namespace
