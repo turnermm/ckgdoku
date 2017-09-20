@@ -172,6 +172,7 @@ class action_plugin_ckgdoku_save extends DokuWiki_Action_Plugin {
        } 
        
         $this->replace_entities();
+        $TEXT = preg_replace("/\{\{http:\/\/.*?fetch.php\?media=(.*?linkonly.*?)\}\}/",'{{' . "$1$2" .'}}',$TEXT);
         $TEXT = str_replace('< nowiki >', '%%<nowiki>%%',$TEXT);
 
 /* 11 Dec 2013 see comment below        
