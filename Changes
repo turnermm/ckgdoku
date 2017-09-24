@@ -1,4 +1,4 @@
-rev_17-Sep_19-23_46
+rev_17-Sep_24-11_11
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -131,3 +131,6 @@ smoother switching betweein image paste modes
 Sep 18
 Added initial colon to links returned from linkwiz, to establish them as root, otherwise they are configured as
 belonging to current namespace
+
+Swp 24 
+jQuery support for edittable plugin
