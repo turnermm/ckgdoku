@@ -1,4 +1,4 @@
-rev_17-Sep_24-11_11
+rev_17-Oct_22-12_02
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -132,5 +132,8 @@ Sep 18
 Added initial colon to links returned from linkwiz, to establish them as root, otherwise they are configured as
 belonging to current namespace
 
-Swp 24 
+Sep 24 
 jQuery support for edittable plugin
+
+Oct 22
+Insure namespace template data is saved when there has been no activity in editor
