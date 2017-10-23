@@ -460,6 +460,14 @@ class action_plugin_ckgdoku_edit extends DokuWiki_Action_Plugin {
             $this->xhtml
           );
        
+         $this->xhtml = preg_replace_callback(
+          '/wikilink2(.*?)dot-repl_/ms',
+           function($matches) {
+             return str_replace('wikilink2','wikilink1',$matches[0]);
+           },
+          $this->xhtml
+        );
+       
       if($this->draft_started) return $this->xhtml;
        $cname = getCacheName($INFO['client'].$ID,'.draft.fckl');
      
