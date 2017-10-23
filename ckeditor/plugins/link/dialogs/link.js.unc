@@ -1131,7 +1131,7 @@ var useHeading = function(wiki_id) {
                      internal_text =  this.getValueOf( 'info', 'internal_text' );
                      if(!data.url.url) {
                         data.url.url=document.getElementById(fckgInternalInputId).value;
-                              if(!data.url.url.match(/^:\w+/)) {                                 
+                              if(!data.url.url.match(/^:\w+/)  && !data.url.url.match(/^\.?/)) {                                 
                                 var ns = top.getCurrentWikiNS() + ':';
                                 ns = ns.replace(/:$/,"");
                                 var regex = new RegExp(':?'+ ns+':');
@@ -1144,7 +1144,9 @@ var useHeading = function(wiki_id) {
 
                      data.url.url =  data.url.url.replace(/^.*?\/data\/pages\//,"");
                      data.url.url = data.url.url.replace(/^\:/,"");
-                     data.url.url =  ':' + data.url.url.replace(/\//g,':');
+                     if(!data.url.url.match(/^\./)) {
+                         data.url.url =  ':' + data.url.url.replace(/\//g,':');
+                     }
                      data.adv.advCSSClasses = "wikilink1";
                      if(oDokuWiki_FCKEditorInstance.useheading == 'y') {
                          data.adv.advTitle = useHeading(data.url.url)
@@ -1158,6 +1160,7 @@ var useHeading = function(wiki_id) {
                  	var protocol = ( data.url && data.url.protocol != undefined ) ? data.url.protocol : 'http://',
 						url = ( data.url && CKEDITOR.tools.trim( data.url.url ) ) || '';
 					attributes[ 'data-cke-saved-href' ] = ( url.indexOf( '/' ) === 0 ) ? url : protocol + url;
+                      
                      break;
                 case 'interwiki':
                       if( ckg_iwikiClass) {

@@ -201,7 +201,7 @@ class action_plugin_ckgdoku_edit extends DokuWiki_Action_Plugin {
             }
             }
             else $text = $draft_text;
-         
+      $text =preg_replace("/\[\[\./ms",'[[dot-repl_',$text);   
      $text = preg_replace_callback(
     '/(~~NOCACHE~~|~~NOTOC~~|\{\{rss>http:\/\/.*?\}\})/ms',
      create_function(
