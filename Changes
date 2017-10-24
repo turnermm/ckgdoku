@@ -137,3 +137,6 @@ jQuery support for edittable plugin
 
 Oct 22
 Insure namespace template data is saved when there has been no activity in editor
+
+Oct 24
+Fixes broken table when cell has pipe in nowiki

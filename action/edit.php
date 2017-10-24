@@ -238,6 +238,7 @@ class action_plugin_ckgdoku_edit extends DokuWiki_Action_Plugin {
             function ($matches) {
                 $matches[0] = str_replace('%%', 'DBLPERCENT',$matches[0]);
                 $matches[0] =  str_replace('\\ ', 'DBLBACKSPLASH',$matches[0]);
+                 $matches[0] =  str_replace('|', 'NWPIPECHARACTER',$matches[0]);
                 return $matches[0];
             },
            $text
@@ -1210,7 +1211,8 @@ $text = preg_replace_callback(
         $xhtml = str_replace('ckgdokuFONTOpen', '&amp;lt;font',$xhtml);  // protect font markup in code blocks
         $xhtml = str_replace('ckgdokuFONTClose', 'font&amp;gt;',$xhtml);
         $xhtml = str_replace('DBLBACKSPLASH', '\\ ',$xhtml);
-        //DBLBACKSPLASH
+        $xhtml = str_replace('NWPIPECHARACTER', '|',$xhtml);        
+        
        $ua = strtolower ($_SERVER['HTTP_USER_AGENT']); 
 	  if(strpos($ua,'chrome') !== false) {
        $xhtml = preg_replace_callback(
