@@ -373,8 +373,16 @@ class action_plugin_ckgdoku_edit extends DokuWiki_Action_Plugin {
        //$text = preg_replace('/%%\s*<(code|file)>\s*%%/ms', 'PERC' . "$1" . 'PERC',$text);
        $text = preg_replace('/PERCcodePERC/ms','%%&lt;code&gt;%%', $text);
        $text = preg_replace('/PERCfilePERC/ms','%%&lt;file&gt;%%', $text);
-       $text =preg_replace("/\[\[(\.+):/ms","[[$1",$text);
-       $text =preg_replace("/\[\[\./ms",'[[dot-repl_',$text);   
+     //  $text =preg_replace("/\[\[(\.+):/ms","[[$1",$text);
+    //  $text =preg_replace("/\[\[\./ms",'[[dot-repl_',$text);   
+    $text = preg_replace_callback('/\[\[(.*?)\]\]/',
+        function ($matches) {
+            $matches[1] = preg_replace("/\.\./","dot-repl_.",$matches[1]);
+            $matches[1] = preg_replace("/\.\:/","dot-repl_:",$matches[1]);
+            return '[[' . $matches[1] . ']]';
+        }, $text
+      );
+      
        $divalign = false;
        if($this->helper->has_plugin('divalign2_center')) {
            $divalign = true;
