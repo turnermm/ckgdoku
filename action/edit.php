@@ -201,7 +201,7 @@ class action_plugin_ckgdoku_edit extends DokuWiki_Action_Plugin {
             }
             }
             else $text = $draft_text;
- //    $text =preg_replace("/\[\[\./ms",'[[dot-repl_',$text);   
+ 
      $text = preg_replace_callback(
     '/(~~NOCACHE~~|~~NOTOC~~|\{\{rss>http:\/\/.*?\}\})/ms',
      create_function(
@@ -373,16 +373,25 @@ class action_plugin_ckgdoku_edit extends DokuWiki_Action_Plugin {
        //$text = preg_replace('/%%\s*<(code|file)>\s*%%/ms', 'PERC' . "$1" . 'PERC',$text);
        $text = preg_replace('/PERCcodePERC/ms','%%&lt;code&gt;%%', $text);
        $text = preg_replace('/PERCfilePERC/ms','%%&lt;file&gt;%%', $text);
-     //  $text =preg_replace("/\[\[(\.+):/ms","[[$1",$text);
-    //  $text =preg_replace("/\[\[\./ms",'[[dot-repl_',$text);   
+//  $this->write_debug("TOP:\n" .$text);
     $text = preg_replace_callback('/\[\[(.*?)\]\]/',
         function ($matches) {
+           $matches[1] = preg_replace("/^\.\./",":dot-repl_dot-repl_",$matches[1]);
             $matches[1] = preg_replace("/\.\./","dot-repl_.",$matches[1]);
             $matches[1] = preg_replace("/\.\:/","dot-repl_:",$matches[1]);
+            $matches[1] = preg_replace("/^\./","dot-repl_",$matches[1]);
             return '[[' . $matches[1] . ']]';
         }, $text
       );
       
+    $text = preg_replace_callback('/\{\{(.*?)\}\}/',
+        function ($matches) {
+            list($name, $ext,$rest) = explode('.',$matches[1]);
+            if(empty($rest)) return $matches[0];
+            return '{#{' . $matches[1] . '}#}';
+        }, $text
+      );
+  // $this->write_debug("CONVERTED:\n" .$text);   
        $divalign = false;
        if($this->helper->has_plugin('divalign2_center')) {
            $divalign = true;
