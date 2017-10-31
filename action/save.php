@@ -174,12 +174,13 @@ class action_plugin_ckgdoku_save extends DokuWiki_Action_Plugin {
         $this->replace_entities();
         $TEXT = preg_replace("/\{\{http:\/\/.*?fetch.php\?media=(.*?linkonly.*?)\}\}/",'{{' . "$1$2" .'}}',$TEXT);
         $TEXT = str_replace('< nowiki >', '%%<nowiki>%%',$TEXT);
+        if($this->getConf('rel_links')) { 
         $TEXT = preg_replace('/dot-repl_?dot-repl_?/', '..', $TEXT);     
         $TEXT = preg_replace('/dot-repl_?/', '.', $TEXT);
         $TEXT = preg_replace("/\[\[:\./ms", '[[.',$TEXT);
         $TEXT = str_replace('{#{', '{{',$TEXT);
         $TEXT = str_replace('}#}', '}}',$TEXT);
-    
+        }
 
 /* 11 Dec 2013 see comment below        
 Remove discarded font syntax    
@@ -226,7 +227,10 @@ Removed newlines and spaces from beginnings and ends of text enclosed by font ta
       $TEXT = preg_replace_callback(
        '#(code|file)\>\s*.*?\n?\|#ms',
        function($matches) {         
-         return  str_replace("\\", "",$matches[0]);              
+         $matches[0] = preg_replace("/([\w\:])\\\\(\w)/ms","$1@#@$2",$matches[0]); //retain backslashes inside code blocks
+         $matches[0] = preg_replace("/(\w+)\\\\/ms","$1@#@",$matches[0]);
+         $matches[0] =  str_replace("\\", "",$matches[0]);              
+         return str_replace("@#@", "\\",$matches[0]);              
       },
       $TEXT     
       );
