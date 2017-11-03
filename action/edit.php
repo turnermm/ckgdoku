@@ -391,14 +391,6 @@ class action_plugin_ckgdoku_edit extends DokuWiki_Action_Plugin {
             return '[[' . $matches[1] . ']]';
         }, $text
       );
-      
-    $text = preg_replace_callback('/\{\{(.*?)\}\}/',
-        function ($matches) {
-            list($name, $ext,$rest) = explode('.',$matches[1]);
-            if(empty($rest)) return $matches[0];
-            return '{#{' . $matches[1] . '}#}';
-        }, $text
-      );
     }  
   // $this->write_debug("CONVERTED:\n" .$text);   
        $divalign = false;
