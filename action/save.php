@@ -300,7 +300,7 @@ global $ents;
 
 
 function write_debug($data) {
-//return;
+  return;
   if (!$handle = fopen('save.txt', 'a')) {
     return;
     }
@@ -311,12 +311,12 @@ function write_debug($data) {
 
 }
 function abs2rel($linkPath,$pagePath){
-    $this->write_debug ("$linkPath,$pagePath");
+   // $this->write_debug ("$linkPath,$pagePath");
    
     $aLink=explode(':',$linkPath);
     $nLink=count($aLink);
     if ($nLink<2 || trim($aLink[0])){
-        $this->write_debug ("8: $linkPath");
+    //    $this->write_debug ("8: $linkPath");
         // Probably relative link, return it
         return $linkPath;
     }
@@ -326,17 +326,17 @@ function abs2rel($linkPath,$pagePath){
     }
     
     $nPage=count($aPage);
-    $this->write_debug ( "npage = $nPage");
-    $this->write_debug ( "npage = $nLink");
+    //$this->write_debug ( "npage = $nPage");
+    //$this->write_debug ( "npage = $nLink");
      $arLinkText = print_r($aLink,1);
      $arPageText = print_r($aPage,1);
-     $this->write_debug("aLink=" .$arLinkText ) ;
-     $this->write_debug("nLink=" .$arPageText) ;
+     //$this->write_debug("aLink=" .$arLinkText ) ;
+     //$this->write_debug("nLink=" .$arPageText) ;
     $nslEqual=1; // count of equal namespaces from left to right
     // Minimal length of these two arrays. (-1 is becaus the last element is a page, not a namespace
     
     $nMin=($nLink<$nPage ? $nLink : $nPage)-1 ;
-    $this->write_debug ("min: $nMin");
+   // $this->write_debug ("min: $nMin");
     // Look the depth of common starting path
     for ($i=1;$i<$nMin;++$i){ // i==0 is empty root ns
         if (trim($aLink[$i])===trim($aPage[$i])){
@@ -348,7 +348,7 @@ function abs2rel($linkPath,$pagePath){
     }
     if ($nslEqual==1){
         // Link and page from different root namespaces
-        $this->write_debug ( "30: $linkPath");
+   //     $this->write_debug ( "30: $linkPath");
         return $linkPath;
     }
     // Truncate equal lef namespaces
@@ -362,7 +362,7 @@ function abs2rel($linkPath,$pagePath){
         $aResult=array_fill(0,$nPageDiff-1,'..');
     }
     $aResult=array_merge($aResult,$aLinkDiff);
-    $this->write_debug ( "44:" . implode(':', $aResult) ); 
+ //  $this->write_debug ( "44:" . implode(':', $aResult) ); 
     return implode(':', $aResult);
 }
 
