@@ -480,7 +480,7 @@ class action_plugin_ckgdoku_edit extends DokuWiki_Action_Plugin {
           );
        
          $this->xhtml = preg_replace_callback(
-          '/wikilink2(.*?)dot-repl_/ms',
+          '/wikilink2(.*?)dot-repl/ms',
            function($matches) {
              return str_replace('wikilink2','wikilink1',$matches[0]);
            },

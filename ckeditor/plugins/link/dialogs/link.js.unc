@@ -1490,7 +1490,7 @@ var useHeading = function(wiki_id) {
                select.options.length = 0;
                select.options[0] =  new Option(notSet,"",false,false);
            });
-
+            CKEDITOR.config.LinkAb2sRel=abs2rel ; 
 		},
 
 
@@ -1721,13 +1721,18 @@ var doku_linkwiz = {
      */
     insertLink: function(title){
         var link = doku_linkwiz.$entry.val(),
-            sel, stxt;
+            rel,relative_link,sel, stxt;
         if(!link) {
             return;
         }
         link = ':' + link.replace(/^:/,"");
         //insert link into field
-        var dialog = CKEDITOR.dialog.getCurrent();
+        var dialog = CKEDITOR.dialog.getCurrent();       
+        rel = CKEDITOR.config.LinkAb2sRel(link);         alert(rel);
+        relative_link = dialog.getValueOf( 'info', 'relative_link' ); 
+        if(relative_link) {        
+               if(rel) link = rel;
+        }
         dialog.getContentElement("info", "internal").setValue(link);
 
         doku_linkwiz.hide();
