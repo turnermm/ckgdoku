@@ -316,7 +316,6 @@ function abs2rel($linkPath,$pagePath){
     $aLink=explode(':',$linkPath);
     $nLink=count($aLink);
     if ($nLink<2 || trim($aLink[0])){
-    //    $this->write_debug ("8: $linkPath");
         // Probably relative link, return it
         return $linkPath;
     }
@@ -360,6 +359,9 @@ function abs2rel($linkPath,$pagePath){
     $aResult=array();
     if ($nPageDiff>1){
         $aResult=array_fill(0,$nPageDiff-1,'..');
+    }
+     else if($nPageDiff == 1) {
+        $aResult[] = '.';
     }
     $aResult=array_merge($aResult,$aLinkDiff);
  //  $this->write_debug ( "44:" . implode(':', $aResult) ); 
