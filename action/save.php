@@ -10,7 +10,7 @@ define('FCK_ACTION_SUBDIR', realpath(dirname(__FILE__)) . '/');
  */
 
 class action_plugin_ckgdoku_save extends DokuWiki_Action_Plugin {
-
+     private $auto_InternalToRelative = false;
     function register(Doku_Event_Handler $controller) {
   
         $controller->register_hook('DOKUWIKI_STARTED', 'BEFORE', $this, 'ckgdoku_save_preprocess');
@@ -40,6 +40,9 @@ class action_plugin_ckgdoku_save extends DokuWiki_Action_Plugin {
               $TEXT = trim($TEXT);
         }
 
+   if(strpos($TEXT,'~~AUTO_INTERNAL_LINKS~~') !==false) {
+       $this->auto_InternalToRelative = true;
+   }
 
   $TEXT = preg_replace_callback(
     '|\{\{data:(.*?);base64|ms',
@@ -185,11 +188,11 @@ class action_plugin_ckgdoku_save extends DokuWiki_Action_Plugin {
                        $matches[0] = preg_replace('/dot-repl_?/', '.', $matches[0]);   
                        return $matches[0];
                    }
-                   
+                  if(!$this->auto_InternalToRelative) return $matches[0];
                    $link = explode('?',$matches[1]);
                    list($link_id,$linktext) = explode('|', $link[0]);          
                    $rel = $this->abs2rel($link_id,$ID);                              
-                   if(!empty($link[1])) $rel = $rel.'|'.$link[1];                
+                   if(!empty($linktext)) $rel = $rel.'|'.$linktext;                
                    return '[[' . $rel .']]';
                },
            $TEXT
