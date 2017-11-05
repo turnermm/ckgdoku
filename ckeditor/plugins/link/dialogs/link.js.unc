@@ -409,10 +409,17 @@ var useHeading = function(wiki_id) {
            text =  text.replace(/\//g,':');
            text = ':' + text;            
 
-            document.getElementById(fckgInternalInputId).value = text;
+        
             newRelativeLink = abs2rel (text);       
             ckg_dialog.getContentElement('info', 'relative_link').disable();
-            var rel_link = ckg_dialog.getContentElement('info', 'relative_link').getInputElement().$.id;            
+            var  relative_link = ckg_dialog.getValueOf( 'info', 'relative_link' );          
+            if(!relative_link) {
+                 document.getElementById(fckgInternalInputId).value = text;
+            }
+            else  {
+                 document.getElementById(fckgInternalInputId).value = newRelativeLink;
+            }
+           // var rel_link = ckg_dialog.getContentElement('info', 'relative_link').getInputElement().$.id;            
             
            //alert(document.getElementById(inel).checked);
            //document.getElementById(inel).style.display='none';
