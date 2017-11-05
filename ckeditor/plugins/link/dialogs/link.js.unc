@@ -805,9 +805,10 @@ var useHeading = function(wiki_id) {
                             },                            
                            {
                                id: 'relative_link',
-                               label:  'Create a relative link', //lang.IfChecked, //' If checked, uncheck to activate OK button',
                                type: 'checkbox',
+                                label:  'Create a relative link', 
                                'default' : false,                                                             
+                               required: false,                               
                             },                             
                             {
                                 id: 'anchorsmsg',
@@ -1491,6 +1492,10 @@ var useHeading = function(wiki_id) {
                select.options[0] =  new Option(notSet,"",false,false);
            });
             CKEDITOR.config.LinkAb2sRel=abs2rel ; 
+            if(!top.JSINFO['rel_links']) {
+                this.getContentElement('info','relative_link').getElement().hide();
+            }
+       
 		},
 
 
