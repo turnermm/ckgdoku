@@ -410,7 +410,7 @@ var useHeading = function(wiki_id) {
            text = ':' + text;            
 
             document.getElementById(fckgInternalInputId).value = text;
-            newRelativeLink = abs2rel (text,top);       
+            newRelativeLink = abs2rel (text);       
             ckg_dialog.getContentElement('info', 'relative_link').disable();
             var rel_link = ckg_dialog.getContentElement('info', 'relative_link').getInputElement().$.id;            
             
@@ -423,8 +423,8 @@ var useHeading = function(wiki_id) {
 
     var trim=function(x){return x.replace(/^\s+|\s+$/g, '')};
     var empty = function(x){x= trim(x); if(!x  || typeof(x) == 'undefined') return true;}
-    var abs2rel = function (linkPath,pagePath) {   
-      pagePath=top.JSINFO['id'];
+    var abs2rel = function (linkPath) {   
+       var pagePath=top.JSINFO['id'];
        var aLink=linkPath.split(':');     
        var  nLink=aLink.length;
         if (nLink<2 || trim(aLink[0])){  
@@ -807,7 +807,7 @@ var useHeading = function(wiki_id) {
                                id: 'relative_link',
                                type: 'checkbox',
                                 label:  'Create a relative link', 
-                               'default' : false,                                                             
+                               'default' : false,  
                                required: false,                               
                             },                             
                             {
@@ -1733,7 +1733,7 @@ var doku_linkwiz = {
         link = ':' + link.replace(/^:/,"");
         //insert link into field
         var dialog = CKEDITOR.dialog.getCurrent();       
-        rel = CKEDITOR.config.LinkAb2sRel(link);         alert(rel);
+        rel = CKEDITOR.config.LinkAb2sRel(link);  
         relative_link = dialog.getValueOf( 'info', 'relative_link' ); 
         if(relative_link) {        
                if(rel) link = rel;
