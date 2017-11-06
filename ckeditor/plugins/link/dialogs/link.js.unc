@@ -1381,11 +1381,11 @@ var useHeading = function(wiki_id) {
                this.stack = select.options;
                this.stack.length = 0;
                this.stack[0] = (new Option("Not Set","not-set",false,false));
-               ckgeditIwikiIndex = new Array();
+               ckgdokuIwikiIndex = new Array();
                var count = 1;
                for(var i in ckgdokuIwikiData) {
                   this.stack[count] =  new Option(i + ' >> ' + ckgdokuIwikiData[i],i,false,false); 
-                  ckgeditIwikiIndex[i] = count;
+                  ckgdokuIwikiIndex[i] = count;
                   count++;            
               }              
          }; 
