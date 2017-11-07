@@ -10,7 +10,7 @@ define('FCK_ACTION_SUBDIR', realpath(dirname(__FILE__)) . '/');
  */
 
 class action_plugin_ckgdoku_save extends DokuWiki_Action_Plugin {
-
+     private $auto_InternalToRelative = false;
     function register(Doku_Event_Handler $controller) {
   
         $controller->register_hook('DOKUWIKI_STARTED', 'BEFORE', $this, 'ckgdoku_save_preprocess');
@@ -40,6 +40,9 @@ class action_plugin_ckgdoku_save extends DokuWiki_Action_Plugin {
               $TEXT = trim($TEXT);
         }
 
+   if(strpos($TEXT,'~~AUTO_INTERNAL_LINKS~~') !==false) {
+       $this->auto_InternalToRelative = true;
+   }
 
   $TEXT = preg_replace_callback(
     '|\{\{data:(.*?);base64|ms',
@@ -172,8 +175,44 @@ class action_plugin_ckgdoku_save extends DokuWiki_Action_Plugin {
        } 
        
         $this->replace_entities();
-        $TEXT = preg_replace("/\{\{http:\/\/.*?fetch.php\?media=(.*?linkonly.*?)\}\}/",'{{' . "$1$2" .'}}',$TEXT);
+        $TEXT = preg_replace("/\{\{http:\/\/.*?fetch.php\?media=(.*?linkonly.*?)\}\}/",'{{' . "$1" .'}}',$TEXT);
         $TEXT = str_replace('< nowiki >', '%%<nowiki>%%',$TEXT);
+
+       if($this->getConf('rel_links')) { 
+          $TEXT = preg_replace_callback(
+           '#\[\[(.*?)\]\]#ms',
+               function($matches){             
+                    global $ID;        
+                   if(strpos($matches[0],'dot-repl') !== false) {                     
+                        $matches[0] = preg_replace('/dot-repl_?dot-repl_?/', '..', $matches[0]);     
+                       $matches[0] = preg_replace('/dot-repl_?/', '.', $matches[0]);   
+                       return $matches[0];
+                   }
+                  if(!$this->auto_InternalToRelative) return $matches[0];
+                   $link = explode('?',$matches[1]);
+                   list($link_id,$linktext) = explode('|', $link[0]);          
+                   $rel = $this->abs2rel($link_id,$ID);                              
+                   if(!empty($linktext)) $rel = $rel.'|'.$linktext;                
+                   return '[[' . $rel .']]';
+               },
+           $TEXT
+         );      
+         
+          $TEXT = preg_replace_callback(
+           '#\{\{(.*?)\}\}#ms',
+           function($matches) {              
+                global $ID;
+               $link = explode('?',$matches[1]);
+               list($link_id,$linktext) = explode('|', $link[0]);          
+               $rel = $this->abs2rel($link_id,$ID);
+               if(!empty($linktext)) $rel = $rel.'|'.$linktext;
+               return '{{' . $rel .'}}';
+           },
+           $TEXT
+         );       
+
+        $TEXT = preg_replace("/\[\[:\./ms", '[[.',$TEXT);
+        }
 
 /* 11 Dec 2013 see comment below        
 Remove discarded font syntax    
@@ -227,6 +266,8 @@ Removed newlines and spaces from beginnings and ends of text enclosed by font ta
       },
       $TEXT     
  	     );
+      
+     
       /* reformat table cell after removing extra line-feeds, above */
     $TEXT = preg_replace_callback(  
          '#\|[\s\n]+(\<file.*?\>)(.*?)(\<\/file>\s*.*?)\n?\|#ms',   
@@ -242,6 +283,7 @@ Removed newlines and spaces from beginnings and ends of text enclosed by font ta
     
     }
 
+    
 function replace_entities() {
 global $TEXT;
 global $ents;
@@ -271,5 +313,63 @@ return;
     fclose($handle);
 
 }
+function abs2rel($linkPath,$pagePath){
+   // $this->write_debug ("$linkPath,$pagePath");
+   
+    $aLink=explode(':',$linkPath);
+    $nLink=count($aLink);
+    if ($nLink<2 || trim($aLink[0])){
+        // Probably relative link, return it
+        return $linkPath;
+    }
+    $aPage=explode(':',$pagePath);
+    if(empty($aLink[0])) {
+       array_unshift($aPage,"");    
+    }
+    
+    $nPage=count($aPage);
+    //$this->write_debug ( "npage = $nPage");
+    //$this->write_debug ( "npage = $nLink");
+     $arLinkText = print_r($aLink,1);
+     $arPageText = print_r($aPage,1);
+     //$this->write_debug("aLink=" .$arLinkText ) ;
+     //$this->write_debug("nLink=" .$arPageText) ;
+    $nslEqual=1; // count of equal namespaces from left to right
+    // Minimal length of these two arrays. (-1 is becaus the last element is a page, not a namespace
+    
+    $nMin=($nLink<$nPage ? $nLink : $nPage)-1 ;
+   // $this->write_debug ("min: $nMin");
+    // Look the depth of common starting path
+    for ($i=1;$i<$nMin;++$i){ // i==0 is empty root ns
+        if (trim($aLink[$i])===trim($aPage[$i])){
+            ++$nslEqual;
+        }
+        else {
+            break;
+        }
+    }
+    if ($nslEqual==1){
+        // Link and page from different root namespaces
+   //     $this->write_debug ( "30: $linkPath");
+        return $linkPath;
+    }
+    // Truncate equal lef namespaces
+    $aPageDiff=array_slice($aPage,$nslEqual);
+    $nPageDiff=count($aPageDiff);
+    $aLinkDiff=array_slice($aLink,$nslEqual);
+    
+    // Now we have to go up to nPageDiff-1 levels
+    $aResult=array();
+    if ($nPageDiff>1){
+        $aResult=array_fill(0,$nPageDiff-1,'..');
+    }
+     else if($nPageDiff == 1) {
+        $aResult[] = '.';
+    }
+    $aResult=array_merge($aResult,$aLinkDiff);
+ //  $this->write_debug ( "44:" . implode(':', $aResult) ); 
+    return implode(':', $aResult);
+}
+
 } //end of action class
 ?>

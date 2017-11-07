@@ -398,6 +398,7 @@ var useHeading = function(wiki_id) {
 		return retval;
         };
 
+       var newRelativeLink;
      var  insertInternalLinkText = function (text)
        {
            if(!text) return;
@@ -407,10 +408,78 @@ var useHeading = function(wiki_id) {
            text = text.replace(/^[\/\:]/,"");
            text =  text.replace(/\//g,':');
            text = ':' + text;
+
+        
+            newRelativeLink = abs2rel (text);       
+            ckg_dialog.getContentElement('info', 'relative_link').disable();
+            var  relative_link = ckg_dialog.getValueOf( 'info', 'relative_link' );          
+            if(!relative_link) {
            document.getElementById(fckgInternalInputId).value = text;
+            }
+            else  {
+                 document.getElementById(fckgInternalInputId).value = newRelativeLink;
+            }
+           // var rel_link = ckg_dialog.getContentElement('info', 'relative_link').getInputElement().$.id;            
+            
+           //alert(document.getElementById(inel).checked);
+           //document.getElementById(inel).style.display='none';
+            // ckg_dialog.getContentElement('info', 'relative_link').disable();
         };
 
     update_ckgdokuInternalLink = insertInternalLinkText;
+
+    var trim=function(x){return x.replace(/^\s+|\s+$/g, '')};
+    var empty = function(x){x= trim(x); if(!x  || typeof(x) == 'undefined') return true;}
+    var abs2rel = function (linkPath) {   
+       var pagePath=top.JSINFO['id'];
+       var aLink=linkPath.split(':');     
+       var  nLink=aLink.length;
+        if (nLink<2 || trim(aLink[0])){  
+            // Probably relative link, return it
+            return linkPath;
+        }
+        var aPage=pagePath.split(':');
+        if(empty(aLink[0])) {
+           aPage.unshift("");    
+        }
+        nPage=aPage.length;
+        
+        var nslEqual=1; // count of equal namespaces from left to right
+        // Minimal length of these two arrays. (-1 is becaus the last element is a page, not a namespace    
+        var nMin=(nLink<nPage ? nLink : nPage)-1 ;   
+        // Look the depth of common starting path
+        for (i=1;i<nMin;++i){ // i==0 is empty root ns
+            if (trim(aLink[i])===trim(aPage[i])){
+                ++nslEqual;
+            }
+            else {
+                break;
+            }
+        }
+
+        if (nslEqual==1){
+            // Link and page from different root namespaces   
+            return linkPath;
+        }
+        // Truncate equal left namespaces
+        aPageDiff=aPage.slice(nslEqual);
+        nPageDiff=aPageDiff.length;
+        aLinkDiff=aLink.slice(nslEqual);
+        
+        // Now we have to go up to nPageDiff-1 levels
+        var aResult = new Array();  //=new Array();
+        
+
+        if (nPageDiff>1){      
+            aResult = new Array(nPageDiff-1);
+            aResult=aResult.fill('..');
+        }
+        else if(nPageDiff == 1) {
+            aResult[0] = '.';
+        }
+        aResult=aResult.concat(aLinkDiff); 
+        return aResult.join(':');
+    };
 
       var  insertMediaLinkText = function (text)
        {
@@ -740,7 +809,13 @@ var useHeading = function(wiki_id) {
 								id : 'internal_text',
 								label : translateItem('LinkText'),
 								required: false,
-                                
+                            },                            
+                           {
+                               id: 'relative_link',
+                               type: 'checkbox',
+                                label:  'Create a relative link', 
+                               'default' : false,  
+                               required: false,                               
                             },
                             {
                                 id: 'anchorsmsg',
@@ -1089,6 +1164,7 @@ var useHeading = function(wiki_id) {
 		onOk : function()
 		{
            var internal_text = false;
+           var relative_link = false;           
             var ImagesAllowed = new RegExp( oDokuWiki_FCKEditorInstance.imageUploadAllowedExtensions);
 			var attributes = {},
 				removeAttributes = [],
@@ -1128,10 +1204,15 @@ var useHeading = function(wiki_id) {
 					attributes[ 'data-cke-saved-href' ] = ( url.indexOf( '/' ) === 0 ) ? url : protocol + url;
                 break;
                 case 'internal':
+                   
                      internal_text =  this.getValueOf( 'info', 'internal_text' );
+                     relative_link = this.getValueOf( 'info', 'relative_link' ); 
+                     if(relative_link && newRelativeLink) {
+                                 data.url.url = newRelativeLink;                                  
+                     }
                      if(!data.url.url) {
                         data.url.url=document.getElementById(fckgInternalInputId).value;
-                              if(!data.url.url.match(/^:\w+/)) {                                 
+                              if(!data.url.url.match(/^:\w+/)  && !data.url.url.match(/^\.?/)) {                                 
                                 var ns = top.getCurrentWikiNS() + ':';
                                 ns = ns.replace(/:$/,"");
                                 var regex = new RegExp(':?'+ ns+':');
@@ -1144,7 +1225,9 @@ var useHeading = function(wiki_id) {
 
                      data.url.url =  data.url.url.replace(/^.*?\/data\/pages\//,"");
                      data.url.url = data.url.url.replace(/^\:/,"");
+                     if(!data.url.url.match(/^\./)) {
                      data.url.url =  ':' + data.url.url.replace(/\//g,':');
+                     }
                      data.adv.advCSSClasses = "wikilink1";
                      if(oDokuWiki_FCKEditorInstance.useheading == 'y') {
                          data.adv.advTitle = useHeading(data.url.url)
@@ -1158,6 +1241,7 @@ var useHeading = function(wiki_id) {
                  	var protocol = ( data.url && data.url.protocol != undefined ) ? data.url.protocol : 'http://',
 						url = ( data.url && CKEDITOR.tools.trim( data.url.url ) ) || '';
 					attributes[ 'data-cke-saved-href' ] = ( url.indexOf( '/' ) === 0 ) ? url : protocol + url;
+                      
                      break;
                 case 'interwiki':
                       if( ckg_iwikiClass) {
@@ -1414,6 +1498,10 @@ var useHeading = function(wiki_id) {
                select.options.length = 0;
                select.options[0] =  new Option(notSet,"",false,false);
            });
+            CKEDITOR.config.LinkAb2sRel=abs2rel ; 
+            if(!top.JSINFO['rel_links']) {
+                this.getContentElement('info','relative_link').getElement().hide();
+            }
 
 		},
 
@@ -1645,13 +1733,18 @@ var doku_linkwiz = {
      */
     insertLink: function(title){
         var link = doku_linkwiz.$entry.val(),
-            sel, stxt;
+            rel,relative_link,sel, stxt;
         if(!link) {
             return;
         }
         link = ':' + link.replace(/^:/,"");
         //insert link into field
         var dialog = CKEDITOR.dialog.getCurrent();
+        rel = CKEDITOR.config.LinkAb2sRel(link);  
+        relative_link = dialog.getValueOf( 'info', 'relative_link' ); 
+        if(relative_link) {        
+               if(rel) link = rel;
+        }
         dialog.getContentElement("info", "internal").setValue(link);
 
         doku_linkwiz.hide();
