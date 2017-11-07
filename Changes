@@ -2,6 +2,13 @@ rev_17-Nov_06-05_49
 
 Switched dafault filebrowser settings to all and ckgedit
 
+19 Oct
+manually merged with ckgdoku farms branch
+20 Oct
+Fixed script.js to correctly insert farm's image url into image.js
+21 Feb  2017
+Synched with ckgdoku farms_4.7a
+
 18 Nov
 Fix for HTML in user profile panel
 
@@ -29,23 +36,23 @@ Fix in script.js for assigning image parameters (size, link, align)
 Mar 29
 Synced to captcha
 
-Mar 30
-Fixed hiding specialized buttons for non-users wehn captcha is on
+Mar 31
+fix for guest use of specialized buttons when captcha is on
 
 Apr 1
-removed extra / from fileurl sent from media manager to ckeditor link dialog in script.js (pull  #9) 
+syncs with master pull #9: remove extraneous / from fileurl in script.js
 
-Apr 4
-Moved javascript from mediamanager.php to scripts/mediamgr.js, loaded by TPL_METAHEADER_OUTPUT.
+Apr 1
+Moved js from in action/mediamanager.php to script: scripts/mediamgr.js
 
 Apr 5
-support for Hover texts on images
+Support for Hover Tips over images
 
 Apr 6
 Fixes missing curly at end of mediamgr.js
 
 Apr 20
-New setting htmbloc_okk gives option of allowing HTML_BLOCKs without settiâ€¦ng DW's htmlok to true
+New setting htmbloc_okk gives option of allowing HTML_BLOCKs without setti…ng DW's htmlok to true
 
 Apr 22
 Double click edit section opens dw editor
