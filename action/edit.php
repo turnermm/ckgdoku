@@ -373,26 +373,7 @@ class action_plugin_ckgdoku_edit extends DokuWiki_Action_Plugin {
        //$text = preg_replace('/%%\s*<(code|file)>\s*%%/ms', 'PERC' . "$1" . 'PERC',$text);
        $text = preg_replace('/PERCcodePERC/ms','%%&lt;code&gt;%%', $text);
        $text = preg_replace('/PERCfilePERC/ms','%%&lt;file&gt;%%', $text);
-//  $this->write_debug("TOP:\n" .$text);
-    if($this->getConf('rel_links')) {
-    $text = preg_replace_callback('/\[\[(.*?)\]\]/',
-        function ($matches) {
-            list($id,$lnktext) = explode('|',$matches[1]);
-           $matches[1] = preg_replace("/^\.\./",":dot-repl_dot-repl_",$matches[1]);
-            $matches[1] = preg_replace("/\.\./","dot-repl_.",$matches[1]);
-            $matches[1] = preg_replace("/\.\:/","dot-repl_:",$matches[1]);
-            $matches[1] = preg_replace("/^\./","dot-repl_",$matches[1]);
-            
-            $elems = explode('|', $matches[1]) ;
-            if(!empty($lnktext)) {             
-                $matches[1]  = $elems[0] . '|' . $lnktext ;
-             } 
              
-            return '[[' . $matches[1] . ']]';
-        }, $text
-      );
-    }  
-  // $this->write_debug("CONVERTED:\n" .$text);   
        $divalign = false;
        if($this->helper->has_plugin('divalign2_center')) {
            $divalign = true;

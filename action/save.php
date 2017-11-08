@@ -10,7 +10,7 @@ define('FCK_ACTION_SUBDIR', realpath(dirname(__FILE__)) . '/');
  */
 
 class action_plugin_ckgdoku_save extends DokuWiki_Action_Plugin {
-     private $auto_InternalToRelative = false;
+    
     function register(Doku_Event_Handler $controller) {
   
         $controller->register_hook('DOKUWIKI_STARTED', 'BEFORE', $this, 'ckgdoku_save_preprocess');
@@ -182,16 +182,11 @@ class action_plugin_ckgdoku_save extends DokuWiki_Action_Plugin {
           $TEXT = preg_replace_callback(
            '#\[\[(.*?)\]\]#ms',
                function($matches){             
-                    global $ID;        
-                   if(strpos($matches[0],'dot-repl') !== false) {                     
-                        $matches[0] = preg_replace('/dot-repl_?dot-repl_?/', '..', $matches[0]);     
-                       $matches[0] = preg_replace('/dot-repl_?/', '.', $matches[0]);   
-                       return $matches[0];
-                   }
-                  if(!$this->auto_InternalToRelative) return $matches[0];
+                    global $ID, $conf;      
                    $link = explode('?',$matches[1]);
                    list($link_id,$linktext) = explode('|', $link[0]);          
                    $rel = $this->abs2rel($link_id,$ID);                              
+                   if($conf['useheading']) $linktext = trim(tpl_pagetitle($link_id,1));                  
                    if(!empty($linktext)) $rel = $rel.'|'.$linktext;                
                    return '[[' . $rel .']]';
                },
@@ -313,7 +308,67 @@ function write_debug($data) {
     fclose($handle);
 
 }
+//linkPath is the link in the page
+//pagePath is absolute path of the page (ns1:ns2:....:page or :ns1:ns2:....:page)
 function abs2rel($linkPath,$pagePath){
+    if ($linkPath[0]==='.'){
+        // It's already relative
+        return $linkPath;
+    }
+    $aLink=explode(':',$linkPath);
+    $nLink=count($aLink);
+    if ($nLink<2){
+        return $linkPath;
+    }
+    $aPage=explode(':',$pagePath);
+    if(empty($aLink[0])) {
+        // If linkPath is started by ':'
+        // Make canonical absolute path ns1:ns2:.....:pageLink (strip leading :)
+        array_shift($aLink);
+        if (--$nLink<2) {
+            return $linkPath;
+        }
+    }
+    
+    if(empty($aPage[0])) {
+        // If pagePath is started by ':'
+        // Make canonical absolute path ns1:ns2:.....:page (strip leading :)
+        array_shift($aPage);
+    }
+    $nPage=count($aPage);
+    $nslEqual=0; // count of equal namespaces from left to right
+    // Minimal length of these two arrays, page name is not included
+    $nMin=($nLink<$nPage ? $nLink : $nPage)-1 ;
+    for ($i=0;$i<$nMin;++$i){
+        if ($aLink[$i]===$aPage[$i]){
+            ++$nslEqual;
+        }
+        else {
+            break;
+        }
+    }
+    if ($nslEqual==0){
+        // Link and page from different root namespaces
+        return $linkPath;
+    }
+    // Truncate equal lef namespaces
+    $aPageDiff=array_slice($aPage,$nslEqual);
+    $nPageDiff=count($aPageDiff);
+    $aLinkDiff=array_slice($aLink,$nslEqual);
+    
+    // Now we have to go up to nPageDiff-1 levels
+    $aResult=array();
+    if ($nPageDiff>1){
+        $aResult=array_fill(0,$nPageDiff-1,'..');
+    }
+     else if($nPageDiff == 1) {
+        $aResult[] = '.';
+    }
+    $aResult=array_merge($aResult,$aLinkDiff);
+    return implode(':', $aResult);
+}
+
+function abs_2rel($linkPath,$pagePath){
    // $this->write_debug ("$linkPath,$pagePath");
    
     $aLink=explode(':',$linkPath);
