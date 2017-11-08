@@ -377,15 +377,15 @@ class action_plugin_ckgdoku_edit extends DokuWiki_Action_Plugin {
     if($this->getConf('rel_links')) {
     $text = preg_replace_callback('/\[\[(.*?)\]\]/',
         function ($matches) {
+            list($id,$lnktext) = explode('|',$matches[1]);
            $matches[1] = preg_replace("/^\.\./",":dot-repl_dot-repl_",$matches[1]);
             $matches[1] = preg_replace("/\.\./","dot-repl_.",$matches[1]);
             $matches[1] = preg_replace("/\.\:/","dot-repl_:",$matches[1]);
             $matches[1] = preg_replace("/^\./","dot-repl_",$matches[1]);
             
             $elems = explode('|', $matches[1]) ;
-            if(!empty($elems[1])) {
-                 $elems[1] = str_replace('dot-repl_',"", $elems[1]);
-                $matches[1]  = $elems[0] . '|' . $elems[1] ;
+            if(!empty($lnktext)) {             
+                $matches[1]  = $elems[0] . '|' . $lnktext ;
              } 
              
             return '[[' . $matches[1] . ']]';
