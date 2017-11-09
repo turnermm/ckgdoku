@@ -1104,6 +1104,7 @@ var useHeading = function(wiki_id) {
 				data = {},
                 linkstyle = 'page',
 				me = this,
+                tested  = false,
 				editor = this.getParentEditor();
 
 			this.commitContent( data );
@@ -1157,14 +1158,22 @@ var useHeading = function(wiki_id) {
                      data.url.url = data.url.url.replace(/^\:/,"");
                          data.url.url =  ':' + data.url.url.replace(/\//g,':');
                      data.adv.advCSSClasses = "wikilink1";
+                     
                      if(oDokuWiki_FCKEditorInstance.useheading == 'y') {
-                         data.adv.advTitle = useHeading(data.url.url)
+                        var tmp = useHeading(data.url.url);
+                        var test_1 = tmp.replace(/^:/,"");
+                        var test_2 = data.url.url.replace(/^:/,"");                   
+                        if(test_1 != test_2) {            
+                              data.adv.advTitle = tmp;    
+                              tested = true;
+                          }    
+                          else tested = false;                          
                     }
-                   else if(ilinkstyle == 'page') {                      
+                   if(ilinkstyle == 'page' && !tested) {      
                           var elms = data.url.url.split(':');
                           data.adv.advTitle = elms.pop();                        
                     }  
-                     else {
+                    else if(!tested) {
                      data.adv.advTitle = data.url.url;
                      }
                      data.url.url=top.dokuBase + 'doku.php?id=' + data.url.url;
