@@ -81,7 +81,18 @@ class action_plugin_ckgdoku_meta extends DokuWiki_Action_Plugin {
   }
  
 function _ajax_call(Doku_Event $event, $param) {
-     if ($event->data == 'wrap_lang') {  //choose profile editor priority
+      if ($event->data == 'use_heads') {  
+         $event->stopPropagation();
+          $event->preventDefault();
+          global $INPUT;
+          $page = $INPUT->str('dw_id');  
+          $page = urldecode($page);
+          $page = ltrim($page, ':');
+         $t= trim(tpl_pagetitle($page,1));
+         echo htmlentities($t) . "\n";          
+     }
+     
+     if ($event->data == 'wrap_lang') {  
          $event->stopPropagation();
           $event->preventDefault();
          global $INPUT;

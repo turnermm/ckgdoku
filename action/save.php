@@ -178,21 +178,32 @@ class action_plugin_ckgdoku_save extends DokuWiki_Action_Plugin {
         $TEXT = preg_replace("/\{\{http:\/\/.*?fetch.php\?media=(.*?linkonly.*?)\}\}/",'{{' . "$1" .'}}',$TEXT);
         $TEXT = str_replace('< nowiki >', '%%<nowiki>%%',$TEXT);
         
-       if($this->getConf('rel_links')) { 
+ 
           $TEXT = preg_replace_callback(
            '#\[\[(.*?)\]\]#ms',
-               function($matches){             
+               function($matches){ 
                     global $ID, $conf;      
                    $link = explode('?',$matches[1]);
                    list($link_id,$linktext) = explode('|', $link[0]);          
-                   $rel = $this->abs2rel($link_id,$ID);                              
-                   if($conf['useheading']) $linktext = trim(tpl_pagetitle($link_id,1));                  
-                   if(!empty($linktext)) $rel = $rel.'|'.$linktext;                
+                   if($this->getConf('rel_links'))  $rel = $this->abs2rel($link_id,$ID); 
+                   
+                   if($conf['useheading']) {
+                      $tmp_linktext = trim(tpl_pagetitle($link_id,1));                       
+                      if(trim($linktext) == trim($tmp_linktext)) {
+                          $linktext = "";
+                      }
+                   }  
+                   $tmp_ar = explode(':',$link_id);
+                   $tmp_id = array_pop($tmp_ar);
+                   if(trim($linktext,'.: ' ) == trim($tmp_id,'.: ')) $linktext = "";
+                              
+                   $rel = $rel.'|'.$linktext;    
                    return '[[' . $rel .']]';
                },
            $TEXT
          );      
          
+        if($this->getConf('rel_links')) {    
           $TEXT = preg_replace_callback(
            '#\{\{(.*?)\}\}#ms',
            function($matches) {              
@@ -204,9 +215,7 @@ class action_plugin_ckgdoku_save extends DokuWiki_Action_Plugin {
                return '{{' . $rel .'}}';
            },
            $TEXT
-         );       
-
-        $TEXT = preg_replace("/\[\[:\./ms", '[[.',$TEXT);
+         );               
         }
 
 /* 11 Dec 2013 see comment below        
@@ -368,63 +377,6 @@ function abs2rel($linkPath,$pagePath){
     return implode(':', $aResult);
 }
 
-function abs_2rel($linkPath,$pagePath){
-   // $this->write_debug ("$linkPath,$pagePath");
-   
-    $aLink=explode(':',$linkPath);
-    $nLink=count($aLink);
-    if ($nLink<2 || trim($aLink[0])){
-        // Probably relative link, return it
-        return $linkPath;
-    }
-    $aPage=explode(':',$pagePath);
-    if(empty($aLink[0])) {
-       array_unshift($aPage,"");    
-    }
-    
-    $nPage=count($aPage);
-    //$this->write_debug ( "npage = $nPage");
-    //$this->write_debug ( "npage = $nLink");
-     $arLinkText = print_r($aLink,1);
-     $arPageText = print_r($aPage,1);
-     //$this->write_debug("aLink=" .$arLinkText ) ;
-     //$this->write_debug("nLink=" .$arPageText) ;
-    $nslEqual=1; // count of equal namespaces from left to right
-    // Minimal length of these two arrays. (-1 is becaus the last element is a page, not a namespace
-    
-    $nMin=($nLink<$nPage ? $nLink : $nPage)-1 ;
-   // $this->write_debug ("min: $nMin");
-    // Look the depth of common starting path
-    for ($i=1;$i<$nMin;++$i){ // i==0 is empty root ns
-        if (trim($aLink[$i])===trim($aPage[$i])){
-            ++$nslEqual;
-        }
-        else {
-            break;
-        }
-    }
-    if ($nslEqual==1){
-        // Link and page from different root namespaces
-   //     $this->write_debug ( "30: $linkPath");
-        return $linkPath;
-    }
-    // Truncate equal lef namespaces
-    $aPageDiff=array_slice($aPage,$nslEqual);
-    $nPageDiff=count($aPageDiff);
-    $aLinkDiff=array_slice($aLink,$nslEqual);
-    
-    // Now we have to go up to nPageDiff-1 levels
-    $aResult=array();
-    if ($nPageDiff>1){
-        $aResult=array_fill(0,$nPageDiff-1,'..');
-    }
-     else if($nPageDiff == 1) {
-        $aResult[] = '.';
-    }
-    $aResult=array_merge($aResult,$aLinkDiff);
- //  $this->write_debug ( "44:" . implode(':', $aResult) ); 
-    return implode(':', $aResult);
-}
 
 } //end of action class
 
