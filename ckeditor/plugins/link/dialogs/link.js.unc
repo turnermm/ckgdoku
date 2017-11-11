@@ -30,8 +30,9 @@ CKEDITOR.dialog.add( 'link', function( editor )
 	 var fckgSMBInputId;
      var defaultFBLang = {
         InternalLink: "internal link",
-        LinkText: "Link Text (Optional)",
+        LinkText: "<span style='font-weight:bold'>Link Display Text</span><br />User defined Text (takes precedence over Page Name or  ID)",
         InternalMedia: "internal media",
+        LinkPageOrId: 'Page Name creates default Dokuwiki Link: <code>[[namespace:page|]]</code><br />ID creates: <code>[[namespace:page|namespace:page]]</code>',
         MediaFileLink: "link to media file",
         SMBLabel: "Samba Share",
         GetHeadingsLabel: 'Get Headings'	,
@@ -746,9 +747,8 @@ var useHeading = function(wiki_id) {
                            {
                                 type: 'radio',
                                 id: 'ilinkstyle',
-                                label: 'Link Style: Page name or Id (Optional Link Text takes precedence)',
+                                 label: translateItem('LinkPageOrId'),
                                 items: [ [ 'Page Name', 'page' ], [ 'ID', 'id' ] ],
-                                style: 'color: green',
                                 'default': 'page',
                                 required: false
                             },                             
