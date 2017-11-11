@@ -40,9 +40,6 @@ class action_plugin_ckgdoku_save extends DokuWiki_Action_Plugin {
               $TEXT = trim($TEXT);
         }
 
-   if(strpos($TEXT,'~~AUTO_INTERNAL_LINKS~~') !==false) {
-       $this->auto_InternalToRelative = true;
-   }
 
   $TEXT = preg_replace_callback(
     '|\{\{data:(.*?);base64|ms',
@@ -185,9 +182,11 @@ class action_plugin_ckgdoku_save extends DokuWiki_Action_Plugin {
                     global $ID, $conf;      
                    $link = explode('?',$matches[1]);
                    list($link_id,$linktext) = explode('|', $link[0]);          
-                   if($this->getConf('rel_links'))  $rel = $this->abs2rel($link_id,$ID); 
-                   
-                   if($conf['useheading']) {
+                   if($this->getConf('rel_links')) 
+                      $current_id = $this->abs2rel($link_id,$ID); 
+                    else  $current_id = $link_id;
+                   $useheading  = $conf['useheading'];
+                   if($useheading && $useheading != 'navigation') {
                       $tmp_linktext = trim(tpl_pagetitle($link_id,1));                       
                       if(trim($linktext) == trim($tmp_linktext)) {
                           $linktext = "";
@@ -197,8 +196,8 @@ class action_plugin_ckgdoku_save extends DokuWiki_Action_Plugin {
                    $tmp_id = array_pop($tmp_ar);
                    if(trim($linktext,'.: ' ) == trim($tmp_id,'.: ')) $linktext = "";
                               
-                   $rel = $rel.'|'.$linktext;    
-                   return '[[' . $rel .']]';
+                   $current_id = $current_id.'|'.$linktext;    
+                   return '[[' . $current_id .']]';
                },
            $TEXT
          );      
