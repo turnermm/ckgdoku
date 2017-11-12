@@ -30,8 +30,9 @@ CKEDITOR.dialog.add( 'link', function( editor )
 	 var fckgSMBInputId;
      var defaultFBLang = {
         InternalLink: "internal link",
-        LinkText: "Link Text (Optional)",
+        LinkText: "<span style='font-weight:bold'>Link Display Text</span><br />User defined Text (takes precedence over Page Name or  ID)",
         InternalMedia: "internal media",
+        LinkPageOrId: 'Page Name creates default Dokuwiki Link: <code>[[namespace:page|]]</code><br />ID creates: <code>[[namespace:page|namespace:page]]</code>',
         MediaFileLink: "link to media file",
         SMBLabel: "Samba Share",
         GetHeadingsLabel: 'Get Headings'	,
@@ -142,8 +143,9 @@ var useHeading = function(wiki_id) {
         var retv = wiki_id;
         var debug = 0;
          var params="dw_id=" +encodeURIComponent(wiki_id);
+         params +="&call=use_heads";
          editor.config.jquery.ajax({
-           url: editor.config.ckedit_path + "useheading.php",
+           url: editor.config.doku_url + 'lib/exe/ajax.php',
            async: true,
            data: params,
            type: 'POST',
@@ -736,11 +738,19 @@ var useHeading = function(wiki_id) {
                                 },
                             },
                             {
+                                  
 								type : 'text',
 								id : 'internal_text',
 								label : translateItem('LinkText'),
 								required: false,
-                                
+                            },                            
+                           {
+                                type: 'radio',
+                                id: 'ilinkstyle',
+                                 label: translateItem('LinkPageOrId'),
+                                items: [ [ 'Page Name', 'page' ], [ 'ID', 'id' ] ],
+                                'default': 'page',
+                                required: false
                             },
                             {
                                 id: 'anchorsmsg',
@@ -1093,7 +1103,9 @@ var useHeading = function(wiki_id) {
 			var attributes = {},
 				removeAttributes = [],
 				data = {},
+                linkstyle = 'page',
 				me = this,
+                tested  = false,
 				editor = this.getParentEditor();
 
 			this.commitContent( data );
@@ -1129,6 +1141,7 @@ var useHeading = function(wiki_id) {
                 break;
                 case 'internal':
                      internal_text =  this.getValueOf( 'info', 'internal_text' );
+                     ilinkstyle =this.getValueOf( 'info', 'ilinkstyle' );
                      if(!data.url.url) {
                         data.url.url=document.getElementById(fckgInternalInputId).value;
                               if(!data.url.url.match(/^:\w+/)) {                                 
@@ -1146,10 +1159,22 @@ var useHeading = function(wiki_id) {
                      data.url.url = data.url.url.replace(/^\:/,"");
                      data.url.url =  ':' + data.url.url.replace(/\//g,':');
                      data.adv.advCSSClasses = "wikilink1";
+                     
                      if(oDokuWiki_FCKEditorInstance.useheading == 'y') {
-                         data.adv.advTitle = useHeading(data.url.url)
+                        var tmp = useHeading(data.url.url);
+                        var test_1 = tmp.replace(/^:/,"");
+                        var test_2 = data.url.url.replace(/^:/,"");                   
+                        if(test_1 != test_2) {            
+                              data.adv.advTitle = tmp;    
+                              tested = true;
+                          }    
+                          else tested = false;                          
                     }
-                     else {
+                   if(ilinkstyle == 'page' && !tested) {      
+                          var elms = data.url.url.split(':');
+                          data.adv.advTitle = elms.pop();                        
+                    }
+                    else if(!tested) {
                      data.adv.advTitle = data.url.url;
                      }
                      data.url.url=top.dokuBase + 'doku.php?id=' + data.url.url;

@@ -57,6 +57,8 @@ class syntax_plugin_ckgdoku_specials extends DokuWiki_Syntax_Plugin {
           $this->Lexer->addSpecialPattern('~~MULTI_PLUGIN_CLOSE~~',$mode,'plugin_ckgdoku_specials');
           $this->Lexer->addSpecialPattern('~~COMPLEX_TABLES~~',$mode,'plugin_ckgdoku_specials');
           $this->Lexer->addSpecialPattern('~~NO_STYLING~~',$mode,'plugin_ckgdoku_specials');          
+          $this->Lexer->addSpecialPattern('~~AUTO_INTERNAL_LINKS~~',$mode,'plugin_ckgdoku_specials');     
+
           $this->Lexer->addEntryPattern('~~START_HTML_BLOCK~~(?=.*?~~CLOSE_HTML_BLOCK~~)',$mode,'plugin_ckgdoku_specials');   
  
            
@@ -78,7 +80,7 @@ class syntax_plugin_ckgdoku_specials extends DokuWiki_Syntax_Plugin {
         elseif(preg_match('/CLOSE/', $match)) {
               return array($state, "<span class='multi_p_close'></span>" );
         }       
-        elseif(preg_match('/(TABLES|STYLING)/', $match)) {                                       
+        elseif(preg_match('/(TABLES|STYLING|AUTO_INTERNAL)/', $match)) {                                       
               return array($state, "" );
         }       
           case DOKU_LEXER_ENTER :  return array($state, '');                

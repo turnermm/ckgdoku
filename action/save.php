@@ -172,8 +172,50 @@ class action_plugin_ckgdoku_save extends DokuWiki_Action_Plugin {
        } 
        
         $this->replace_entities();
-        $TEXT = preg_replace("/\{\{http:\/\/.*?fetch.php\?media=(.*?linkonly.*?)\}\}/",'{{' . "$1$2" .'}}',$TEXT);
+        $TEXT = preg_replace("/\{\{http:\/\/.*?fetch.php\?media=(.*?linkonly.*?)\}\}/",'{{' . "$1" .'}}',$TEXT);
         $TEXT = str_replace('< nowiki >', '%%<nowiki>%%',$TEXT);
+
+ 
+          $TEXT = preg_replace_callback(
+           '#\[\[(.*?)\]\]#ms',
+               function($matches){ 
+                    global $ID, $conf;      
+                   $link = explode('?',$matches[1]);
+                   list($link_id,$linktext) = explode('|', $link[0]);          
+                   if($this->getConf('rel_links')) 
+                      $current_id = $this->abs2rel($link_id,$ID); 
+                    else  $current_id = $link_id;
+                   $useheading  = $conf['useheading'];
+                   if($useheading && $useheading != 'navigation') {
+                      $tmp_linktext = trim(tpl_pagetitle($link_id,1));                       
+                      if(trim($linktext) == trim($tmp_linktext)) {
+                          $linktext = "";
+                      }
+                   }  
+                   $tmp_ar = explode(':',$link_id);
+                   $tmp_id = array_pop($tmp_ar);
+                   if(trim($linktext,'.: ' ) == trim($tmp_id,'.: ')) $linktext = "";
+                              
+                   $current_id = $current_id.'|'.$linktext;    
+                   return '[[' . $current_id .']]';
+               },
+           $TEXT
+         );      
+         
+        if($this->getConf('rel_links')) {    
+          $TEXT = preg_replace_callback(
+           '#\{\{(.*?)\}\}#ms',
+           function($matches) {              
+                global $ID;
+               $link = explode('?',$matches[1]);
+               list($link_id,$linktext) = explode('|', $link[0]);          
+               $rel = $this->abs2rel($link_id,$ID);
+               if(!empty($linktext)) $rel = $rel.'|'.$linktext;
+               return '{{' . $rel .'}}';
+           },
+           $TEXT
+         );               
+        }
 
 /* 11 Dec 2013 see comment below        
 Remove discarded font syntax    
@@ -227,6 +269,8 @@ Removed newlines and spaces from beginnings and ends of text enclosed by font ta
       },
       $TEXT     
       );
+      
+     
       /* reformat table cell after removing extra line-feeds, above */
     $TEXT = preg_replace_callback(  
          '#\|[\s\n]+(\<file.*?\>)(.*?)(\<\/file>\s*.*?)\n?\|#ms',   
@@ -242,6 +286,7 @@ Removed newlines and spaces from beginnings and ends of text enclosed by font ta
     
     }
 
+    
 function replace_entities() {
 global $TEXT;
 global $ents;
@@ -271,5 +316,67 @@ return;
     fclose($handle);
 
 }
+//linkPath is the link in the page
+//pagePath is absolute path of the page (ns1:ns2:....:page or :ns1:ns2:....:page)
+function abs2rel($linkPath,$pagePath){
+    if ($linkPath[0]==='.'){
+        // It's already relative
+        return $linkPath;
+    }
+    $aLink=explode(':',$linkPath);
+    $nLink=count($aLink);
+    if ($nLink<2){
+        return $linkPath;
+    }
+    $aPage=explode(':',$pagePath);
+    if(empty($aLink[0])) {
+        // If linkPath is started by ':'
+        // Make canonical absolute path ns1:ns2:.....:pageLink (strip leading :)
+        array_shift($aLink);
+        if (--$nLink<2) {
+            return $linkPath;
+        }
+    }
+    
+    if(empty($aPage[0])) {
+        // If pagePath is started by ':'
+        // Make canonical absolute path ns1:ns2:.....:page (strip leading :)
+        array_shift($aPage);
+    }
+    $nPage=count($aPage);
+    $nslEqual=0; // count of equal namespaces from left to right
+    // Minimal length of these two arrays, page name is not included
+    $nMin=($nLink<$nPage ? $nLink : $nPage)-1 ;
+    for ($i=0;$i<$nMin;++$i){
+        if ($aLink[$i]===$aPage[$i]){
+            ++$nslEqual;
+        }
+        else {
+            break;
+        }
+    }
+    if ($nslEqual==0){
+        // Link and page from different root namespaces
+        return $linkPath;
+    }
+    // Truncate equal lef namespaces
+    $aPageDiff=array_slice($aPage,$nslEqual);
+    $nPageDiff=count($aPageDiff);
+    $aLinkDiff=array_slice($aLink,$nslEqual);
+    
+    // Now we have to go up to nPageDiff-1 levels
+    $aResult=array();
+    if ($nPageDiff>1){
+        $aResult=array_fill(0,$nPageDiff-1,'..');
+    }
+     else if($nPageDiff == 1) {
+        $aResult[] = '.';
+    }
+    $aResult=array_merge($aResult,$aLinkDiff);
+    return implode(':', $aResult);
+}
+
+
 } //end of action class
+
 ?>

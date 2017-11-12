@@ -373,6 +373,7 @@ class action_plugin_ckgdoku_edit extends DokuWiki_Action_Plugin {
        //$text = preg_replace('/%%\s*<(code|file)>\s*%%/ms', 'PERC' . "$1" . 'PERC',$text);
        $text = preg_replace('/PERCcodePERC/ms','%%&lt;code&gt;%%', $text);
        $text = preg_replace('/PERCfilePERC/ms','%%&lt;file&gt;%%', $text);
+             
        $divalign = false;
        if($this->helper->has_plugin('divalign2_center')) {
            $divalign = true;
