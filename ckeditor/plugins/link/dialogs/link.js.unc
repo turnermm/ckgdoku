@@ -138,7 +138,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 var useHeading = function(wiki_id) {
         var retv = wiki_id;
-       ckg_useheader = "";
+        
          jQuery.ajax({
              method: "POST",
              url: DOKU_BASE + 'lib/exe/ajax.php',
@@ -151,7 +151,12 @@ var useHeading = function(wiki_id) {
               })
             .done(function(data)
               {
-               retv = decodeURIComponent(data);
+                  var retvget = "";
+                  retvget = decodeURIComponent(data);
+                  for(i=0;i<10000;i++) {
+                      if(retvget) break;
+                  }            
+                  retv = retvget;
               })
               .fail(function(jqXHR, textStatus, errorThrown )
               {
