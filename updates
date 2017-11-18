@@ -1,0 +1,2 @@
+Nov 15
+Put loop in useheading for brief delay, giving async chance to return
