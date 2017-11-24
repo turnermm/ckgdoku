@@ -140,27 +140,21 @@ CKEDITOR.dialog.add( 'link', function( editor )
     }
 
 var useHeading = function(wiki_id) {
-        var retv = wiki_id;
-        var debug = 0;
-         var params="dw_id=" +encodeURIComponent(wiki_id);
-         params +="&call=use_heads";
-         editor.config.jquery.ajax({
-           url: editor.config.doku_url + 'lib/exe/ajax.php',
+        return jQuery.ajax({
+             method: "POST",
+             url: DOKU_BASE + 'lib/exe/ajax.php',
+             data: {             
+             dw_id: encodeURIComponent(wiki_id),
+             call: call="use_heads"
+             },                           
            async: true,
-           data: params,
-           type: 'POST',
-           dataType: 'html',
-           success: function(data){
-               if(debug) {
-                  alert(data);
-               }
-               retv = decodeURIComponent(data);
-      },
-      error: function (XMLHttpRequest, textStatus, errorThrown) {
-            retv = wiki_id;
-        }
+            dataType: "html",
+              })
+              .fail(function(jqXHR, textStatus, errorThrown )
+              {
+                alert('Error: ' + textStatus +'/' + errorThrown);
+                
     });
-    return retv;
 };
 
 
@@ -1098,17 +1092,38 @@ var useHeading = function(wiki_id) {
 
 		onOk : function()
 		{
+            var wikiIdFromUrl = function (url) {
+                if(!url) {
+                    url=document.getElementById(fckgInternalInputId).value;
+                    if(!url.match(/^:\w+/)) {
+                        var ns = top.getCurrentWikiNS() + ':';
+                        ns = ns.replace(/:$/,"");
+                        var regex = new RegExp(':?'+ ns+':');
+                        if(!url.match(regex)) {
+                            url = ns +':' + url;
+                            url = url.replace(/\:{2,}/g,':');
+                        }
+                    }
+                }
+
+                url =  url.replace(/^.*?\/data\/pages\//,"");
+                url = url.replace(/^\:/,"");
+                url =  ':' + url.replace(/\//g,':');
+
+                return url;
+			};
+
+			var ok_callback = jQuery.proxy(function (data, heading) {
            var internal_text = false;
             var ImagesAllowed = new RegExp( oDokuWiki_FCKEditorInstance.imageUploadAllowedExtensions);
 			var attributes = {},
 				removeAttributes = [],
-				data = {},
                 linkstyle = 'page',
 				me = this,
                 tested  = false,
 				editor = this.getParentEditor();
 
-			this.commitContent( data );
+
              var other_media = false;
 
 			// Compose the URL.
@@ -1159,9 +1174,8 @@ var useHeading = function(wiki_id) {
                      data.url.url = data.url.url.replace(/^\:/,"");
                      data.url.url =  ':' + data.url.url.replace(/\//g,':');
                      data.adv.advCSSClasses = "wikilink1";
-                     
-                     if(oDokuWiki_FCKEditorInstance.useheading == 'y') {
-                        var tmp = useHeading(data.url.url);
+						 if(heading && oDokuWiki_FCKEditorInstance.useheading == 'y') {
+							var tmp = heading;
                         var test_1 = tmp.replace(/^:/,"");
                         var test_2 = data.url.url.replace(/^:/,"");                   
                         if(test_1 != test_2) {            
@@ -1394,7 +1408,18 @@ var useHeading = function(wiki_id) {
             else if(text && data.adv.advTitle) {
                   text.setText(data.adv.advTitle);
             }
+            }, this);
               
+            var data = {};
+            this.commitContent( data );
+              
+            if (data.type == 'internal' && oDokuWiki_FCKEditorInstance.useheading == 'y') {
+                jQuery.when(useHeading(wikiIdFromUrl(data.url.url)).then(function (heading) {
+                    ok_callback(data, heading);
+				}));
+			} else {
+                ok_callback(data);
+			}
 		},
 		onLoad : function()
 		{	                   
