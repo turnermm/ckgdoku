@@ -61,28 +61,25 @@ CKEDITOR.dialog.add( 'link', function( editor )
       return defaultFBLang[js_code];
     };
 
-         jQuery.ajax(
-          DOKU_BASE + 'lib/exe/ajax.php',
-          {
-            data:
-              {
-                call: 'iwiki_list'
-              },
-            type: "POST",
+
+     jQuery.ajax({
+             method: "POST",
+             url: DOKU_BASE + 'lib/exe/ajax.php',
+             data: { call: 'iwiki_list'},                           
             async: true,
             dataType: "json",
-            success: function(data, textStatus, jqXHR)
+              })
+            .done(function(data)
               {
                   retv = data;
                   ckgdokuIwikiData = retv;
-              },
-            error: function(jqXHR, textStatus, errorThrown )
+              })
+              .fail(function(jqXHR, textStatus, errorThrown )
               {
                 alert(textStatus);
                 alert(errorThrown);
-              }
-          }
-        );
+              });      
+    
 
     var getInternalHeaders = function() {
 
