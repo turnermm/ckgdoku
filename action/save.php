@@ -316,6 +316,7 @@ return;
     fclose($handle);
 
 }
+/* @auth Sergey Kotov */
 //linkPath is the link in the page
 //pagePath is absolute path of the page (ns1:ns2:....:page or :ns1:ns2:....:page)
 function abs2rel($linkPath,$pagePath){
