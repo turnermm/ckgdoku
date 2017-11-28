@@ -1,4 +1,4 @@
-rev_17-Nov_12-08_53
+rev_17-Nov_28-07_26
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -146,3 +146,6 @@ Adds back in backslashes when code/file blocks are filtered for extra final line
 
 Nov 6
 Fixed bug in link.js where ckgdokuIwikiIndex was left in 2 places as ckgeditIwikiIndex
+
+Nov 28
+Merged farms branch into master
