@@ -263,6 +263,7 @@ function parse_wikitext(id) {
     is_iwiki: function(class_name, title) {
                     var iw_type = class_name.match(/iw_(\w+\.?\w{0,12})/);                    
 					 var iw_title = title.split(/\//);
+       
                      var interwiki_label = iw_title[iw_title.length-1];
                     interwiki_label = interwiki_label.replace(String.frasl,"\/");    
                     if(!interwiki_label.match(/oIWIKIo.*?cIWIKIc/)) {
@@ -270,8 +271,9 @@ function parse_wikitext(id) {
                     }
                     interwiki_label =  interwiki_label.replace(/^.*?oIWIKIo/,'oIWIKIo');
                     interwiki_label =  interwiki_label.replace(/cIWIKIc.*/,'cIWIKIc');
-                    iw_type[1] = iw_type[1].replace(/_(\w{2})/, "." +"$1" );
+                    iw_type[1] = iw_type[1].replace(/_(\w{2})/g, "." +"$1" );
                     this.attr = iw_type[1] + '>' +  decodeURIComponent(interwiki_label);                  
+         
                     HTML_InterWiki=true;
 				    this.interwiki=true;
 	},
@@ -551,8 +553,14 @@ function parse_wikitext(id) {
                   else if(attrs[i].value.match(/mf_(png|gif|jpg|jpeg)/i)) {
                      this.link_only=true;
                   }
+                  else if(attrs[i].value.match(/interwiki/)) {               
+                     attrs[i].value = attrs[i].value.replace(/\./g,'_');          
+                      this.link_class = attrs[i].value;
+                      continue;
+                  }
 
                   this.link_class= attrs[i].escaped;                 
+                
                   media_class = this.link_class.match(/mediafile/);              				  
                }
                else if(attrs[i].name == 'id') {

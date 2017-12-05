@@ -149,3 +149,6 @@ Fixed bug in link.js where ckgdokuIwikiIndex was left in 2 places as ckgeditIwik
 
 Nov 28
 Merged farms branch into master
+
+Dec 5
+Fix iwiki handling to process more than one type extension type.12.12, etc
