@@ -1,4 +1,4 @@
-rev_17-Dec_08-15_22
+rev_17-Dec_19-10_56
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -156,3 +156,6 @@ Fix iwiki handling to process more than one type extension type.12.12, etc
 Dec 8
 merge iwiki branch into master
 in save.php fix deleted backslash in code blocks
+
+Dec 19
+fixed https://github.com/turnermm/ckgedit/issues/360: html tag markup confused with interwiki markup: >
