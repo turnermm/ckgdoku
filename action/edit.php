@@ -1163,6 +1163,8 @@ $text = preg_replace_callback(
              }, $xhtml
         );
         }
+        
+        $xhtml = str_replace(array('oiwikio','ciwikic'),array('oIWIKIo','cIWIKIc'),$xhtml);
          if(strpos($xhtml,'oIWIKIo') !== false) {
             $xhtml = preg_replace_callback(
                 '/<?(.*?)oIWIKIo(.*?)cIWIKIc/ms',

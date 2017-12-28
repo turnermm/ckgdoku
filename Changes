@@ -1,4 +1,4 @@
-rev_17-Dec_22-08_24
+rev_17-Dec_27-20_26
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -162,3 +162,7 @@ fixed https://github.com/turnermm/ckgedit/issues/360: html tag markup confused w
 
 Dec 21
 Fixes https://github.com/turnermm/ckgdoku/issues/45 (left-over interwiki internal markup removed)
+
+Dec  27
+Fixed interwiki urls that start with colon and get changed to wikilinks
+
