@@ -1,4 +1,4 @@
-rev_17-Dec_30-11_17
+rev_18-Jan_01-15_12
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -168,3 +168,7 @@ Fixed interwiki urls that start with colon and get changed to wikilinks
 
 Dec 30
 Fixes ckgdoku/issues/47: mishandled image with relative links
+
+Dec 31
+Fixes https://github.com/turnermm/ckgdoku/issues/48, page duplication on switching to dwedit
+same as https://github.com/turnermm/ckgedit/issues/343
