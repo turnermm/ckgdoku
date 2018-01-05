@@ -1,4 +1,4 @@
-rev_18-Jan_02-08_25
+rev_18-Jan_05-07_31
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -175,3 +175,6 @@ same as https://github.com/turnermm/ckgedit/issues/343
 
 Jan 2 2018
 Update fix to removed backslash in code blocks
+
+Jan 4
+Copied some German language updates from ckgedit
