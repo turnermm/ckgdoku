@@ -1,4 +1,4 @@
-rev_18-Jan_05-07_31
+rev_18-Jan_08-16_00
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -178,3 +178,7 @@ Update fix to removed backslash in code blocks
 
 Jan 4
 Copied some German language updates from ckgedit
+
+Jan 8
+Fix for backslashes removed on save: https://github.com/turnermm/ckgdoku/issues/27
+
