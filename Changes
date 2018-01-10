@@ -1,4 +1,4 @@
-rev_18-Jan_08-16_00
+rev_18-Jan_10-09_48
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -182,3 +182,5 @@ Copied some German language updates from ckgedit
 Jan 8
 Fix for backslashes removed on save: https://github.com/turnermm/ckgdoku/issues/27
 
+Jan 10
+ Removed oIWIKIo inserted after '>' when that is followed by link text
