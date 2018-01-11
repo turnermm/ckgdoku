@@ -1,4 +1,4 @@
-rev_18-Jan_10-09_48
+rev_18-Jan_11-04_40
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -187,3 +187,4 @@ Jan 10
 
 Jan 11
 Update fix for turnermm/ckgdoku/issues/27
+fixed typo in edit.php
