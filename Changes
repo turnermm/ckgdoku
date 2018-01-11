@@ -1,4 +1,4 @@
-rev_18-Jan_11-04_40
+rev_18-Jan_11-10_10
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -188,3 +188,4 @@ Jan 10
 Jan 11
 Update fix for turnermm/ckgdoku/issues/27
 fixed typo in edit.php
+fix faulty regex to restore valid backslashes when removing extra line-breaks from code blocks
