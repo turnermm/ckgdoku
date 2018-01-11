@@ -184,3 +184,6 @@ Fix for backslashes removed on save: https://github.com/turnermm/ckgdoku/issues/
 
 Jan 10
  Removed oIWIKIo inserted after '>' when that is followed by link text
+
+Jan 11
+Update fix for turnermm/ckgdoku/issues/27
