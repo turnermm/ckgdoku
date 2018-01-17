@@ -180,8 +180,7 @@ class action_plugin_ckgdoku_save extends DokuWiki_Action_Plugin {
                     global $ID, $conf;      
                 
                     if(preg_match("/\[\[http/",$matches[0])) return $matches[0];  //not an internal link
-                   
-                    if (preg_match("/\[\[.*?|\{\{\]\]/", $matches[0])) {   //internal link with image link
+                      if(preg_match("#\[\[.*?\|\{\{.*?\}\}\]\]#", $matches[0],$matches_1)) {  
                         if(!$this->getConf('rel_links')) { 
                             return $matches[0];
                         }
