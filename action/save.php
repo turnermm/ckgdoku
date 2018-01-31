@@ -178,7 +178,7 @@ class action_plugin_ckgdoku_save extends DokuWiki_Action_Plugin {
            '#\[\[(.*?)\]\]#ms',
                function($matches){ 
                     global $ID, $conf;      
-                
+                    $qs = "";
                     if(preg_match("/\[\[http/",$matches[0])) return $matches[0];  //not an internal link
                       if(preg_match("#\[\[.*?\|\{\{.*?\}\}\]\]#", $matches[0],$matches_1)) {  
                         if(!$this->getConf('rel_links')) { 

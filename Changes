@@ -1,4 +1,4 @@
-rev_18-Jan_17-11_11
+rev_18-Jan_31-10_19
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -193,3 +193,5 @@ fix faulty regex to restore valid backslashes when removing extra line-breaks fr
 Jan 16
 fix corrupted image as link when checking for userheading and relative links
 
+Jan 31
+Restores query string to internal link, missing after coded for relative links
