@@ -81,6 +81,93 @@ class action_plugin_ckgdoku_meta extends DokuWiki_Action_Plugin {
   }
  
 function _ajax_call(Doku_Event $event, $param) {
+       if ($event->data == 'cked_upload') {  
+          global $lang;
+           $event->stopPropagation();
+          $event->preventDefault();
+           global $INPUT;
+           $id = urldecode($INPUT->str('ckedupl_id'));
+           $id = str_replace('/', ':',$id);         
+           $this->ajax_debug($id);
+          $fn = mediaFN($id);
+          $this->ajax_debug($fn);
+          $delete = $INPUT->str('ckedupl_del');
+           if(file_exists($fn)) {
+              $size =  filesize($fn);               
+              $this->ajax_debug("$fn:  $size");               
+           }           
+          else $this->ajax_debug("$fn not found");
+          
+          if($delete && $delete == 'D') {           
+               $size = ""; $ft = ""; 
+               $oldf  = $id;
+              $size_tm =  $INPUT->str('delsize');         
+               $this->ajax_debug('size_tm='.$size_tm);             
+              if(!empty($size_tm))   {                  
+                  list($size,$ft) = explode(';',$size_tm);
+                  $size=trim($size);
+                  $ft=trim($ft);
+                  $size =  '-' . $size;
+              }
+              else if(file_exists($fn)) {
+                  if(!$size) {
+                      $size = filesize($fn);               
+                   $size =  '-' . $size;
+                  }
+                  if(!$ft) {                   
+                   $ft=filemtime($fn) ;
+              }
+              }
+              else {
+                  $this->ajax_debug("$fn not found");
+                  return;
+              }
+              if(!empty($ft) && file_exists($fn)) {                
+                $newf = mediaFN($id,$ft);
+                $this->ajax_debug("newf:  $newf fn:  $fn");                                
+                 if(file_exists($fn)){
+                    $this->ajax_debug("old file: $oldf; $fn");               
+               }
+                 else  $this->ajax_debug("no old file: $fn");                 
+                 
+                 io_makeFileDir($newf);
+                 if(copy($fn, $newf)) {
+                    $this->ajax_debug("Copying $fn  to $newf");
+                    chmod($newf, $conf['fmode']);
+                   $this->ajax_debug("deleting: $fn");
+                    if(!unlink($fn)) $this->ajax_debug("delete failed");
+                }         
+                 else $this->ajax_debug("copy failed");                
+             }
+              if(file_exists($fn)) {
+                  if(!copy($fn, $newf)) { 
+                     $this->ajax_debug ("(2nd try) could not copy $fn to $newf"); 
+                     return; 
+                     }
+                  if(!unlink($fn))  { 
+                     $this->ajax_debug ("could not delete $fn"); 
+                     return; 
+                  }
+              }
+              addMediaLogEntry($ft, $id, DOKU_CHANGE_TYPE_DELETE, $lang['deleted'],'', null, $size);            
+          }
+          else addMediaLogEntry(time(), $id, DOKU_CHANGE_TYPE_CREATE, $lang['created'],'', null, $size);
+          echo 'done';
+          return;
+      }
+      //cked_deletedsize
+      if ($event->data == 'cked_deletedsize') {  
+          $event->stopPropagation();
+          $event->preventDefault();
+           global $INPUT;
+           $id = urldecode($INPUT->str('cked_delid'));
+           $fn = mediaFN($id);
+           if(file_exists($fn)) {
+            $this->ajax_debug(filesize ($fn) . ';' .filemtime($fn) );
+           }
+           else echo ("$fn not found");
+          return;
+      }
       if ($event->data == 'use_heads') {  
          $event->stopPropagation();
           $event->preventDefault();
@@ -88,8 +175,9 @@ function _ajax_call(Doku_Event $event, $param) {
           $page = $INPUT->str('dw_id');  
           $page = urldecode($page);
           $page = ltrim($page, ':');
-         $t= trim(tpl_pagetitle($page,1));
-         echo htmlentities($t) . "\n";          
+         $t= trim(p_get_first_heading($page));
+         echo $t;
+         return;
      }
      
      if ($event->data == 'wrap_lang') {  
@@ -666,6 +754,7 @@ function check_userfiles() {
        if($onoff == 'off') $JSINFO['ckg_dbl_click'] = "";
        $JSINFO['ckg_canonical'] =$conf['canonical'];
        $JSINFO['doku_base'] = DOKU_BASE;
+        $JSINFO['doku_url'] = DOKU_URL;
        if($this->helper->has_plugin('tag'))  $JSINFO['has_tags'] = "Tag";
        if($this->helper->has_plugin('wrap') && ! plugin_isdisabled('wrap'))  {       
            $JSINFO['has_wrap'] = "Wrap";
@@ -877,7 +966,10 @@ function restore_conf() {
     }
     
 }
-
+function ajax_debug($data) {
+    return;
+    echo "$data\n";
+}
 function write_debug($data) {
   return;
   if (!$handle = fopen(DOKU_INC .'meta.txt', 'a')) {

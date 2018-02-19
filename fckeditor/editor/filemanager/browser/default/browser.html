@@ -259,11 +259,16 @@ oIcons.GetIcon = function( fileName )
 function OnUploadCompleted( errorNumber, fileUrl, fileName, customMsg )
 {
    // alert( errorNumber +"\nurl="+ fileUrl+"\nfname="+ fileName+"\nmsg="+ customMsg );
+    fileUrl = fileUrl.replace(/.*?(media|userfiles\/image|file)\//,"");
+ //alert(fileUrl);
     
 	if (errorNumber == "1" || parseInt(errorNumber) > 300) 
 		window.frames['frmUpload'].OnUploadCompleted( errorNumber, customMsg ) ;
-	else
+	else {
 		window.frames['frmUpload'].OnUploadCompleted( errorNumber, fileName ) ;
+         fileUrl = encodeURIComponent(fileUrl);        
+         opener.ckged_setmedia(fileUrl,"") ;
+        }
 }
 
 function fbsz_inc(val) {  
