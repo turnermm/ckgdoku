@@ -304,6 +304,43 @@ var dokuBase = location.host + DOKU_BASE;
             );     
  }
 
+ /* gets both size and filetime: "size||filetime" */
+ function ckged_get_unlink_size(id) {
+                var params = 'call=cked_deletedsize';    params += "&cked_delid=" + id;
+                jQuery.post( DOKU_BASE + 'lib/exe/ajax.php', params,   
+                function (data) {  
+                    if(data) { 
+                     JSINFO['ckg_del_sz'] = data;
+                      //console.log(data);
+                    }
+                      else  {
+                    //      alert(LANG.plugins.ckgedit.dwp_save_err + data); 
+                      }   
+                    },
+                'html'
+            );    
+       
+ }
+ 
+ function ckged_setmedia(id,del, refresh_cb) {
+	 
+             var params = 'call=cked_upload';    params += "&ckedupl_id=" + id;
+             if(del)  params += "&ckedupl_del=D&delsize="+JSINFO['ckg_del_sz'];
+                jQuery.post( DOKU_BASE + 'lib/exe/ajax.php', params,   
+                function (data) {  
+                    if(data) { 
+                      if(refresh_cb) {
+                           refresh_cb.postMessage(JSINFO['doku_url'], JSINFO['doku_url']);
+                      }
+                      console.log(data);
+                    }
+                      else  {
+                    //      alert(LANG.plugins.ckgedit.dwp_save_err + data); 
+                      }   
+                    },
+                'html'
+            );    
+ }
  jQuery(document).ready(function() {
      if(JSINFO['hide_captcha_error'] =='hide') {
          jQuery("div.error").hide();
