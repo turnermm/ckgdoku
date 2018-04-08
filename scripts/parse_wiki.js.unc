@@ -1922,7 +1922,7 @@ jQuery(document).ready(function() {
   jQuery(document).on("keypress", "input#edit__summary", function(e){
         if(e.which == 13){          
          edit__summary = true;
-			return parse_wikitext('edbtn__save');
+	    jQuery("#save_button" ).trigger( "mousedown" );
         }
   });
 
