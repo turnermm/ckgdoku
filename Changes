@@ -1,4 +1,4 @@
-rev_18-Mar_15-19_59
+rev_18-Apr_17-10_34
 
 Switched dafault filebrowser settings to all and ckgedit
 
@@ -195,3 +195,6 @@ fix corrupted image as link when checking for userheading and relative links
 
 Jan 31
 Restores query string to internal link, missing after coded for relative links
+
+Apr 17
+Adds missing HTML_BLOCK aliases
