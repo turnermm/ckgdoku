@@ -62,4 +62,6 @@ $lang['on'] ='on';
 $lang['off'] ='off';
 $lang['js']['on'] ='on';
 $lang['js']['off'] ='off';
+$lang['deprecation']= 'Ckgdoku is deprecated. Please use ckgedit. For more information, see';
+
 

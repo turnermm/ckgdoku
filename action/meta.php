@@ -716,11 +716,15 @@ function check_userfiles() {
   function file_type(Doku_Event $event, $param) {	 
        global $ACT;
        global $ID; 
-       global $JSINFO;
+       global $JSINFO,$USERINFO;
        global  $INPUT;
        global $updateVersion;
        global $conf;
        
+	    if(isset($USERINFO)&& in_array('admin',$USERINFO['grps'])){
+			msg($this->getLang('deprecation').	
+		   ' <a href="https://www.dokuwiki.org/plugin:ckgdoku#important_notice">CKGDOKU</a>',2);
+		}
         $plist = plugin_list('helper');        
         if(in_array('ckgedit', $plist)) {    
             msg($this->getLang('ckgcke_conflict'),2); 
