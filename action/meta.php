@@ -721,7 +721,8 @@ function check_userfiles() {
        global $updateVersion;
        global $conf;
        
-	    if(isset($USERINFO)&& in_array('admin',$USERINFO['grps'])){
+        $do = $INPUT->str('do','NOTADMIN');
+	    if($do === 'admin' && isset($USERINFO)){
 			msg($this->getLang('deprecation').	
 		   ' <a href="https://www.dokuwiki.org/plugin:ckgdoku#important_notice">CKGDOKU</a>',2);
 		}
